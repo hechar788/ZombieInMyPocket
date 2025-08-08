@@ -5,6 +5,10 @@ from model.encounter.i_encounter import IEncounter
 class ITile(ABC):
 
     @abstractmethod
+    def get_name(self) -> str:
+        pass
+
+    @abstractmethod
     def is_outdoors(self) -> bool:
         pass
 
