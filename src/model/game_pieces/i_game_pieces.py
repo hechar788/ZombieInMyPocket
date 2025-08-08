@@ -40,3 +40,11 @@ class IGamePieces(ABC):
     @abstractmethod
     def place_tile(self, position: Position, rotation: Rotation) -> None:
         pass
+
+    @abstractmethod
+    def get_tile(self, position: Position) -> tuple[ITile, Rotation]:
+        pass
+
+    @abstractmethod
+    def is_stuck(self) -> bool:
+        pass
