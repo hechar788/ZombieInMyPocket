@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from enums_and_types import *
-from model.encounter.encounter import Encounter
+from model.encounter.i_encounter import IEncounter
 
 class ITile(ABC):
 
@@ -23,7 +23,7 @@ class ITile(ABC):
         pass
 
     @abstractmethod
-    def get_encounter(self) -> Encounter | None:
+    def get_encounter(self) -> IEncounter | None:
         """Gets the encounter for this tile if there is any otherwise
         returns None
         """
