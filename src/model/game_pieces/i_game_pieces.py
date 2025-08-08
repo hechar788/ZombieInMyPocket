@@ -34,15 +34,17 @@ class IGamePieces(ABC):
         pass
 
     @abstractmethod
-    def can_place_tile(self, position: Position, rotation: Rotation) -> bool:
+    def can_place_tile(self, tile: ITile, tile_position: Position,
+                       player_position: Position, rotation: Rotation) -> bool:
         pass
 
     @abstractmethod
-    def place_tile(self, position: Position, rotation: Rotation) -> None:
+    def place_tile(self, tile: ITile, position: Position,
+                   rotation: Rotation) -> None:
         pass
 
     @abstractmethod
-    def get_tile(self, position: Position) -> tuple[ITile, Rotation]:
+    def get_tile(self, position: Position) -> ITile:
         pass
 
     @abstractmethod

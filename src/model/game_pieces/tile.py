@@ -16,6 +16,7 @@ class Tile(ITile):
         self._exits = exits
         self._front_door = front_door
         self._encounter = encounter
+        self._rotation = Rotation.NONE
     
     def get_name(self) -> str:
         return self._name
@@ -23,18 +24,101 @@ class Tile(ITile):
     def is_outdoors(self) -> bool:
         return self._is_outdoors
     
-    def get_exits(self, rotation: Rotation) -> tuple[Direction, ...]:
+    def get_exits(self) -> tuple[Direction, ...]:
 
         # This only works if the rotation and direction enums
         # are in a specific way
         return tuple(Direction(
-            (x.value + rotation.value) % 4) for x in self._exits)
+            (x.value + self._rotation.value) % 4) for x in self._exits)
 
-    def get_front_door(self, rotation: Rotation) -> Direction | None:
+    def get_front_door(self) -> Direction | None:
         if self._front_door is None:
             return None
         else:
-            return Direction((self._front_door.value + rotation.value) % 4)
+            return Direction(
+                (self._front_door.value + self._rotation.value) % 4)
     
     def get_encounter(self) -> IEncounter | None:
         return self._encounter
+    
+    def set_rotation(self, rotation: Rotation) -> None:
+        self._rotation = rotation
+    
+    @staticmethod
+    def get_indoor_tiles() -> list[ITile]:
+        return [
+
+            Tile("Bathroom", False,
+                (Direction.NORTH,),
+                None, None),
+
+            # TODO: Add encounter for +1 health
+            Tile("Kitchen", False,
+                (Direction.NORTH, Direction.EAST, Direction.WEST),
+                None, None),
+            
+            # TODO: Add item encounter
+            Tile("Storage", False,
+                (Direction.NORTH,),
+                None, None),
+
+            #TODO: Add pick up totem event
+            Tile("Evil Temple", False,
+                (Direction.EAST, Direction.WEST),
+                None, None),
+            
+            Tile("Family Room", False,
+                (Direction.NORTH, Direction.EAST, Direction.WEST),
+                None, None),
+            
+            Tile("Dining Room", False,
+                (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST),
+                Direction.NORTH, None),
+
+            Tile("Bedroom", False,
+                (Direction.NORTH, Direction.WEST),
+                None, None),
+            
+            Tile("Foyer", False,
+                (Direction.NORTH,),
+                None, None),
+        ]
+    
+    @staticmethod
+    def get_outdoor_tiles() -> list[ITile]:
+        return[
+
+            #TODO: Add encounter for +1 health
+            Tile("Garden", True,
+                (Direction.EAST, Direction.SOUTH, Direction.WEST),
+                None, None),
+            
+            Tile("Sitting Area", True,
+                (Direction.EAST, Direction.SOUTH, Direction.WEST),
+                None, None),
+            
+            Tile("Yard", True,
+                (Direction.EAST, Direction.SOUTH, Direction.WEST),
+                None, None),
+            
+            #TODO: Add graveyard event
+            Tile("Graveyard", True,
+                (Direction.EAST, Direction.SOUTH),
+                None, None),
+            
+            Tile("Garage", True,
+                (Direction.SOUTH, Direction.WEST),
+                None, None),
+            
+            Tile("Patio", True,
+                (Direction.NORTH, Direction.EAST, Direction.SOUTH),
+                Direction.NORTH, None),
+            
+            Tile("Yard", True,
+                (Direction.EAST, Direction.SOUTH, Direction.WEST),
+                None, None),
+            
+            Tile("Yard", True,
+                (Direction.EAST, Direction.SOUTH, Direction.WEST),
+                None, None),
+        ]

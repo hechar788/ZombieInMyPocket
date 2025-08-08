@@ -13,13 +13,13 @@ class ITile(ABC):
         pass
 
     @abstractmethod
-    def get_exits(self, rotation: Rotation) -> tuple[Direction, ...]:
+    def get_exits(self) -> tuple[Direction, ...]:
         """Given a rotation returns a list of exit directions"""
 
         pass
 
     @abstractmethod
-    def get_front_door(self, rotation: Rotation) -> Direction | None:
+    def get_front_door(self) -> Direction | None:
         """Given a rotation returns the direction to the front door
         or returns None if this tile is not the patio or dining room
         """
@@ -32,4 +32,8 @@ class ITile(ABC):
         returns None
         """
 
+        pass
+
+    @abstractmethod
+    def set_rotation(self, rotation: Rotation) -> None:
         pass
