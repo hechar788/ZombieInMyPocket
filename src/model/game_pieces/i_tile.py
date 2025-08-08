@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from enums_and_types import *
 from model.encounter.encounter import Encounter
 
-class Tile(ABC):
+class ITile(ABC):
 
     @abstractmethod
     def is_outdoors(self) -> bool:
