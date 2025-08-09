@@ -1,5 +1,5 @@
 from enums_and_types import *
-from model.game_pieces.i_tile import ITile
+from .i_tile import ITile
 from model.encounter.i_encounter import IEncounter
 
 class Tile(ITile):

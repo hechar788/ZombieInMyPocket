@@ -1,8 +1,8 @@
-from model.game_pieces.i_dev_card import IDevCard
-from model.game_pieces.i_game_pieces import IGamePieces
-from model.game_pieces.i_tile import ITile
-from model.game_pieces.tile import Tile
-from model.game_pieces.board import Board
+from .i_dev_card import IDevCard
+from .i_game_pieces import IGamePieces
+from .i_tile import ITile
+from .tile import Tile
+from .board import Board
 from enums_and_types import *
 from random import shuffle
 

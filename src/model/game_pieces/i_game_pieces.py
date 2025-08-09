@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from model.game_pieces.i_dev_card import IDevCard
-from model.game_pieces.i_tile import ITile
+from .i_dev_card import IDevCard
+from .i_tile import ITile
 from enums_and_types import *
 
 class IGamePieces(ABC):

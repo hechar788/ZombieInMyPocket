@@ -1,4 +1,4 @@
-from model.game_pieces.i_tile import ITile
+from .i_tile import ITile
 from enums_and_types import *
 
 type TileDict = dict[Position, ITile]

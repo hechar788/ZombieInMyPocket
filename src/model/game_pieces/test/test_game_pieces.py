@@ -1,7 +1,6 @@
 import unittest
-from model.game_pieces.game_pieces import GamePieces
+from model.game_pieces import GamePieces, Tile
 from enums_and_types import *
-from model.game_pieces.tile import Tile
 
 class TestGamePieces(unittest.TestCase):
 

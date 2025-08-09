@@ -1,4 +1,4 @@
-from model.game_pieces.i_dev_card import IDevCard
+from .i_dev_card import IDevCard
 from model.item.i_item import IItem
 from model.encounter.i_encounter import IEncounter
 
