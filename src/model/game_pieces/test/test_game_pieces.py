@@ -15,6 +15,10 @@ class TestGamePieces(unittest.TestCase):
                 (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST),
                 Direction.NORTH, None)
         
+        self.family_room_tile = Tile("Family Room", False,
+                (Direction.NORTH, Direction.EAST, Direction.WEST),
+                None, None)
+        
         self.patio_tile = Tile("Patio", True,
                 (Direction.NORTH, Direction.EAST, Direction.SOUTH),
                 Direction.NORTH, None)
@@ -83,3 +87,23 @@ class TestGamePieces(unittest.TestCase):
         self.assertTrue(self.game_pieces.can_place_tile(
             self.patio_tile, (0, 2), (0, 1), Rotation.UPSIDE_DOWN
         ))
+    
+    def test_is_stuck_starts_false(self):
+        self.assertFalse(self.game_pieces.is_stuck())
+
+    def test_is_stuck_is_true_with_bathroom_above(self):
+        self.game_pieces.place_tile(self.bathroom_tile,
+                                    (0, 1), Rotation.UPSIDE_DOWN)
+        self.assertTrue(self.game_pieces.is_stuck())
+    
+    def test_complex_stuck_scenario(self):
+        self.game_pieces.place_tile(self.family_room_tile,
+                                    (0, 1), Rotation.UPSIDE_DOWN)
+        self.game_pieces.place_tile(self.bathroom_tile,
+                                    (1, 1), Rotation.CLOCKWISE)
+        
+        self.assertFalse(self.game_pieces.is_stuck())
+        self.game_pieces.place_tile(self.bathroom_tile,
+                                    (-1, 1), Rotation.ANTICLOCKWISE)
+        self.assertTrue(self.game_pieces.is_stuck())
+        

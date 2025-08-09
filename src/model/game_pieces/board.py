@@ -31,7 +31,7 @@ class Board:
         # Keep track of exits available
         self._exits_available += len(tile.get_exits())
         if len(self._all_tiles) > 1:
-            self._exits_available -= 1
+            self._exits_available -= 2
 
     def can_place_tile(self, tile: ITile, position: Position,
             position_from: Position, rotation: Rotation) -> bool:
