@@ -1,11 +1,12 @@
 from enum import Enum
 
+
 class Rotation(Enum):
     """Rotation of a tile."""
 
     NONE = 0
     """No rotation."""
-    
+
     CLOCKWISE = 1
     """Rotated 90 degrees clockwise."""
 
@@ -23,4 +24,3 @@ class Direction(Enum):
     EAST = 1
     SOUTH = 2
     WEST = 3
-
