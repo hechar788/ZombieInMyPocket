@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from enums_and_types import *
-from model.encounter.i_encounter import IEncounter
+from model.interfaces.i_encounter import IEncounter
 
 class ITile(ABC):
 

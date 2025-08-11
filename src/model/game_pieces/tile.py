@@ -1,6 +1,6 @@
 from enums_and_types import *
-from .i_tile import ITile
-from model.encounter.i_encounter import IEncounter
+from model.interfaces.i_tile import ITile
+from model.interfaces.i_encounter import IEncounter
 
 class Tile(ITile):
     

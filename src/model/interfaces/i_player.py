@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List
 from ...enums_and_types.types import Position
-from ..item.i_item import IItem
+from .i_item import IItem
 
 
 class IPlayer(ABC):

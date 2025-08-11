@@ -1,7 +1,7 @@
 from typing import List
-from .i_player import IPlayer
-from ..item.i_item import IItem
-from ...enums_and_types.types import Position
+from ..interfaces.i_player import IPlayer
+from ..interfaces.i_item import IItem
+from enums_and_types.types import Position
 
 
 class Player(IPlayer):
@@ -10,7 +10,7 @@ class Player(IPlayer):
     def __init__(self, initial_health: int = 100, initial_position: Position = (0, 0), base_attack_power: int = 10):
         self._health = initial_health
         self._base_attack_power = base_attack_power
-        self._inventory = []
+        self._inventory: List[IItem] = []
         self._position = initial_position
         self._has_totem = False
     

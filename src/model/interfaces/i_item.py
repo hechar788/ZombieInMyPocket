@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from enums_and_types import ItemName, ItemType
+from ...enums_and_types.enums import ItemName, ItemType
 from typing import List
 
 class IItem(ABC):
