@@ -1,4 +1,4 @@
-from .i_tile import ITile
+from ..interfaces.i_tile import ITile
 from enums_and_types import *
 
 type TileDict = dict[Position, ITile]

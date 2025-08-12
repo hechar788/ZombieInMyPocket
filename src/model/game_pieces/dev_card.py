@@ -1,6 +1,6 @@
-from model.interfaces.i_dev_card import IDevCard
-from model.interfaces.i_item import IItem
-from model.interfaces.i_encounter import IEncounter
+from ..interfaces.i_dev_card import IDevCard
+from ..interfaces.i_item import IItem
+from ..interfaces.i_encounter import IEncounter
 
 class DevCard(IDevCard):
     

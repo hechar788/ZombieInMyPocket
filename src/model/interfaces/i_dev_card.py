@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from model.interfaces.i_encounter import IEncounter
-from model.interfaces.i_item import IItem
+from .i_encounter import IEncounter
+from .i_item import IItem
 
 class IDevCard(ABC):
 
