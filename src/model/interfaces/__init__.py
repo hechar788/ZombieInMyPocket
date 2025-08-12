@@ -4,6 +4,7 @@ from .i_game_pieces import IGamePieces
 from .i_item import IItem
 from .i_player import IPlayer
 from .i_tile import ITile
+from .i_time import ITime
 
 __all__ = [
     "IDevCard",
@@ -11,5 +12,6 @@ __all__ = [
     "IGamePieces",
     "IItem",
     "IPlayer",
-    "ITile"
+    "ITile",
+    "ITime"
 ]

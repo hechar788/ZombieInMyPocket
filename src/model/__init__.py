@@ -3,7 +3,7 @@ from .player import Player
 from .game_pieces import GamePieces, DevCard, Tile, Board
 from .interfaces import (
     IDevCard, IEncounter, IGamePieces,
-    IItem, IPlayer, ITile
+    IItem, IPlayer, ITile, ITime
 )
 
 __all__ = [
@@ -18,5 +18,6 @@ __all__ = [
     "IGamePieces",
     "IItem",
     "IPlayer",
-    "ITile"
+    "ITile",
+    "ITime"
 ]
