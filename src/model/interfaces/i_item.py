@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from enums_and_types import ItemName, ItemType
+from enums_and_types import ItemInfo, ItemType
 
 
 class IItem(ABC):
@@ -8,7 +8,7 @@ class IItem(ABC):
 
     @property
     @abstractmethod
-    def name(self) -> ItemName:
+    def name(self) -> ItemInfo:
         pass
 
     @property
@@ -37,5 +37,5 @@ class IItem(ABC):
         pass
 
     @abstractmethod
-    def combinable_with(self) -> list[ItemName]:
+    def combinable_with(self) -> list[ItemInfo]:
         pass
