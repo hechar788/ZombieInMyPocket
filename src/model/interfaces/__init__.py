@@ -5,6 +5,7 @@ from .i_item import IItem
 from .i_player import IPlayer
 from .i_tile import ITile
 from .i_time import ITime
+from .i_endgame_handler import EndGameHandler
 
 __all__ = [
     "IDevCard",

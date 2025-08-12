@@ -1,0 +1,2 @@
+class IItem:
+    pass
