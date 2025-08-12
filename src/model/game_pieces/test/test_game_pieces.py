@@ -1,5 +1,5 @@
 import unittest
-from model.game_pieces import GamePieces, Tile
+from .. import GamePieces, Tile
 from enums_and_types import *
 
 class TestGamePieces(unittest.TestCase):

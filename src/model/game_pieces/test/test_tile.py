@@ -1,4 +1,4 @@
-from model.game_pieces.tile import Tile
+from .. import Tile
 import unittest
 from enums_and_types import *
 
