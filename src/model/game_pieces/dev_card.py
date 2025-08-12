@@ -2,8 +2,9 @@ from ..interfaces.i_dev_card import IDevCard
 from ..interfaces.i_item import IItem
 from ..interfaces.i_encounter import IEncounter
 
+
 class DevCard(IDevCard):
-    
+
     def __init__(self, item: IItem,
                  encounter_9pm: IEncounter,
                  encounter_10pm: IEncounter,
@@ -13,7 +14,7 @@ class DevCard(IDevCard):
 
     def get_item(self) -> IItem:
         return self._item
-    
+
     def get_encounter(self, time: int) -> IEncounter:
         assert 9 <= time <= 11, \
             f"Cannot get an ecounter from dev card at time {time}pm"

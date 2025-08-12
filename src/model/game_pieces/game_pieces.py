@@ -6,6 +6,7 @@ from .board import Board
 from enums_and_types import *
 from random import shuffle
 
+
 class GamePieces(IGamePieces):
 
     def __init__(self) -> None:
@@ -27,7 +28,7 @@ class GamePieces(IGamePieces):
 
     def draw_dev_card(self) -> IDevCard:
         return self._dev_cards.pop()
-    
+
     def dev_cards_remaining(self) -> int:
         return len(self._dev_cards)
 
@@ -48,7 +49,7 @@ class GamePieces(IGamePieces):
         return self._board.can_place_tile(
             tile, tile_position, player_position, rotation)
 
-    def place_tile(self, tile: ITile,position: Position,
+    def place_tile(self, tile: ITile, position: Position,
                    rotation: Rotation) -> None:
         self._board.place_tile(tile, position, rotation)
 
