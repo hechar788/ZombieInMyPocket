@@ -22,6 +22,17 @@ class HealthEncounter(IEncounter):
         player.heal(self.health)
         return player
 
+class CowerEncounter(HealthEncounter):
+    """Handles Cower Encounter"""
+    COWER_HEALTH = 3
+    def __init__(self, player):
+        self.health_increase = COWER_DAMAGE
+
+    def handle_encounter(self, player, game):
+        player.heal(self.health_increase)
+        game.draw_dev_card()
+        return player, game
+        
 class ItemEncounter(IEncounter):
     """Handles Item Encounters"""
     def __init__(self):
