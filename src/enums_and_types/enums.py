@@ -27,8 +27,8 @@ class Direction(Enum):
 
 
 class GameOverCondition(Enum):
-    WIN_BURY_TOTEM = auto()                 #Winning-Player managed to bury the zombie totem before midnight
-    LOSE_COMBAT_DEATH = auto()              #Losing-Player loses its last health during COMBAT
-    LOSE_RUN_AWAY_DEATH = auto()            #Losing-Player loses its last health after RUNNING AWAY
-    LOSE_TIME_RAN_OUT_NO_TOTEM = auto()     #Losing-Player DOES NOT have the totem, but ran out of time before being able to bury the zombie totem
-    LOSE_TIME_RAN_OUT_WITH_TOTEM = auto()   #Losing-Player DOES have the totem, but ran out of time before being able to bury the zombie totem
+    WIN_BURY_TOTEM = auto()                 #Win: Player managed to bury the zombie totem before midnight
+    LOSE_COMBAT_DEATH = auto()              #Lose: Player loses its last health during COMBAT
+    LOSE_RUN_AWAY_DEATH = auto()            #Lose: Player loses its last health after RUNNING AWAY
+    LOSE_TIME_RAN_OUT_NO_TOTEM = auto()     #Lose: Player DOES NOT have the totem, but ran out of time before being able to bury the zombie totem
+    LOSE_TIME_RAN_OUT_WITH_TOTEM = auto()   #Lose: Player DOES have the totem, but ran out of time before being able to bury the zombie totem
