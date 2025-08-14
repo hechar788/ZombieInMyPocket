@@ -14,8 +14,11 @@ class State(ABC):
         self.trigger: str | None = None
         self.context: TurnFlow | None = None #none should be assigned before exiting to help with clean up
 
-    def call(self, service: str, method: str, *args, **kwargs):
+    def use_service(self, service: str, method: str, *args, **kwargs):
         return self.context.call_service_method(service, method, *args, **kwargs)
+
+    def get_request_handler(self):
+        return self.context.handle_request
 
     @abstractmethod
     def enter(self, *args, **kwargs):

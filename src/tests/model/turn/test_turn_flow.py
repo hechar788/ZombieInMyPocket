@@ -21,10 +21,10 @@ class MyTestCase(unittest.TestCase):
         fake_tile = Mock()
         fake_rotation = 0
 
-        mock_game_pieces = Mock()
-        mock_game_pieces.get_tile.return_value = [fake_tile, fake_rotation]
+        self.mock_game_pieces = Mock()
+        self.mock_game_pieces.get_tile.return_value = [fake_tile, fake_rotation]
 
-        return {"ui":mock_ui, "game_pieces":mock_game_pieces}
+        return {"ui":mock_ui, "game_pieces":self.mock_game_pieces}
 
     def create_mock_state(self, name="mock_state", result=None, trigger=None):
         # Create a mock that follows the State interface
@@ -40,6 +40,17 @@ class MyTestCase(unittest.TestCase):
         mock_state.enter.return_value = None
         mock_state.handle_request.return_value = None
         mock_state.exit.return_value = None
+
+        def handle_enter_side_effect(*args, **kwargs):
+            """mimics the state using a service"""
+            mock_state.context.call_service_method('game_pieces', 'get_tile')
+
+        def handle_request_side_effect(*args, **kwargs):
+            """this mimics the real state being called then finishing"""
+            mock_state.context.state_finished(mock_state.trigger, mock_state.result)
+
+        mock_state.handle_request.side_effect = handle_request_side_effect
+        mock_state.enter.side_effect = handle_enter_side_effect
 
         return mock_state
 
@@ -61,10 +72,21 @@ class MyTestCase(unittest.TestCase):
     def test_starting_state_bad_day(self):
         with self.assertRaises(Exception):
             self.turn_flow.start()
+        self.assertEqual(self.turn_flow.current_state, None)
 
     def test_starting_happy_day(self):
         self.turn_flow.register_transition("ready", Mock(return_value=self.create_ready_state()))
         self.assertEqual(self.turn_flow.start(), True)
+        self.assertEqual(self.turn_flow.current_state.name, "ready")
+
+    def test_calling_states(self):
+        self.turn_flow.register_transition("ready", Mock(return_value=self.create_ready_state()))
+        self.turn_flow.start()
+        self.assertEqual(self.turn_flow.current_state.name, "ready")
+        self.turn_flow.handle_request()
+        self.assertEqual(self.turn_flow.current_state.name, "exit_room")
+        self.mock_game_pieces.get_tile.assert_called()
+
 
 
 if __name__ == '__main__':
