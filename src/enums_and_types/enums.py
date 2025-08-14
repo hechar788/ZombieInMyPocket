@@ -87,7 +87,6 @@ class Alert(Enum):
     INVALID_GRASS_PATH_SELECTED = "You can't enter from this side. Hedges block your path."
     LOW_HEALTH_WARNING = "Warning! Your health is running low!"
 
-
 class UnknownSystemError(Enum):
     """Codes for system errors in the game."""
     UnknownStatusError = "Unknown system error!"

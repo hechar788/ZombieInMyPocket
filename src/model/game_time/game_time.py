@@ -1,5 +1,4 @@
-from src.model import ITime
-
+from ..interfaces.i_time import ITime
 
 class GameTime(ITime):
     """Handles Game Time and validation"""
