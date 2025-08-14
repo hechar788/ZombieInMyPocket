@@ -1,5 +1,6 @@
 from ..interfaces.i_player import IPlayer
 from ..interfaces.i_item import IItem
+from ..item.item_helper import combine_items
 from enums_and_types.types import Position
 
 
@@ -95,15 +96,35 @@ class PlayerImplementation:
             if item.type.value == 1:
                 self.heal(item.heal_amount)
             
-            if item.is_single_use:
+            if item.uses_remaining==0:
                 self._inventory.remove(item)
 
     def add_item_to_inventory(self, item: IItem) -> None:
-        self._inventory.append(item)
+        if len(self._inventory) < 2:
+            self._inventory.append(item)
 
     def remove_item_from_inventory(self, item: IItem) -> None:
         if item in self._inventory:
             self._inventory.remove(item)
 
-    def combine_items_from_inventory(self) -> None:
-        pass
+    def combine_items_from_inventory(self):
+        if len(self._inventory) == 2:
+            item_a, item_b = self._inventory[0], self._inventory[1]
+            try:
+                kill_all_zombies = combine_items(item_a, item_b)
+                
+                # Remove items with 0 uses_remaining
+                items_to_remove: list[IItem] = []
+                if item_a.uses_remaining == 0:
+                    items_to_remove.append(item_a)
+                if item_b.uses_remaining == 0:
+                    items_to_remove.append(item_b)
+                
+                for item in items_to_remove:
+                    self._inventory.remove(item)
+                
+                return kill_all_zombies
+            except AssertionError:
+                return False
+        
+        return False
