@@ -19,8 +19,11 @@ class Board:
     def get_all_tiles(self) -> TileDict:
         return self._all_tiles
 
-    def get_tile(self, position: Position) -> ITile:
-        return self._all_tiles[position]
+    def get_tile(self, position: Position) -> ITile | None:
+        if position in self._all_tiles:
+            return self._all_tiles[position]
+        else:
+            return None
 
     def place_tile(self, tile: ITile, position: Position,
                    rotation: Rotation) -> None:
