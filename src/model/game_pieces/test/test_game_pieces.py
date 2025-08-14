@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from .. import GamePieces, Tile
 from enums_and_types import *
 
 
-class TestGamePieces(unittest.TestCase):
+class TestGamePieces(TestCase):
 
     def setUp(self) -> None:
         self.game_pieces = GamePieces()
