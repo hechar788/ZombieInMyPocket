@@ -1,4 +1,4 @@
-class GameManager:
+class GameStateManager:
     """ """
     def __init__(self):
         """ Coordinates the state and the components of the game (Time, Turn, Player, and GameOver/GameStatus)"""

@@ -1,15 +1,19 @@
-from .i_dev_card import IDevCard
-from .i_game_pieces import IGamePieces
-from .i_tile import ITile
+from ..interfaces.i_dev_card import IDevCard
+from ..interfaces.i_game_pieces import IGamePieces
+from ..interfaces.i_tile import ITile
 from .tile import Tile
 from .board import Board
-from enums_and_types import *
+from ...enums_and_types import *
 from random import shuffle
 
 
 class GamePieces(IGamePieces):
 
     def __init__(self) -> None:
+        self._outdoor_tiles = None
+        self._indoor_tiles = None
+        self._dev_cards = None
+        self._board = None
         self.setup()
 
     def setup(self) -> None:
