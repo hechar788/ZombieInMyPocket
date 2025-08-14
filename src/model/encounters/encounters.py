@@ -70,15 +70,3 @@ class MessageEncounter(IEncounter):
 
     def handle_encounter(self, player):
         pass
-
-
-class TotemEncounter(IEncounter):
-    """Handles Totem Encounters"""
-    def __init__(self):
-        pass
-
-    def set_values(self, new_item):
-        pass
-
-    def handle_encounter(self, player):
-        player.set_totem = True
