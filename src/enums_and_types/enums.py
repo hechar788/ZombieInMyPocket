@@ -61,6 +61,7 @@ class GameStateMessage(Enum):
     """Codes for game state messages in the game."""
     INITIALISE = "Initialising game..."
     WELCOME = "Welcome Player!"
+
     ROOM_CHANGED = "You are now in {}"
     HEALTH_UPDATE = "+{} Health gained"
     ITEM_ACQUIRED = "You acquired a new item: {}"
@@ -82,6 +83,8 @@ class Alert(Enum):
     ZOMBIE_DOOR_CREATED = "Zombie Door Created!"
     TIME_WARNING = "Hurry! Your time is running out! Burry the totem!"
     INVALID_COWER_MOVE = "You cannot cower during a zombie door attack"
+    INVALID_DOOR_EXIT_SELECTED = "You can't enter from this side. There's no door here."
+    INVALID_GRASS_PATH_SELECTED = "You can't enter from this side. Hedges block your path."
     LOW_HEALTH_WARNING = "Warning! Your health is running low!"
 
 
