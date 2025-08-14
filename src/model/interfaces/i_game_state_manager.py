@@ -1,9 +1,11 @@
 from abc import abstractmethod
 
+from src.enums_and_types.enums import GameState
+
 class IGameStateManager():
     """Interface for win/loss outcomes. Also known as IWinLossHandler"""
     @abstractmethod
-    def is_game_finished(self) -> bool:
+    def set_current_state(self) -> GameState:
         pass
 
     @abstractmethod

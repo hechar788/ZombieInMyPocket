@@ -56,13 +56,22 @@ class ItemInfo(Enum):
         self.is_single_use = is_single_use
         self.combinable_with = combinable_with
 
-# Arsenie: List the game states, used in get-game-status and game-state-manager
+# Arsenie: State
+class GameState(Enum):
+    INIT = auto()       # Basic flow
+    READY = auto()      # Basic flow
+    RUNNING = auto()    # Basic flow
+    PAUSED = auto()     # Alternate flow
+    OVER = auto()       # Basic flow
+
+# Arsenie: [Event-driven] Game setup messages, used in get-game-status and game-state-manager.
 class GameSetupMessage(Enum):
     """Messages related to game initialisation."""
     GAME_START = "Welcome Player!"
     INITIALISE = "Initialising game..."
     SHUFFLING_CARDS = "Shuffling DevCard deck..."
 
+# Arsenie: [Event-driven] List of the game states, used in get-game-status and game-state-manager.
 class GameStateMessage(Enum):
     """Codes for game state messages in the game."""
     ROOM_CHANGED = "You are now in room {}"
