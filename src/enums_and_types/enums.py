@@ -1,9 +1,4 @@
 from enum import Enum
-# from typing import TYPE_CHECKING, cast
-
-# if TYPE_CHECKING:
-#     pass
-
 
 class Rotation(Enum):
     """Rotation of a tile."""
@@ -46,4 +41,8 @@ class ItemName(Enum):
     GOLF_CLUB = "Golf Club"
     CANDLE = "Candle"
     CHAINSAW = "Chainsaw"
+<<<<<<< Updated upstream
     MACHETE = "Machete"
+=======
+    MACHETE = "Machete"
+>>>>>>> Stashed changes
