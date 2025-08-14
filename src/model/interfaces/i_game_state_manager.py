@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 class IGameStateManager():
     """Interface for win/loss outcomes. Also known as IWinLossHandler"""
     @abstractmethod

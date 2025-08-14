@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from .i_dev_card import IDevCard
 from .i_tile import ITile
-from enums_and_types import *
+from ...enums_and_types.enums import Rotation
+from ...enums_and_types.types import Position
 
 
 class IGamePieces(ABC):

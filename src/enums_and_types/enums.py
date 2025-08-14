@@ -1,4 +1,8 @@
 from enum import Enum
+from typing import TYPE_CHECKING, cast
+
+if TYPE_CHECKING:
+    pass
 
 
 class Rotation(Enum):
@@ -26,9 +30,28 @@ class Direction(Enum):
     WEST = 3
 
 
-class GameOverCondition(Enum):
-    WIN_BURY_TOTEM = auto()                 #Win: Player managed to bury the zombie totem before midnight
-    LOSE_COMBAT_DEATH = auto()              #Lose: Player loses its last health during COMBAT
-    LOSE_RUN_AWAY_DEATH = auto()            #Lose: Player loses its last health after RUNNING AWAY
-    LOSE_TIME_RAN_OUT_NO_TOTEM = auto()     #Lose: Player DOES NOT have the totem, but ran out of time before being able to bury the zombie totem
-    LOSE_TIME_RAN_OUT_WITH_TOTEM = auto()   #Lose: Player DOES have the totem, but ran out of time before being able to bury the zombie totem
+class ItemType(Enum):
+    WEAPON = 0,
+    HEALING = 1
+
+
+class ItemInfo(Enum):
+    SPADE = ("Spade", "A sturdy digging tool that can be used as a weapon", ItemType.WEAPON, 2, 0, False,
+             cast(list['ItemInfo'], []))
+    AXE = ("Axe", "A sharp wood-cutting axe effective in combat", ItemType.WEAPON, 3, 0, False,
+           cast(list['ItemInfo'], []))
+    BANDAGE = ("Bandage", "Basic medical supplies for treating wounds", ItemType.HEALING, 0, 3, True,
+               cast(list['ItemInfo'], []))
+    HEALTH_KIT = ("Health Kit", "Advanced medical kit for serious injuries", ItemType.HEALING, 0, 8, True,
+                  cast(list['ItemInfo'], []))
+
+    def __init__(self, display_name: str, description: str, item_type: ItemType,
+                 attack_bonus: int, heal_amount: int, is_single_use: bool,
+                 combinable_with: list['ItemInfo']):
+        self.display_name = display_name
+        self.description = description
+        self.item_type = item_type
+        self.attack_bonus = attack_bonus
+        self.heal_amount = heal_amount
+        self.is_single_use = is_single_use
+        self.combinable_with = combinable_with

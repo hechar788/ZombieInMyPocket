@@ -1,3 +1,6 @@
+from src.model import ITime
+
+
 class GameTime(ITime):
     """Handles Game Time and validation"""
     def __init__(self):
