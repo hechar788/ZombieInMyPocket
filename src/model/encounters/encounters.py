@@ -22,16 +22,31 @@ class HealthEncounter(IEncounter):
         player.heal(self.health)
         return player
 
-class CowerEncounter(HealthEncounter):
+class CowerEncounter(IEncounter):
     """Handles Cower Encounter"""
-    COWER_HEALTH = 3
-    def __init__(self, player):
-        self.health_increase = COWER_DAMAGE
+    def __init__(self):
+        self.health_increase = 3
 
-    def handle_encounter(self, player, game):
+    def handle_encounter(self, player):
         player.heal(self.health_increase)
-        game.draw_dev_card()
-        return player, game
+        return player
+
+class CombatEncounter(IEncounter):
+    """Handles Combat Encounters"""
+    def __init__(self):
+        self.zombies = 0
+
+    def set_values(self, value):
+        self.zombies = value
+
+    def handle_encounter(self, player):
+        damage = self.zombies - player.attack_power
+        if damage > 4:
+            damage = 4
+        elif damage < 0:
+            damage = 0
+        player.take_damage(damage)
+        return player
         
 class ItemEncounter(IEncounter):
     """Handles Item Encounters"""
@@ -58,7 +73,7 @@ class MessageEncounter(IEncounter):
 
 
 class TotemEncounter(IEncounter):
-    """Handles Item Encounters"""
+    """Handles Totem Encounters"""
     def __init__(self):
         pass
 
@@ -66,4 +81,4 @@ class TotemEncounter(IEncounter):
         pass
 
     def handle_encounter(self, player):
-        pass
+        player.set_totem = True
