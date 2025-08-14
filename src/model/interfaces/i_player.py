@@ -6,7 +6,7 @@ from .i_item import IItem
 class IPlayer(ABC):
     """Abstract interface defining the contract for player objects in the game.
     """
-    
+
     @abstractmethod
     def get_health(self) -> int:
         pass
