@@ -95,8 +95,8 @@ class PlayerImplementation:
         if item in self._inventory:
             if item.type.value == 1:
                 self.heal(item.heal_amount)
-            
-            if item.uses_remaining==0:
+
+            if item.uses_remaining == 0:
                 self._inventory.remove(item)
 
     def add_item_to_inventory(self, item: IItem) -> None:
@@ -112,19 +112,19 @@ class PlayerImplementation:
             item_a, item_b = self._inventory[0], self._inventory[1]
             try:
                 kill_all_zombies = combine_items(item_a, item_b)
-                
+
                 # Remove items with 0 uses_remaining
                 items_to_remove: list[IItem] = []
                 if item_a.uses_remaining == 0:
                     items_to_remove.append(item_a)
                 if item_b.uses_remaining == 0:
                     items_to_remove.append(item_b)
-                
+
                 for item in items_to_remove:
                     self._inventory.remove(item)
-                
+
                 return kill_all_zombies
             except AssertionError:
                 return False
-        
+
         return False
