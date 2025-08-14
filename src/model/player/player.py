@@ -90,9 +90,13 @@ class PlayerImplementation:
     def heal(self, amount: int) -> None:
         self._health += amount
 
-    def use_item(self, item: IItem) -> None:
+    def use_item(self, item: IItem) -> None | int:
         if item in self._inventory:
-            self._inventory.remove(item)
+            if item.type.value == 1:
+                self.heal(item.heal_amount)
+            
+            if item.is_single_use:
+                self._inventory.remove(item)
 
     def add_item_to_inventory(self, item: IItem) -> None:
         self._inventory.append(item)
