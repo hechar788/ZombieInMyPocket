@@ -1,8 +1,7 @@
-from ..interfaces.i_game_status import IGameStatus
-from ...enums_and_types.enums import MessageCode
+from ..interfaces.i_get_game_status import IGameStatus
+from ...enums_and_types.enums import GameStateMessage, GameInstruction, AlertMessage, UnknownErrorMessage
 
 class GameStatus(IGameStatus):
-
     def __init__(self) -> None:
         self._is_game_over: bool = False
         self._game_over_condition: str | None = None
@@ -31,7 +30,8 @@ class GameStatus(IGameStatus):
         self._game_over_condition = None
         self._system_message = None
 
-    def post_message(self, code: MessageCode, *args) -> None:
-        #TODO: Add validation here for if args are missing but required
-        message_template = self._MESSAGE_MAP.get(code, "Unknown system event.")
-        self._system_message = message_template.format(*args) # Error Possible Here
+    def post_message(self, code: GameStateMessage, *args) -> None:
+        # TODO: Add validation here for if args are missing but required
+        pass
+        # message_template = self._MESSAGE_MAP.get(code, "Unknown system event.")
+        # self._system_message = message_template.format(*args) # Error Possible Here

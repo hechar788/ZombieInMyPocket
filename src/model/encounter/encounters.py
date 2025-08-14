@@ -16,17 +16,6 @@ class ItemEncounter(IEncounter):
     def handle_status_message(self, message):
         self.status_message = message
 
-# class MessageEncounter(IEncounter):
-#     """Handles Message Encounters"""
-#     def __init__(self):
-#         self.message_code = 0
-#
-#     def set_values(self, new_code):
-#         self.message_code = new_code
-#
-#     def handle_encounter(self, player):
-#         pass
-
 class TotemEncounter(IEncounter):
     """Handles Item Encounters"""
     def __init__(self):
@@ -53,5 +42,5 @@ class HealthEncounter(IEncounter):
         player.heal(self.health)
         return player
 
-    def handle_message(self, message):
+    def handle_status_message(self, message):
         pass
