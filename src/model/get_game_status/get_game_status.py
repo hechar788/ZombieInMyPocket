@@ -38,12 +38,37 @@ class GameStatus(IGameStatus, ABC):
         # TODO: give return
         pass
 
+    def get_current_time(self, current_time) -> int:
+        # TODO: use time components to get it.
+        pass
+
     def handle_help_key(self, current_room) -> Optional[GameInstruction]:
         """ Retrieves message code that corresponds to the current room and game state when H key is pressed"""
-        # TODO: give return
-         pass
+        match current_room:
+            # TODO: replace the string cases with actual event
+            case "invalid cower move":
+                # find item
+                return GameInstruction.STORAGE_ROOM
+            case "lose event due to low health":
+                # bury the totem
+                return GameInstruction.GRAVEYARD
+            case "lose event due to low health":
+                # find the totem
+                return GameInstruction.EVIL_TEMPLE
+            case "lose event due to low health":
+                # Choose which item to use for combat
+                return GameInstruction.PICK_ATTACK_ITEM
 
-    def handle_game_warning_event(self) -> Optional[AlertMessage]:
+    def handle_game_warning_event(self, game_movement, current_tile) -> Optional[AlertMessage]:
         """ Retrieves message code when triggered by game time warnings"""
-        # TODO: give return
-        pass
+        match game_movement:
+            # TODO: replace the string cases with actual event
+            case "invalid cower move":
+                #
+                return AlertMessage.INVALID_COWER_MOVE
+            case "lose event due to low health":
+                #
+                return AlertMessage.INVALID_DOOR_EXIT_SELECTED
+            case "lose event due to low health":
+                #
+                return AlertMessage.INVALID_COWER_MOVE
