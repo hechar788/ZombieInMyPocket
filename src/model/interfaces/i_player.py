@@ -6,35 +6,9 @@ from .i_item import IItem
 class IPlayer(ABC):
     """Abstract interface defining the contract for player objects in the game.
     """
-
-    @property
+    
     @abstractmethod
-    def health(self) -> int:
-        pass
-
-    @property
-    @abstractmethod
-    def attack_power(self) -> int:
-        pass
-
-    @property
-    @abstractmethod
-    def has_totem(self) -> bool:
-        pass
-
-    @property
-    @abstractmethod
-    def inventory(self) -> list[IItem]:
-        pass
-
-    @property
-    @abstractmethod
-    def position(self) -> Position:
-        pass
-
-    @position.setter
-    @abstractmethod
-    def position(self, position: Position) -> None:
+    def get_health(self) -> int:
         pass
 
     @abstractmethod
@@ -46,7 +20,27 @@ class IPlayer(ABC):
         pass
 
     @abstractmethod
+    def get_attack_power(self) -> int:
+        pass
+
+    @abstractmethod
+    def has_totem(self) -> bool:
+        pass
+
+    @abstractmethod
+    def get_position(self) -> Position:
+        pass
+
+    @abstractmethod
+    def set_position(self, position: Position) -> None:
+        pass
+
+    @abstractmethod
     def use_item(self, item: IItem) -> None:
+        pass
+
+    @abstractmethod
+    def get_inventory(self) -> list[IItem]:
         pass
 
     @abstractmethod
