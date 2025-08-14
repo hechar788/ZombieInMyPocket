@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from ...enums_and_types.enums import GameOverCondition, MessageCode
+from ...enums_and_types.enums import MessageCode
 
 
-class IGameStatusHandler(ABC):
+class IGameStatus(ABC):
     """
     An interface to handle game state changes and construct status messages.
     """
@@ -14,6 +14,7 @@ class IGameStatusHandler(ABC):
 
     @property
     @abstractmethod
+    # TODO: Change condition type to enum of game over conditions
     def game_over_condition(self) -> str | None:
         pass
 
