@@ -1,27 +1,33 @@
 from ..state import State
-from ..interfaces.i_player import IPlayer
-from enums_and_types.types import Position
 
-class Exit_Room(State):
+class ExitRoom(State):
     """a rudimentary example of a turn sate"""
+    def __init__(self, name):
+        super().__init__(name)
+        self.result = None
+        self.trigger = None
 
-    def enter(self):
+
+    def enter(self, *args, **kwargs):
         """run when the state is entered"""
-        self.tile = IGamePieces.get_tile(IPlayer.position());
-        # get player input (How?)
-        ui.get_input(f"Pick a door to exit from {self.tile.get_exits()}") #place holder
-        # return
+        player_position = self.call('player', 'get_position')
+        tile_exits = self.call('gamePieces', 'get_tile_doors', player_position)
+        self.call("ui", "get_input", dict['prompt':f"Pick a door to exit from {tile_exits}", 'options':tile_exits])
+        return None
+
 
     def handle_request(self, selected_door):
         """resumes for where the state left off"""
         #check if new room
-        if IGamePieces.is_new_room(): #Place holder check
-            self.exit('New room')
+        if self.call('gamePieces', 'is_new_room', selected_door):
+            self.trigger = 'new_room'
         else:
-            self.exit('Revisit_Room')
-        #return
+            self.trigger = 'old_room'
+        self.result = selected_door
+        self.exit()
+        return None
 
-    def exit(self, next_state):
+
+    def exit(self):
         """run when the state is exited"""
-        TurnFlow.set_state(next_state)
-        pass
+        super().exit()

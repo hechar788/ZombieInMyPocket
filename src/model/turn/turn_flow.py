@@ -1,5 +1,6 @@
 from state import State
 from typing import Callable
+from turn_helpers import PendingTransition
 
 class TurnFlow:
     """
@@ -8,44 +9,61 @@ class TurnFlow:
     """
     def __init__(self,
                  the_services: dict[
-                    str,
-                    object
+                    str, object
                  ] | None = None,
                  the_transitions: dict[
-                    tuple[str, str],
+                    tuple[str],
                     Callable[[], State]
                  ] | None = None) -> None:
+
+        self.pending_transition: PendingTransition | None = None
         self.current_state = None
-        self.next_state = None
+
         #map: (name, component)
         self.service: dict[str, object] = the_services if the_services is not None else {}
-        #map: (event_name, result: str, state_factory(None) -> State
-        self.transition: dict[
-            tuple[str, str],
-            Callable[[], State]
-        ] = the_transitions if the_transitions is not None else {}
 
-    def set_next_state(self, next_state: State) -> None:
-        """sets the next state"""
-        self.next_state = next_state
+        # Map of transitions: trigger -> state factory (callable that returns a State)
+        self.transitions: dict[str, Callable[[], State]] = the_transitions if the_transitions is not None else {}
 
-    def set_state(self, state_factory: Callable[[], State]) -> None:
+        # Note: if multiple states can finish with the same trigger but transition to different next states,
+        # you could refactor the dict key to include the current state's name along with the trigger.
+        # But consider changing one of the trigger first
+
+
+    def set_state(self, state_factory: Callable[[], State], *args, **kwargs) -> None:
         """sets the current state of the turn"""
         self.current_state = state_factory() #Make a new state object each time
         self.current_state.context = self
-        self.current_state.enter()
+        self.current_state.enter(*args, **kwargs)
+        return None #Passback
+
 
     def change_state(self) -> None:
-        """changes the current state of the turn to self.next_state"""
-        if self.next_state is not None and self.current_state is not None:
-
+        """changes the current state of the turn if there is a pending transition"""
+        if self.pending_transition is not None and self.current_state is not None:
             self.current_state = None
-            self.set_state(self.next_state)
+            self.set_state(self.pending_transition["next_state"], self.pending_transition["previous_result"])
+            self.pending_transition = None
+        return None #Passback
 
-    def state_finished(self, result) -> None:
+
+    def get_state_factory(self, trigger) -> Callable[[], State] | None:
+        """returns the factory for a state with a given trigger,
+        or None if there is no trigger:state pair"""
+        return self.transitions.get(trigger, None)
+
+
+    def state_finished(self, trigger, result) -> None:
         """called when the state is finished"""
-        self.next_state = self.transition[(self.current_state.name, result)]
-        return None #The state that called state_finished mast end(return) immediately
+        next_transition = self.get_state_factory(trigger)
+        if next_transition is None:
+            raise Exception(f"No such transition: {next_transition}")
+        self.pending_transition: PendingTransition = {
+            "next_state": next_transition,
+            "previous_result": result
+        }
+        return None #The state that called state_finished mast end(return) quickly
+
 
     def handle_request(self, *args, **kwargs) -> None:
         """handles incoming requests"""
@@ -53,20 +71,13 @@ class TurnFlow:
         self.change_state()
         return None #Returns to caller
 
+
     def register_transition(self,
-           event_name: str,
-           result: str,
+           trigger: str,
            sate_factory: Callable[[], State]) -> None:
-        """Register a transition, takes some event, some condition (fuc), and a state_factory (fun)"""
-        self.transition[(event_name, result)] = sate_factory
+        """Register a transition, takes some trigger, and a state_factory"""
+        self.transitions[trigger] = sate_factory
 
-
-    # def emit_state_transition_event(self, name: str, data: dict) -> None:
-    #     """Called by a state to trigger a possible transition"""
-    #     for (event_name, condition), state_factory in self.transition.items():
-    #         if name == event_name and condition(data):
-    #             self.set_state(state_factory)
-    #             break
 
     # services (could be moved to a new class)
     def register_service(self, name: str, interface: object) -> None:
