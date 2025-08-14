@@ -1,6 +1,7 @@
-from state import State
 from typing import Callable
-from turn_helpers import PendingTransition
+
+from .state import State
+from .turn_helpers import PendingTransition
 
 class TurnFlow:
     """
@@ -12,7 +13,7 @@ class TurnFlow:
                     str, object
                  ] | None = None,
                  the_transitions: dict[
-                    tuple[str],
+                    str,
                     Callable[[], State]
                  ] | None = None) -> None:
 
@@ -29,6 +30,12 @@ class TurnFlow:
         # you could refactor the dict key to include the current state's name along with the trigger.
         # But consider changing one of the trigger first
 
+    def start(self) -> bool:
+        start_state = self.get_state_factory('ready')
+        if start_state is None:
+            raise Exception(f"No start_state: use 'ready' trigger")
+        self.set_state(start_state)
+        return True
 
     def set_state(self, state_factory: Callable[[], State], *args, **kwargs) -> None:
         """sets the current state of the turn"""
@@ -86,14 +93,17 @@ class TurnFlow:
         """
         self.service[name] = interface
 
+
     def unregister_service(self, name: str) -> object:
         """unregisters a service, returns the service"""
         return self.service.pop(name)
+
 
     def get_service(self, name: str) -> object | None:
         """returns the interface registered for the given name
         returns none if the interface is not registered"""
         return self.service.get(name, None)
+
 
     def call_service_method(self, name: str, method: str, *args, **kwargs) -> object:
         """calls a method on the given service"""

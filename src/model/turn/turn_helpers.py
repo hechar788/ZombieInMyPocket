@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import TypedDict, Callable
-from state import State
+from .state import State
 
 
 class PendingTransition(TypedDict):

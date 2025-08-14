@@ -1,7 +1,11 @@
 from abc import ABC, abstractmethod
-from turn_flow import TurnFlow
+from typing import TYPE_CHECKING
 
-class State(object, ABC):
+if TYPE_CHECKING:
+    #only imported for type checking
+    from .turn_flow import TurnFlow
+
+class State(ABC):
     """The parent state class"""
     @abstractmethod
     def __init__(self, name: str) -> None:
