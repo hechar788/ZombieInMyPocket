@@ -3,13 +3,13 @@ from typing import Optional
 
 from ..interfaces.i_get_game_status import IGameStatus
 from ..interfaces.i_time import ITime
+
 from ...enums_and_types.enums import GameStateMessage, GameInstruction, AlertMessage, UnknownErrorMessage, GameState, \
     GameOverMessage
 
 
 class GameStatus(IGameStatus, ABC):
     def __init__(self, current_time: ITime) -> None:
-        self._game_over_message = None
         self.current_time = current_time
         self._state = GameState.INIT
         self._low_health = False
@@ -19,22 +19,31 @@ class GameStatus(IGameStatus, ABC):
     #     """"""
     #     return self._state
 
-    @property
-    def handle_game_over(self) -> Optional[GameOverMessage]:
+    def handle_game_over(self, game_over_event) -> Optional[GameOverMessage]:
         """ Retrieves message code for the end game details, based on GameOverMessage enum"""
-        return self._game_over_message
+        match game_over_event:
+            # TODO: replace the string cases with actual event
+            case "win event":
+                # current tile is graveyard, totem is buried, time is < 12 midnight, health > 0
+                return GameOverMessage.GAME_OVER_WIN
+            case "lose event due to low health":
+                # health is < 0
+                return GameOverMessage.GAME_OVER_LOSE_HEALTH
+            case "lose event due to low health":
+                # time is >= 12
+                return GameOverMessage.GAME_OVER_LOSE_HEALTH
 
-    @property
-    def get_state_message(self) -> Optional[GameStateMessage]:
+    def get_state_message(self, game_event) -> Optional[GameStateMessage]:
         """Retrieves message code that constantly updates based on the players choices (i.e. room change, item selection/acquired, heal, and attack score gains  """
+        # TODO: give return
         pass
 
-    @property
-    def handle_help_key(self) -> Optional[GameInstruction]:
+    def handle_help_key(self, current_room) -> Optional[GameInstruction]:
         """ Retrieves message code that corresponds to the current room and game state when H key is pressed"""
-        pass
+        # TODO: give return
+         pass
 
-    @property
     def handle_game_warning_event(self) -> Optional[AlertMessage]:
         """ Retrieves message code when triggered by game time warnings"""
+        # TODO: give return
         pass
