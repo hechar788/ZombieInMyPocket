@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ...enums_and_types.enums import MessageCode
+from ...enums_and_types.enums import MessageCode, GameOverConditions
 
 
 class IGameStatus(ABC):
@@ -14,8 +14,7 @@ class IGameStatus(ABC):
 
     @property
     @abstractmethod
-    # TODO: Change condition type to enum of game over conditions
-    def game_over_condition(self) -> str | None:
+    def game_over_condition(self) -> GameOverConditions | None:
         pass
 
     @property
@@ -28,7 +27,7 @@ class IGameStatus(ABC):
         pass
 
     @abstractmethod
-    def trigger_game_over(self, condition: str) -> None:
+    def trigger_game_over(self, condition: GameOverConditions) -> None:
         pass
 
     @abstractmethod

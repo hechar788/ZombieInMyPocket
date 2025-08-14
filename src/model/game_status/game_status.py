@@ -1,5 +1,5 @@
 from ..interfaces.i_game_status import IGameStatus
-from ...enums_and_types.enums import MessageCode
+from ...enums_and_types.enums import MessageCode, GameOverConditions
 
 class GameStatus(IGameStatus):
 
@@ -27,15 +27,14 @@ class GameStatus(IGameStatus):
         return self._is_game_over
 
     @property
-    def game_over_condition(self) -> str | None:
+    def game_over_condition(self) -> GameOverConditions | None:
         return self._game_over_condition
 
     @property
     def system_message(self) -> str | None:
         return self._system_message
 
-    #TODO: Change condition type to enum of game over conditions
-    def trigger_game_over(self, condition: str) -> None:
+    def trigger_game_over(self, condition: GameOverConditions) -> None:
         self._is_game_over = True
         self._game_over_condition = condition
 

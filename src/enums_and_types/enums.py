@@ -76,4 +76,8 @@ class MessageCode(Enum):
     # Scenario 11
     INVALID_COWER_MOVE = auto()
 
-#TODO: Create enum of game over conditions
+
+class GameOverConditions(Enum):
+    WIN_TOTEM_BURIED = auto()
+    LOSE_PLAYER_DIED = auto()
+    LOSE_OUT_OF_TIME = auto()
