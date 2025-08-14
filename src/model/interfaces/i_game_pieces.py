@@ -45,7 +45,7 @@ class IGamePieces(ABC):
         pass
 
     @abstractmethod
-    def get_tile(self, position: Position) -> ITile:
+    def get_tile(self, position: Position) -> ITile | None:
         pass
 
     @abstractmethod
