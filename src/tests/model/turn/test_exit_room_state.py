@@ -1,7 +1,8 @@
 import unittest
-from unittest.mock import Mock, create_autospec
+from unittest.mock import create_autospec
 
 from src.model import TurnFlow
+from src.model.turn.turn_enums import Triggers, ServiceNames, ServicesMethods
 from src.model.turn.turn_states import ExitRoom
 
 
@@ -28,13 +29,13 @@ class MyTestCase(unittest.TestCase):
             self.state.handle_request(3)
 
         def mock_service_side_effect(name, method, *args, **kwargs):
-            if name == 'player' and method == 'get_position':
+            if name == ServiceNames.PLAYER and method == ServicesMethods.GET_POSITION:
                 return 5, 10
-            elif name == 'gamePieces' and method == 'get_tile_doors':
+            elif name == ServiceNames.GAME_PIECES and method == ServicesMethods.GET_TILE_DOORS:
                 return [0, 1, 3]
-            elif name == 'gamePieces' and method == 'is_new_room':
+            elif name == ServiceNames.GAME_PIECES and method == ServicesMethods.IS_NEW_ROOM:
                 return True
-            elif name == 'ui' and method == 'get_input':
+            elif name == ServiceNames.UI and method == ServicesMethods.GET_INPUT:
                 self.callback = kwargs.get('callback')
                 return None
             else:
@@ -47,14 +48,14 @@ class MyTestCase(unittest.TestCase):
 
 
     def test_player_position_called(self):
-        self.mock_turn_flow.call_service_method.assert_any_call('player', 'get_position')
+        self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.PLAYER, ServicesMethods.GET_POSITION)
 
     def test_game_pieces_called(self):
-        self.mock_turn_flow.call_service_method.assert_any_call('gamePieces', 'get_tile_doors', (5, 10))
+        self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.GAME_PIECES, ServicesMethods.GET_TILE_DOORS, (5, 10))
 
     def test_state_finished_called(self):
         self.mock_turn_flow.handle_request()
-        self.mock_turn_flow.state_finished.assert_called_once_with('new_room', 3)
+        self.mock_turn_flow.state_finished.assert_called_once_with(Triggers.NEW_TILE, 3)
 
 
 if __name__ == '__main__':

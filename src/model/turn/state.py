@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
+from .turn_enums import Triggers, ServiceNames, ServicesMethods, StateNames
+
 if TYPE_CHECKING:
     #only imported for type checking
     from .turn_flow import TurnFlow
@@ -8,13 +10,13 @@ if TYPE_CHECKING:
 class State(ABC):
     """The parent state class"""
     @abstractmethod
-    def __init__(self, name: str) -> None:
-        self.name: str = name
+    def __init__(self, name: StateNames) -> None:
+        self.name: StateNames = name
         self.result: str | None = None
-        self.trigger: str | None = None
+        self.trigger: Triggers | None = None
         self.context: TurnFlow | None = None #none should be assigned before exiting to help with clean up
 
-    def use_service(self, service: str, method: str, *args, **kwargs):
+    def use_service(self, service: ServiceNames, method: ServicesMethods, *args, **kwargs):
         return self.context.call_service_method(service, method, *args, **kwargs)
 
     def get_request_handler(self):
