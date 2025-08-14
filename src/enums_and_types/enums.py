@@ -41,8 +41,4 @@ class ItemName(Enum):
     GOLF_CLUB = "Golf Club"
     CANDLE = "Candle"
     CHAINSAW = "Chainsaw"
-<<<<<<< Updated upstream
     MACHETE = "Machete"
-=======
-    MACHETE = "Machete"
->>>>>>> Stashed changes
