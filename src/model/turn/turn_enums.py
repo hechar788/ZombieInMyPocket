@@ -26,10 +26,13 @@ class ServiceNames(Enum):
     GAME_PIECES = "gamePieces"
     UI = "ui"
 
-class ServicesMethods(Enum):
-    GET_POSITION = "get_position"
-    GET_TILE_DOORS = "get_tile_doors"
-    GET_INPUT = "get_input"
-    IS_NEW_ROOM = "is_new_room"
+
+class ServiceMethods(Enum):
+    GET_POSITION = "get_position"       #for player
+    GET_TILE_DOORS = "get_tile_doors"   #for gamePieces
+    GET_INPUT = "get_input"             #for UI
+    IS_NEW_ROOM = "is_new_room"         #for GamePieces
+    GET_TILE = "get_tile"
+    DRAW_TILE = "draw_tile"
 
 

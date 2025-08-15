@@ -9,13 +9,13 @@ if os.getenv("RUNNING_TURN_TESTS") == "1":
     #set environment variable to "RUNNING_TURN_TESTS=1"
 
     from .state import State
-    from .turn_enums import Triggers, StateNames, ServiceNames, ServicesMethods
+    from .turn_enums import Triggers, StateNames, ServiceNames, ServiceMethods
 
     __all__ = ["State",
                "TurnFlow",
                "Triggers",
                "StateNames",
                "ServiceNames",
-               "ServicesMethods",
+               "ServiceMethods",
 
                ]

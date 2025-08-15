@@ -2,7 +2,7 @@ from typing import Callable, TYPE_CHECKING
 
 from .state import State
 from .turn_helpers import PendingTransition
-from .turn_enums import Triggers, ServiceNames, ServicesMethods
+from .turn_enums import Triggers, ServiceNames, ServiceMethods
 
 
 class TurnFlow:
@@ -32,12 +32,11 @@ class TurnFlow:
         # But consider changing one of the trigger instead
 
 
-    def start(self) -> bool:
+    def start(self) -> None:
         start_state = self.get_state_factory(Triggers.READY)
         if start_state is None:
             raise Exception(f"No start_state: use {Triggers.READY} trigger")
         self.set_state(start_state)
-        return True
 
 
     def set_state(self, state_factory: Callable[[], State], *args, **kwargs) -> None:
@@ -45,7 +44,7 @@ class TurnFlow:
         self.current_state = state_factory() #Make a new state object each time
         self.current_state.context = self
         self.current_state.enter(*args, **kwargs)
-        return None #Passback
+        #return None #Passback
 
 
     def change_state(self) -> None:
@@ -54,7 +53,7 @@ class TurnFlow:
             self.current_state = None
             self.set_state(self.pending_transition["next_state"], self.pending_transition["previous_result"])
             self.pending_transition = None
-        return None #Passback
+        #return None #Passback
 
 
     def get_state_factory(self, trigger) -> Callable[[], State] | None:
@@ -72,14 +71,14 @@ class TurnFlow:
             "next_state": next_transition,
             "previous_result": result
         }
-        return None #The state that called state_finished mast end(return) quickly
+        #return None #The state that called state_finished mast end(return) quickly
 
 
     def handle_request(self, *args, **kwargs) -> None:
         """handles incoming requests"""
         self.current_state.handle_request(*args, **kwargs)
         self.change_state()
-        return None #Returns to caller
+        #return None #Returns to caller
 
 
     def register_transition(self,
@@ -108,7 +107,7 @@ class TurnFlow:
         return self.service.get(name, None)
 
 
-    def call_service_method(self, name: ServiceNames, method: ServicesMethods, *args, **kwargs) -> object:
+    def call_service_method(self, name: ServiceNames, method: ServiceMethods, *args, **kwargs) -> object:
         """calls a method on the given service"""
         service = self.get_service(name)
         if service is None:
