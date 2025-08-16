@@ -1,46 +1,47 @@
-from typing import Callable, Optional
-from threading import Timer
-from .turn_enums import ServiceNames, ServiceMethods, Triggers, StateNames
+from typing import Callable, Optional, Any
+from abc import ABC, abstractmethod
 
 from src.enums_and_types.types import Position
+
+from .turn_enums import ServiceNames, ServiceMethods, Triggers, StateNames
+from .turn_helpers import AsyncServiceRunner
+
 from ..interfaces import IGamePieces
 
-
-
+class AService(ABC):
+    def __init__(self, service_name: ServiceNames, the_service: object):
+        self.service_name = service_name
+        self.service = the_service
+#
+#     def service_method(self, method_name: str) -> Callable:
+#         return getattr(self.service, method_name)
 
 class ServiceGateway:
     """The gateway between game and components turn needs to call
     """
-    #Real Services
-    class GamePieces:
-        """the gateway for game pieces"""
-        def __init__(self, game_pieces: IGamePieces):
-            self.implementation = game_pieces
+    #Runner
+    def __init__(self):
+        self.services = []
 
-        def get_tile(
-                self,
-                position: Position,
-                callback: Optional[Callable[[any], None]] = None
-        ) -> Optional[any]:
+    def get_services(self) -> dict[ServiceNames, object]:
+        the_services = {}
+        for service in self.services:
+            the_services[service.name] = service
+        return the_services
 
-            service_method = lambda: self.implementation.get_tile(position)
 
-            if callback is not None:
-                # Call asynchronously with callback
-                ServiceGateway.use_callback(service_method, callback)
-                output = None
-            else:
-                # Call synchronously and return result
-                output = service_method
-
-            return output
-
-    #Mocks
     @staticmethod
-    def use_callback(self, service_method: Callable[[], any], callback: Callable[[any], None]) -> None:
-        """adds a callback to a given service method"""
-        def delated_call():
-            result = service_method()
-            callback(result)
-        Timer(1, delated_call).start()
+    def run_service(
+            service_method: Callable[[], Any],
+            callback: Optional[Callable[[Any], None]] = None
+    ) -> Optional[Any]:
+        """runs a service Synchronously or asynchronously with a callback"""
+        if callback is not None:
+            # Call asynchronously with callback
+            AsyncServiceRunner.use_callback(service_method, callback)
+            output = None
+        else:
+            # Call synchronously and return result
+            output = service_method()
 
+        return output

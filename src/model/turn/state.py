@@ -5,6 +5,7 @@ from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames
 
 if TYPE_CHECKING:
     #only imported for type checking
+    from typing import Any
     from .turn_flow import TurnFlow
 
 class State(ABC):
@@ -12,7 +13,7 @@ class State(ABC):
     @abstractmethod
     def __init__(self, name: StateNames) -> None:
         self.name: StateNames = name
-        self.result: tuple[any] | None = None
+        self.result: tuple[Any] | None = None
         self.trigger: Triggers | None = None
         self.context: TurnFlow | None = None #none should be assigned before exiting to help with clean up
 

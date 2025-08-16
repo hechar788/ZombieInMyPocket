@@ -20,13 +20,13 @@ class StateNames(Enum):
     #testing
     TEST_STATE = "test_state"
 
-
+#Services
 class ServiceNames(Enum):
     PLAYER = "player"
     GAME_PIECES = "gamePieces"
     UI = "ui"
 
-
+#Change the name of service methods here
 class ServiceMethods(Enum):
     GET_POSITION = "get_position"       #for player
     GET_TILE_DOORS = "get_tile_doors"   #for gamePieces

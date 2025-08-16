@@ -2,7 +2,7 @@ from ..state import State
 from ..turn_enums import ServiceNames, ServiceMethods, Triggers, StateNames
 
 class SelectExit(State):
-    """Ask the user to select a exit from a give tile"""
+    """Ask the user to select an exit from a give tile"""
     def __init__(self, name = StateNames.DRAW_TILE):
         super().__init__(name)
 
