@@ -31,7 +31,9 @@ class State(ABC):
     @abstractmethod
     def handle_request(self, *args, **kwargs):
         """handles incoming requests in a way that is unique to this state"""
-        pass
+        raise NotImplementedError(
+            f"{self.__class__.__name__} does not implement handle_request"
+        )
 
     @abstractmethod
     def exit(self):
