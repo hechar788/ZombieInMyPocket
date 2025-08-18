@@ -1,3 +1,4 @@
+"""#No longer in use"""
 from ..state import State
 from ..turn_enums import ServiceNames, ServiceMethods, Triggers, StateNames
 
@@ -23,7 +24,7 @@ class ExitRoom(State):
     def handle_request(self, selected_door):
         """resumes for where the state left off"""
         #check if new room
-        if self.use_service(ServiceNames.GAME_PIECES, ServiceMethods.IS_NEW_ROOM, selected_door):
+        if self.use_service(ServiceNames.GAME_PIECES, ServiceMethods.IS_NEW_TILE, selected_door):
             self.trigger = Triggers.NEW_TILE
         else:
             self.trigger = Triggers.OLD_TILE
