@@ -22,7 +22,7 @@ class SelectExit(State):
     def get_tile_exits (self):
         self.tile_exits = self.use_service(
             ServiceNames.GAME_PIECES,
-            ServiceMethods.GET_TILE_DOORS,
+            ServiceMethods.GET_TILE_EXITS,
             self.result)
 
 

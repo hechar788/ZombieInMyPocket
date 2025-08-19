@@ -52,15 +52,18 @@ class ServiceNames(Enum):
 class ServiceMethods(Enum):
     #for player
     GET_POSITION = "get_position"
+    MOVE_PLAYER = "move_player"
     # for UI
     GET_INPUT = "get_input_with_callback"
     #for GamePieces
-    GET_PLAYER_LOCATION = "get_player_location"
-    GET_TILE_DOORS = "get_tile_doors"
+    GET_TILE_EXITS = "get_tile_exits"
     GET_TILE = "get_tile"
     DRAW_TILE = "draw_tile"
     IS_NEW_TILE = "is_new_tile"
     PLACE_TILE = "place_tile"
+    GET_TILE_LOCATION = "get_tile_location"
+    DRAW_DEV_CARD = "draw_dev_card"
+    GET_ENCOUNTER = "get_encounter"
 
 
 class PendingTransition(TypedDict):

@@ -44,7 +44,7 @@ class MyTestCase(unittest.TestCase):
 
         def handle_enter_side_effect(*args, **kwargs):
             """mimics the state using a service"""
-            mock_state.context.call_service_method(ServiceNames.GAME_PIECES, ServiceMethods.GET_TILE_DOORS)
+            mock_state.context.call_service_method(ServiceNames.GAME_PIECES, ServiceMethods.GET_TILE_EXITS)
 
         def handle_request_side_effect(*args, **kwargs):
             """this mimics the real state being called then finishing"""
