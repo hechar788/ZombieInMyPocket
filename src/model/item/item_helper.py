@@ -4,7 +4,7 @@ from .weapon import Weapon
 from .can_of_soda import CanOfSoda
 from .chainsaw import Chainsaw
 from ..interfaces import IItem
-from enums_and_types import ItemName
+from src.enums_and_types import ItemName
 
 
 GASOLINE_DESCRIPTION = ("Combine with Candle to kill all zombies without "
