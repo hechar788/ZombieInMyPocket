@@ -31,7 +31,7 @@ class MyTestCase(unittest.TestCase):
         def mock_service_side_effect(name, method, *args, **kwargs):
             if name == ServiceNames.PLAYER and method == ServiceMethods.GET_POSITION:
                 return 5, 10
-            elif name == ServiceNames.GAME_PIECES and method == ServiceMethods.GET_TILE_DOORS:
+            elif name == ServiceNames.GAME_PIECES and method == ServiceMethods.GET_TILE_EXITS:
                 return [0, 1, 3]
             elif name == ServiceNames.GAME_PIECES and method == ServiceMethods.IS_NEW_ROOM:
                 return True
@@ -51,7 +51,7 @@ class MyTestCase(unittest.TestCase):
         self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.PLAYER, ServiceMethods.GET_POSITION)
 
     def test_game_pieces_called(self):
-        self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.GAME_PIECES, ServiceMethods.GET_TILE_DOORS, (5, 10))
+        self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.GAME_PIECES, ServiceMethods.GET_TILE_EXITS, (5, 10))
 
     def test_state_finished_called(self):
         self.mock_turn_flow.handle_request()

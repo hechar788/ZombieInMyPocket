@@ -1,5 +1,4 @@
 """Places a tile"""
-from urllib.request import Request
 
 from src.model import State
 from src.model.turn import StateNames, ServiceNames, ServiceMethods, Triggers
@@ -12,7 +11,7 @@ class PlaceTile(State):
 
     def enter(self, new_tile, new_exit, current_tile, current_exit):
         self.trigger = Triggers.MOVE_PLAYER
-        self.result = self.use_service(
+        self.use_service(
             ServiceNames.GAME_PIECES,
             ServiceMethods.PLACE_TILE,
             new_tile,
@@ -20,9 +19,10 @@ class PlaceTile(State):
             current_tile,
             current_exit
         )
+        self.result = new_tile
 
 
-    def handle_request(self, request: Request):
+    def handle_request(self, *arg, **kwarg):
         super().handle_request()
 
 

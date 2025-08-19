@@ -1,3 +1,4 @@
+"""Controls the flow of the turn by changing state"""
 from typing import Callable, Any
 
 from .state import State

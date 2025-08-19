@@ -13,7 +13,7 @@ class ExitRoom(State):
         player_position = self.use_service(ServiceNames.PLAYER, ServiceMethods.GET_POSITION)
         player_tile = self.use_service(ServiceNames.GAME_PIECES, ServiceMethods.GET_TILE, player_position)
         self.result = player_tile
-        tile_exits = self.use_service(ServiceNames.GAME_PIECES, ServiceMethods.GET_TILE_DOORS, player_tile)
+        tile_exits = self.use_service(ServiceNames.GAME_PIECES, ServiceMethods.GET_TILE_EXITS, player_tile)
         self.use_service(ServiceNames.UI,
                          ServiceMethods.GET_INPUT,
                   dict['prompt':f"Pick a door to exit from {tile_exits}", 'options':tile_exits],
