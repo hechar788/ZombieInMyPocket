@@ -1,13 +1,13 @@
-from src.model import State
-from src.model.turn import StateNames, Triggers, ServiceNames, ServiceMethods
-from src.model.encounters import encounters
+from ..state import State
+from ..turn_enums import ServiceNames, StateNames
 
 class RunEncounter(State):
+    """Runs the encounter from the previous state"""
     def __init__(self, name: StateNames = StateNames.RUN_ENCOUNTER):
         super().__init__(name)
 
     def enter(self, encounter, exit_mode):
-        self.trigger = type
+        self.trigger = exit_mode
         encounter.handle_encounter(player=ServiceNames.PLAYER)
         self.result = None
 
