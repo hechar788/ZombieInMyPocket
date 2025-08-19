@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
-from .turn_enums import Triggers, ServiceNames, ServicesMethods, StateNames
+from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames
 
 if TYPE_CHECKING:
     #only imported for type checking
+    from typing import Any
     from .turn_flow import TurnFlow
 
 class State(ABC):
@@ -12,11 +13,11 @@ class State(ABC):
     @abstractmethod
     def __init__(self, name: StateNames) -> None:
         self.name: StateNames = name
-        self.result: str | None = None
+        self.result: tuple[Any] | None = None
         self.trigger: Triggers | None = None
         self.context: TurnFlow | None = None #none should be assigned before exiting to help with clean up
 
-    def use_service(self, service: ServiceNames, method: ServicesMethods, *args, **kwargs):
+    def use_service(self, service: ServiceNames, method: ServiceMethods, *args, **kwargs):
         return self.context.call_service_method(service, method, *args, **kwargs)
 
     def get_request_handler(self):
@@ -30,11 +31,14 @@ class State(ABC):
     @abstractmethod
     def handle_request(self, *args, **kwargs):
         """handles incoming requests in a way that is unique to this state"""
-        pass
+        raise NotImplementedError(
+            f"{self.__class__.__name__} does not implement handle_request"
+        )
 
     @abstractmethod
     def exit(self):
-        """run when the state is exited"""
+        """sends trigger and results to context,
+        removes context reference to help with clean up"""
         self.context.state_finished(self.trigger, self.result)
         self.context = None #set none to help with clean up
         return None #return quickly to give control back to context

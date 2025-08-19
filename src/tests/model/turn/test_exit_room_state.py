@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import create_autospec
 
 from src.model import TurnFlow
-from src.model.turn.turn_enums import Triggers, ServiceNames, ServicesMethods
+from src.model.turn.turn_enums import Triggers, ServiceNames, ServiceMethods
 from src.model.turn.turn_states import ExitRoom
 
 
@@ -29,13 +29,13 @@ class MyTestCase(unittest.TestCase):
             self.state.handle_request(3)
 
         def mock_service_side_effect(name, method, *args, **kwargs):
-            if name == ServiceNames.PLAYER and method == ServicesMethods.GET_POSITION:
+            if name == ServiceNames.PLAYER and method == ServiceMethods.GET_POSITION:
                 return 5, 10
-            elif name == ServiceNames.GAME_PIECES and method == ServicesMethods.GET_TILE_DOORS:
+            elif name == ServiceNames.GAME_PIECES and method == ServiceMethods.GET_TILE_EXITS:
                 return [0, 1, 3]
-            elif name == ServiceNames.GAME_PIECES and method == ServicesMethods.IS_NEW_ROOM:
+            elif name == ServiceNames.GAME_PIECES and method == ServiceMethods.IS_NEW_ROOM:
                 return True
-            elif name == ServiceNames.UI and method == ServicesMethods.GET_INPUT:
+            elif name == ServiceNames.UI and method == ServiceMethods.GET_INPUT:
                 self.callback = kwargs.get('callback')
                 return None
             else:
@@ -48,10 +48,10 @@ class MyTestCase(unittest.TestCase):
 
 
     def test_player_position_called(self):
-        self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.PLAYER, ServicesMethods.GET_POSITION)
+        self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.PLAYER, ServiceMethods.GET_POSITION)
 
     def test_game_pieces_called(self):
-        self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.GAME_PIECES, ServicesMethods.GET_TILE_DOORS, (5, 10))
+        self.mock_turn_flow.call_service_method.assert_any_call(ServiceNames.GAME_PIECES, ServiceMethods.GET_TILE_EXITS, (5, 10))
 
     def test_state_finished_called(self):
         self.mock_turn_flow.handle_request()
