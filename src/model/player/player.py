@@ -8,7 +8,7 @@ class Player(IPlayer):
     """Wrapper class that implements the IPlayer interface."""
     def __init__(self, initial_health: int = 100,
                  initial_position: Position = (0, 0),
-                 base_attack_power: int = 10):
+                 base_attack_power: int = 1):
         self.__player_impl = PlayerImplementation(
             initial_health, initial_position, base_attack_power)
 
@@ -66,8 +66,7 @@ class PlayerImplementation:
 
     @property
     def attack_power(self) -> int:
-        item_bonus = sum(item.attack_bonus for item in self._inventory)
-        return self._base_attack_power + item_bonus
+        return self._base_attack_power
 
     @property
     def has_totem(self) -> bool:
@@ -95,6 +94,8 @@ class PlayerImplementation:
         if item in self._inventory:
             if item.type.value == 1:
                 self.heal(item.heal_amount)
+            elif item.type.value == 0:
+                return self.attack_power + item.attack_bonus
 
             if item.uses_remaining == 0:
                 self._inventory.remove(item)
