@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.enums_and_types import *
+from enums_and_types import *
 
 
 class IItem(ABC):
