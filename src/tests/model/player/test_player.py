@@ -172,6 +172,12 @@ class TestPlayer(unittest.TestCase):
         # Arrange
         mock_item1 = Mock(spec=IItem)
         mock_item2 = Mock(spec=IItem)
+        mock_item1.name = "TestItem1"
+        mock_item2.name = "TestItem2"
+        mock_item1.combinable_with = []
+        mock_item2.combinable_with = []
+        mock_item1.uses_remaining = 1
+        mock_item2.uses_remaining = 1
         self.player.add_item_to_inventory(mock_item1)
         self.player.add_item_to_inventory(mock_item2)
         
@@ -532,7 +538,7 @@ class TestPlayerImplementation(unittest.TestCase):
         expected_inventory_length = 2
         
         self.player_impl._inventory = [mock_item1, mock_item2]
-        mock_combine_items.side_effect = AssertionError("Cannot combine these items")
+        mock_combine_items.side_effect = ValueError("Cannot combine these items")
         
         # Act
         result = self.player_impl.combine_items_from_inventory()

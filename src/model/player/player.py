@@ -1,6 +1,6 @@
 from ..interfaces.i_player import IPlayer
 from ..interfaces.i_item import IItem
-from ..item.item_helper import combine_items
+from ..item import combine_items
 from src.enums_and_types.types import Position
 
 
@@ -125,7 +125,7 @@ class PlayerImplementation:
                     self._inventory.remove(item)
 
                 return kill_all_zombies
-            except AssertionError:
+            except ValueError:
                 return False
 
         return False
