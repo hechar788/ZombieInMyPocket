@@ -56,7 +56,7 @@ class ItemInfo(Enum):
         self.is_single_use = is_single_use
         self.combinable_with = combinable_with
 
-# Arsenie: State
+# Arsenie: State (From game components branch)
 class GameState(Enum):
     INIT = auto()       # Basic flow
     READY = auto()      # Basic flow
@@ -108,3 +108,5 @@ class AlertMessage(Enum):
 class UnknownErrorMessage(Enum):
     """Codes for system errors in the game."""
     UnknownStatusError = "Unknown system error!"
+
+
