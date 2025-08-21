@@ -12,7 +12,7 @@ class GetCowerEncounter(State):
             ServiceNames.UI,
             ServiceMethods.GET_INPUT,
             dict['prompt':'Would you like to cower', 'options':['yes', 'no']]
-            )
+            ) #add callback
 
     def handle_request(self, selected_option):
         if selected_option == 'yes':
