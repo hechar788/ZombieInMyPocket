@@ -45,8 +45,8 @@ class Player(IPlayer):
     def remove_item_from_inventory(self, item: IItem) -> None:
         self.__player_impl.remove_item_from_inventory(item)
 
-    def combine_items_from_inventory(self) -> None:
-        self.__player_impl.combine_items_from_inventory()
+    def combine_items_from_inventory(self) -> bool:
+        return self.__player_impl.combine_items_from_inventory()
 
 
 class PlayerImplementation:
