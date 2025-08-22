@@ -1,5 +1,5 @@
 from ..interfaces.i_tile import ITile
-from enums_and_types import *
+from src.enums_and_types import *
 
 type TileDict = dict[Position, ITile]
 
@@ -38,7 +38,8 @@ class Board:
     #         self._exits_available -= 2
 
     def place_tile(self, new_tile: ITile, new_exit: Direction,
-                   placed_tile: ITile | None, placed_tile_exit: Direction) -> None:
+                   placed_tile: ITile | None,
+                   placed_tile_exit: Direction) -> None:
         new_tile.set_rotation(self.__get_rotation_to_align_door(
             new_exit, placed_tile_exit
         ))
@@ -73,8 +74,8 @@ class Board:
         return result
 
     def __can_place_tile(self, new_tile: ITile, new_exit: Direction,
-                       placed_tile: ITile,
-                       placed_tile_exit: Direction) -> bool:
+                         placed_tile: ITile,
+                         placed_tile_exit: Direction) -> bool:
         if not self.can_move_to_new_tile(placed_tile, placed_tile_exit):
             return False
 
@@ -97,13 +98,13 @@ class Board:
                     self._all_tiles[pos].get_exits()
                 if exit_a != exit_b:
                     return False
-                
+
                 # if two doors match make sure it isn't going from
                 # indoor to outdoor
                 if exit_a and exit_b and new_tile.is_outdoors() != \
                         self._all_tiles[pos].is_outdoors():
                     return False
-        
+
         # Nothing is stopping this tile from being placed
         return True
 
@@ -112,7 +113,9 @@ class Board:
         return Rotation((placed_tile_exit.value + 6 - new_exit.value) % 4)
 
     def get_tile_position(self, tile: ITile) -> Position:
-        return (list(self._all_tiles.keys())[list(self._all_tiles.values()).index(tile)])
+        keys = self._all_tiles.keys()
+        values = self._all_tiles.values()
+        return (list(keys)[list(values).index(tile)])
 
     # def can_place_tile(self, tile: ITile, position: Position,
     #                    position_from: Position, rotation: Rotation) -> bool:

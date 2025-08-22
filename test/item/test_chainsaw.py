@@ -1,7 +1,7 @@
 from unittest import TestCase
-from ..item_helper import IItem, get_item
-from enums_and_types import ItemName, ItemType
-from ..chainsaw import Chainsaw
+from src.model.item.item_helper import IItem, get_item
+from src.enums_and_types import ItemName, ItemType
+from src.model.item.chainsaw import Chainsaw
 
 
 class TestChainsaw(TestCase):

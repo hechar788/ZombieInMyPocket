@@ -3,7 +3,7 @@ from ..interfaces.i_game_pieces import IGamePieces
 from ..interfaces.i_tile import ITile
 from .tile import Tile
 from .board import Board
-from enums_and_types import *
+from src.enums_and_types import *
 from random import shuffle
 
 
@@ -63,7 +63,7 @@ class GamePieces(IGamePieces):
                                           placed_tile, placed_tile_exit)
 
     def can_move_to_new_tile(self, placed_tile: ITile,
-                    placed_tile_exit: Direction) -> bool:
+                             placed_tile_exit: Direction) -> bool:
         return self._board.can_move_to_new_tile(placed_tile, placed_tile_exit)
 
     def place_tile(self, new_tile: ITile, new_exit: Direction,

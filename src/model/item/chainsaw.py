@@ -1,4 +1,4 @@
-from enums_and_types.enums import ItemName
+from src.enums_and_types.enums import ItemName
 from .weapon import Weapon
 
 

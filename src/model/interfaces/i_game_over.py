@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from ..event import Event
-from enums_and_types import GameOverReason
+from src.enums_and_types import GameOverReason
 
 
 class IGameOver(ABC):
