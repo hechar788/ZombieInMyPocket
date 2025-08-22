@@ -1,6 +1,10 @@
 """Ready to start a turn"""
-from src.model import State
-from src.model.turn import StateNames, Triggers
+from typing import TYPE_CHECKING
+from ..state import State
+from ..turn_enums import StateNames, Triggers
+
+#if TYPE_CHECKING:
+
 
 
 class Ready(State):
@@ -11,6 +15,8 @@ class Ready(State):
     def enter(self):
         """Ready to start a turn"""
         self.trigger = Triggers.START_TURN
+        super().enter()
+
 
     def handle_request(self):
         """Wait before starting a new turn"""

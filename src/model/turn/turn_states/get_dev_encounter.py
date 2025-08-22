@@ -1,6 +1,6 @@
 """Draw a dev card then get the encounter from it based on time"""
-from src.model import State
-from src.model.turn import StateNames, Triggers, ServiceNames, ServiceMethods
+from ..state import State
+from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
 
 
 class GetDevEncounter(State):

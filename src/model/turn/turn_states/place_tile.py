@@ -1,7 +1,7 @@
 """Places a tile"""
 
-from src.model import State
-from src.model.turn import StateNames, ServiceNames, ServiceMethods, Triggers
+from ..state import State
+from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
 
 
 class PlaceTile(State):

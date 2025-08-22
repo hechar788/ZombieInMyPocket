@@ -1,5 +1,5 @@
-from src.model import State
-from src.model.turn import StateNames, Triggers, ServiceNames, ServiceMethods
+from ..state import State
+from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
 from src.model.encounters import encounters
 
 class GetCowerEncounter(State):

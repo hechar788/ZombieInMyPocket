@@ -1,8 +1,11 @@
 """Controls the flow of the turn by changing state"""
-from typing import Callable, Any
+from typing import Callable, Any, TYPE_CHECKING
 
-from .state import State
+
 from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames, PendingTransition
+
+if TYPE_CHECKING:
+    from .state import State
 
 
 class TurnFlow:
@@ -20,7 +23,7 @@ class TurnFlow:
                  ] | None = None,
                 the_states: dict[
                     StateNames,
-                    Callable[[], State]
+                    Callable[[], Any]
                 ] | None = None) -> None:
 
         #map: (name ServiceNames, component)
@@ -51,7 +54,7 @@ class TurnFlow:
         self.set_state(start_state)
 
 
-    def set_state(self, state_factory: Callable[[], State], next_tile: Any | None = None, *args, **kwargs) -> None:
+    def set_state(self, state_factory: Callable[[], Any], next_tile: Any | None = None, *args, **kwargs) -> None:
         """sets the current state of the turn"""
         self.current_state = state_factory() #Make a new state object each time
         self.current_state.context = self
@@ -66,19 +69,21 @@ class TurnFlow:
             self.current_state = None
             self.set_state(
                 self.pending_transition["next_state"],
-                self.pending_transition["Next_tile"],
+                self.pending_transition["next_tile"],
                 self.pending_transition["previous_result"])
             self.pending_transition = None
         #return None #Passback
 
 
-    def get_state_factory(self, trigger: Triggers) -> Callable[[], State] | None:
-        """returns the factory for a state with a given trigger,
+    def get_state_factory(self, trigger: Triggers) -> Callable[[], Any] | None:
+        """returns the factory for a state given trigger,
         or None if there is no trigger:state pair"""
-        return self.transitions.get(trigger, None)
+        a_state_name = self.transitions.get(trigger)
+        return self.states.get(a_state_name, None)
+        #return self.transitions.get(trigger, None)
 
 
-    def state_finished(self, trigger: Triggers, result: tuple[Any, ...], next_tile: Any | None = None) -> None:
+    def state_finished(self, trigger: Triggers, result: tuple[Any, ...] | None, next_tile: Any | None = None) -> None:
         """called when the state is finished"""
         next_transition = self.get_state_factory(trigger)
         if next_transition is None:
@@ -86,15 +91,17 @@ class TurnFlow:
         self.pending_transition: PendingTransition = {
             "next_state": next_transition,
             "previous_result": result,
-            "Next_tile": next_tile
+            "next_tile": next_tile
         }
         #return None #The state that called state_finished mast end(return) quickly
 
-    def handle_request(self, *args, **kwargs) -> None:
+
+    def handle_request(self, *args, **kwargs) -> bool:
         """handles incoming requests"""
-        self.current_state.handle_request(*args, **kwargs)
+        wait_for_callback = self.current_state.handle_request(*args, **kwargs)
         self.change_state()
-        #return None #Returns to caller
+        return wait_for_callback
+
 
     def get_service(self, name: ServiceNames) -> object | None:
         """returns the interface registered for the given name
@@ -110,15 +117,15 @@ class TurnFlow:
         try:
             method = getattr(service, method.value)
         except AttributeError:
-            raise Exception(f"No such method: {method}")
+            raise Exception(f"No such method: {service}.{method}")
         else:
             return method(*args, **kwargs)
 
 
-
-    def register_state(self, name: StateNames, sate_factory: Callable[[], State]) -> None:
+    def register_state(self, name: StateNames, sate_factory: Callable[[], Any]) -> None:
         """registers a new state"""
         self.states[name] = sate_factory
+
 
     def register_transition(self,
                             trigger: Triggers,

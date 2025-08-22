@@ -1,6 +1,6 @@
 """Check if the given tile and exit leads to a new tile or an existing tile."""
-from src.model import State
-from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
+from ..state import State
+from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
 
 
 class CheckNewTile(State):
