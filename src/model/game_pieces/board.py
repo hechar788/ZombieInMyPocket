@@ -1,5 +1,5 @@
 from ..interfaces.i_tile import ITile
-from enums_and_types import *
+from src.enums_and_types import *
 
 type TileDict = dict[Position, ITile]
 
@@ -25,49 +25,129 @@ class Board:
         else:
             return None
 
-    def place_tile(self, tile: ITile, position: Position,
-                   rotation: Rotation) -> None:
-        assert position not in self._all_tiles, \
-            f"There is already a tile at position {position}"
-        tile.set_rotation(rotation)
-        self._all_tiles[position] = tile
+    # def place_tile(self, tile: ITile, position: Position,
+    #                rotation: Rotation) -> None:
+    #     assert position not in self._all_tiles, \
+    #         f"There is already a tile at position {position}"
+    #     tile.set_rotation(rotation)
+    #     self._all_tiles[position] = tile
+
+    #     # Keep track of exits available
+    #     self._exits_available += len(tile.get_exits())
+    #     if len(self._all_tiles) > 1:
+    #         self._exits_available -= 2
+
+    def place_tile(self, new_tile: ITile, new_exit: Direction,
+                   placed_tile: ITile | None,
+                   placed_tile_exit: Direction) -> None:
+        new_tile.set_rotation(self.__get_rotation_to_align_door(
+            new_exit, placed_tile_exit
+        ))
+        if placed_tile is None:
+            pos = (0, 0)
+        else:
+            pos = self.get_tile_position(placed_tile)
+            pos = self.__move_position(pos, placed_tile_exit)
+        self._all_tiles[pos] = new_tile
 
         # Keep track of exits available
-        self._exits_available += len(tile.get_exits())
+        self._exits_available += len(new_tile.get_exits())
         if len(self._all_tiles) > 1:
             self._exits_available -= 2
 
-    def can_place_tile(self, tile: ITile, position: Position,
-                       position_from: Position, rotation: Rotation) -> bool:
-        tile.set_rotation(rotation)
+    def can_move_to_new_tile(self, placed_tile: ITile,
+                             placed_tile_exit: Direction) -> bool:
+        pos = self.get_tile_position(placed_tile)
+        pos = self.__move_position(pos, placed_tile_exit)
+        return pos not in self._all_tiles and \
+            placed_tile_exit in placed_tile.get_exits()
 
-        # Can't add a tile where one already exists
-        if position in self._all_tiles:
+    def can_place_tile(self, new_tile: ITile, new_exit: Direction,
+                       placed_tile: ITile,
+                       placed_tile_exit: Direction) -> bool:
+        new_tile.set_rotation(self.__get_rotation_to_align_door(
+            new_exit, placed_tile_exit
+        ))
+        result = self.__can_place_tile(new_tile, new_exit,
+                                       placed_tile, placed_tile_exit)
+        new_tile.set_rotation(Rotation.NONE)
+        return result
+
+    def __can_place_tile(self, new_tile: ITile, new_exit: Direction,
+                         placed_tile: ITile,
+                         placed_tile_exit: Direction) -> bool:
+        if not self.can_move_to_new_tile(placed_tile, placed_tile_exit):
             return False
-
-        if position_from not in self._all_tiles:
-            return False
-        tile_from = self._all_tiles[position_from]
-
-        direction = self._direction_from_position(position_from, position)
-        if direction is None:
-            return False
-
-        reverse_direction = Direction((direction.value + 2) % 4)
 
         # Handle indoor to outdoor
-        if tile_from.is_outdoors() != tile.is_outdoors():
+        if new_tile.is_outdoors() != placed_tile.is_outdoors():
 
             # Both tiles must have a front door
-            if tile_from.get_front_door() is None or \
-                    tile.get_front_door() is None:
+            if placed_tile.get_front_door() is None or \
+                    new_tile.get_front_door() is None:
                 return False
 
-            return tile_from.get_front_door() == direction and \
-                tile.get_front_door() == reverse_direction
+        # Make sure another door isn't facing a wall
+        for dir in [Direction.NORTH, Direction.EAST,
+                    Direction.SOUTH, Direction.WEST]:
+            pos = self.get_tile_position(placed_tile)
+            pos = self.__move_position(pos, dir)
+            if pos in self._all_tiles:
+                exit_a = dir in new_tile.get_exits()
+                exit_b = self.__reverse_direction(dir) in \
+                    self._all_tiles[pos].get_exits()
+                if exit_a != exit_b:
+                    return False
 
-        return direction in tile_from.get_exits() and \
-            reverse_direction in tile.get_exits()
+                # if two doors match make sure it isn't going from
+                # indoor to outdoor
+                if exit_a and exit_b and new_tile.is_outdoors() != \
+                        self._all_tiles[pos].is_outdoors():
+                    return False
+
+        # Nothing is stopping this tile from being placed
+        return True
+
+    def __get_rotation_to_align_door(self, new_exit: Direction,
+                                     placed_tile_exit: Direction) -> Rotation:
+        return Rotation((placed_tile_exit.value + 6 - new_exit.value) % 4)
+
+    def get_tile_position(self, tile: ITile) -> Position:
+        keys = self._all_tiles.keys()
+        values = self._all_tiles.values()
+        return (list(keys)[list(values).index(tile)])
+
+    # def can_place_tile(self, tile: ITile, position: Position,
+    #                    position_from: Position, rotation: Rotation) -> bool:
+    #     tile.set_rotation(rotation)
+
+    #     # Can't add a tile where one already exists
+    #     if position in self._all_tiles:
+    #         return False
+
+    #     if position_from not in self._all_tiles:
+    #         return False
+    #     tile_from = self._all_tiles[position_from]
+
+    #     direction = self._direction_from_position(position_from, position)
+    #     if direction is None:
+    #         return False
+
+    #     reverse_direction = Direction((direction.value + 2) % 4)
+
+    #     # Handle indoor to outdoor
+    #     if tile_from.is_outdoors() != tile.is_outdoors():
+
+    #         # Both tiles must have a front door
+    #         if tile_from.get_front_door() is None or \
+    #                 tile.get_front_door() is None:
+    #             return False
+
+    #         return tile_from.get_front_door() == direction and \
+    #             tile.get_front_door() == reverse_direction
+
+    #     return direction in tile_from.get_exits() and \
+    #         reverse_direction in tile.get_exits()
 
     def is_stuck(self) -> bool:
         return self._exits_available <= 0
@@ -89,3 +169,21 @@ class Board:
             return Direction.SOUTH
         else:
             return None
+
+    @staticmethod
+    def __move_position(pos: Position, dir: Direction) -> Position:
+        x, y = pos
+        match dir:
+            case Direction.NORTH:
+                y += 1
+            case Direction.EAST:
+                x += 1
+            case Direction.SOUTH:
+                y -= 1
+            case Direction.WEST:
+                x -= 1
+        return (x, y)
+
+    @staticmethod
+    def __reverse_direction(dir: Direction) -> Direction:
+        return Direction((dir.value + 2) % 4)

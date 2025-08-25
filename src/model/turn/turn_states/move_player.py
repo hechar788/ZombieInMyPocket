@@ -12,6 +12,7 @@ class MovePlayer(State):
         self.trigger = Triggers.START_ENCOUNTERS
         self.result = a_tile
         self.move_player(self.get_tile_position(a_tile))
+        self.exit()
 
 
     def get_tile_position(self, a_tile):

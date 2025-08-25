@@ -1,6 +1,6 @@
 from unittest import TestCase
-from ..item_helper import IItem, get_item
-from enums_and_types import ItemName
+from src.model.item.item_helper import IItem, get_item
+from src.enums_and_types import ItemName
 
 
 class TestOil(TestCase):
