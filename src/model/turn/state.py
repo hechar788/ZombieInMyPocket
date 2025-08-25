@@ -15,6 +15,7 @@ class State(ABC):
         self.result: tuple[Any] | None = None
         self.trigger: Triggers | None = None
         self.context: TurnFlow | None = None #none should be assigned before exiting to help with clean up #TurnFlow
+        self.needs_input: bool = False
 
     def use_service(self, service: ServiceNames, method: ServiceMethods, *args, **kwargs):
         return self.context.call_service_method(service, method, *args, **kwargs)
@@ -29,7 +30,6 @@ class State(ABC):
         return Turn if handle_request will be called with a callback,
         else return False
         """
-        return False
 
     @abstractmethod
     def handle_request(self, *args, **kwargs):

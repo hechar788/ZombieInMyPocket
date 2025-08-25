@@ -1,3 +1,4 @@
+from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
 
@@ -10,17 +11,17 @@ class SelectExit(State):
 
 
     def enter(self,
-              #a_tile: object,
-              #exit_mode: Triggers,
-              *args) -> bool:
-        a_thing = args[0]
-        a_tile, exit_mode = a_thing
+              a_tile: Any,
+              exit_mode: Triggers,
+              *arg
+              ):
         self.result = a_tile
         self.trigger = exit_mode
+        self.args = arg or None
+        self.needs_input = True
 
         self.get_tile_exits(a_tile)
         self.get_user_selection()
-        return True #wait for callback
 
 
     def get_tile_exits (self, a_tile):

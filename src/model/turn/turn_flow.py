@@ -37,8 +37,8 @@ class TurnFlow:
         self.states: dict[StateNames, Callable[[], State]] = the_states if the_states is not None else {}
 
         self.pending_transition: PendingTransition | None = None
-        self.current_state: State | None = None
 
+        self.current_state: State | None = None
         self.active_tile: Any | None = None
 
         #todo update states and context to use transition and maybe active tile
@@ -54,11 +54,19 @@ class TurnFlow:
         self.set_state(start_state)
 
 
-    def set_state(self, state_factory: Callable[[], Any], next_tile: Any | None = None, *args, **kwargs) -> None:
+    def set_state(
+            self,
+            state_factory: Callable[[], Any],
+            next_tile: Any | None = None,
+            previous_result: tuple[Any, ...] | None = None
+    ) -> None:
         """sets the current state of the turn"""
         self.current_state = state_factory() #Make a new state object each time
         self.current_state.context = self
-        self.current_state.enter(*args, **kwargs)
+        if previous_result is not None:
+            self.current_state.enter(*previous_result)
+        else:
+            self.current_state.enter()
         if next_tile is not None:
             self.active_tile = next_tile
         #return None #Passback
@@ -87,20 +95,24 @@ class TurnFlow:
         """called when the state is finished"""
         next_transition = self.get_state_factory(trigger)
         if next_transition is None:
-            raise Exception(f"No such transition: {next_transition}")
+            raise Exception(f"No such transition: {trigger}")
         self.pending_transition: PendingTransition = {
             "next_state": next_transition,
             "previous_result": result,
             "next_tile": next_tile
         }
-        #return None #The state that called state_finished mast end(return) quickly
+        #return None
+        #The state that called state_finished mast end(return) quickly
+        #state returns to handle request, handle request changes the state
+        #then returns to where it was called
+    def is_wait_for_input(self) -> bool:
+        """returns True if the state is waiting for input"""
+        return self.current_state.needs_input
 
-
-    def handle_request(self, *args, **kwargs) -> bool:
+    def handle_request(self, *args, **kwargs) -> None:
         """handles incoming requests"""
-        wait_for_callback = self.current_state.handle_request(*args, **kwargs)
+        self.current_state.handle_request(*args, **kwargs)
         self.change_state()
-        return wait_for_callback
 
 
     def get_service(self, name: ServiceNames) -> object | None:

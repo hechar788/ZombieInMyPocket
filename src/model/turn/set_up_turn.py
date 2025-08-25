@@ -4,6 +4,11 @@ from typing import TYPE_CHECKING, Callable, Any
 #imports from components
 from src.model.game_pieces import GamePieces
 from src.model.player import Player
+from src.model.turn.turn_states.get_cower_encounter import GetCowerEncounter
+from src.model.turn.turn_states.get_dev_encounter import GetDevEncounter
+from src.model.turn.turn_states.get_tile_encounter import GetTileEncounter
+from src.model.turn.turn_states.move_player import MovePlayer
+from src.model.turn.turn_states.run_encounter import RunEncounter
 from src.view.mock_ui import UserInterface
 
 #imports from Turn
@@ -61,12 +66,17 @@ class TurnSetUp:
     def get_turn_states() -> dict[StateNames, Callable[[], Any]]:
         """Get the states used by the turn"""
         the_turn_states = {
-            StateNames.READY:           lambda : Ready(),
-            StateNames.SELECT_EXIT:     lambda : SelectExit(),
-            StateNames.GET_PLAYER_TILE: lambda : GetPlayerTile(),
-            StateNames.DRAW_TILE:       lambda : DrawTile(),
-            StateNames.CHECK_NEW_TILE:  lambda : CheckNewTile(),
-            StateNames.PLACE_TILE:      lambda : PlaceTile(),
+            StateNames.READY:               lambda : Ready(),
+            StateNames.GET_PLAYER_TILE:     lambda: GetPlayerTile(),
+            StateNames.SELECT_EXIT:         lambda : SelectExit(),
+            StateNames.CHECK_NEW_TILE:      lambda: CheckNewTile(),
+            StateNames.DRAW_TILE:           lambda : DrawTile(),
+            StateNames.PLACE_TILE:          lambda : PlaceTile(),
+            StateNames.MOVE_PLAYER:         lambda : MovePlayer(),
+            StateNames.GET_DEV_ENCOUNTER:   lambda : GetDevEncounter(),
+            StateNames.GET_TILE_ENCOUNTER:  lambda : GetTileEncounter(),
+            StateNames.GET_COWER_ENCOUNTER: lambda : GetCowerEncounter(),
+            StateNames.RUN_ENCOUNTER:       lambda : RunEncounter(),
 
 
         }

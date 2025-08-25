@@ -14,8 +14,8 @@ class Ready(State):
 
     def enter(self):
         """Ready to start a turn"""
+        #self.needs_input = True
         self.trigger = Triggers.START_TURN
-        super().enter()
 
 
     def handle_request(self):

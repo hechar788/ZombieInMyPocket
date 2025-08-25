@@ -11,11 +11,13 @@ if __name__ == "__main__":
     the_set_up = TurnSetUp()
     the_turn = the_set_up.get_turn_flow()
 
-    wait_for_input = the_turn.handle_request()
+    #wait_for_input = False
+    game_running = True
 
-    while True:
-        if not wait_for_input:
-            wait_for_input = the_turn.handle_request()
+    while game_running:
+        if not the_turn.is_wait_for_input():
+            the_turn.handle_request()
+        #Else wait for a callback
 
 
 

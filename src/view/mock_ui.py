@@ -1,5 +1,6 @@
 from typing import Callable, Any
 from threading import Timer
+from src.enums_and_types import enums
 
 class UserInterface:
     """A mock user interface."""
@@ -11,8 +12,9 @@ class UserInterface:
         Timer(1, delay_call).start()
 
     @staticmethod
-    def get_input(prompt: str, options: list[str]) -> str:
+    def get_input(prompt: str, options: Any) -> str:
+        valid_values = [str(o.value) for o in options]
         user_input = ""
-        while user_input not in options:
-            user_input = input(prompt)
+        while user_input not in valid_values:
+            user_input = input(f"{prompt}, {valid_values}: ")
         return user_input
