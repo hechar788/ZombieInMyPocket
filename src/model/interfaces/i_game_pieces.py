@@ -34,14 +34,30 @@ class IGamePieces(ABC):
     def outdoor_tiles_remaining(self) -> int:
         pass
 
+    # @abstractmethod
+    # def can_place_tile(self, tile: ITile, tile_position: Position,
+    #                    player_position: Position, rotation: Rotation) -> bool:
+    #     pass
+
+    # @abstractmethod
+    # def place_tile(self, tile: ITile, position: Position,
+    #                rotation: Rotation) -> None:
+    #     pass
+
     @abstractmethod
-    def can_place_tile(self, tile: ITile, tile_position: Position,
-                       player_position: Position, rotation: Rotation) -> bool:
+    def can_place_tile(self, new_tile: ITile, new_exit: Direction,
+                       placed_tile: ITile,
+                       placed_tile_exit: Direction) -> bool:
         pass
 
     @abstractmethod
-    def place_tile(self, tile: ITile, position: Position,
-                   rotation: Rotation) -> None:
+    def place_tile(self, new_tile: ITile, new_exit: Direction,
+                   placed_tile: ITile, placed_tile_exit: Direction) -> None:
+        pass
+
+    @abstractmethod
+    def can_move_to_new_tile(self, placed_tile: ITile,
+                    placed_tile_exit: Direction) -> bool:
         pass
 
     @abstractmethod

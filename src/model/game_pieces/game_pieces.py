@@ -3,7 +3,7 @@ from ..interfaces.i_game_pieces import IGamePieces
 from ..interfaces.i_tile import ITile
 from .tile import Tile
 from .board import Board
-from enums_and_types import *
+from src.enums_and_types import *
 from random import shuffle
 
 
@@ -20,7 +20,8 @@ class GamePieces(IGamePieces):
 
         # The top card before it is shuffled is the foyer
         # so add it to the board before we shuffle
-        self._board.place_tile(self._indoor_tiles.pop(), (0, 0), Rotation.NONE)
+        self._board.place_tile(self._indoor_tiles.pop(), Direction.NORTH,
+                               None, Direction.SOUTH)
 
         # Shuffle the tiles
         shuffle(self._indoor_tiles)
@@ -44,17 +45,37 @@ class GamePieces(IGamePieces):
     def outdoor_tiles_remaining(self) -> int:
         return len(self._outdoor_tiles)
 
-    def can_place_tile(self, tile: ITile, tile_position: Position,
-                       player_position: Position, rotation: Rotation) -> bool:
-        return self._board.can_place_tile(
-            tile, tile_position, player_position, rotation)
+    # def can_place_tile(self, tile: ITile,
+    #                    tile_position: Position,
+    #                    player_position: Position,
+    #                    rotation: Rotation) -> bool:
+    #     return self._board.can_place_tile(
+    #         tile, tile_position, player_position, rotation)
 
-    def place_tile(self, tile: ITile, position: Position,
-                   rotation: Rotation) -> None:
-        self._board.place_tile(tile, position, rotation)
+    # def place_tile(self, tile: ITile, position: Position,
+    #                rotation: Rotation) -> None:
+    #     self._board.place_tile(tile, position, rotation)
+
+    def can_place_tile(self, new_tile: ITile, new_exit: Direction,
+                       placed_tile: ITile,
+                       placed_tile_exit: Direction) -> bool:
+        return self._board.can_place_tile(new_tile, new_exit,
+                                          placed_tile, placed_tile_exit)
+
+    def can_move_to_new_tile(self, placed_tile: ITile,
+                             placed_tile_exit: Direction) -> bool:
+        return self._board.can_move_to_new_tile(placed_tile, placed_tile_exit)
+
+    def place_tile(self, new_tile: ITile, new_exit: Direction,
+                   placed_tile: ITile, placed_tile_exit: Direction) -> None:
+        pass
 
     def get_tile(self, position: Position) -> ITile | None:
         return self._board.get_tile(position)
+
+    # def get_tile_position(self, tile: ITile) -> Position | None:
+    #     #added by Josiah (Sorry for not asking)
+    #     return self._board.get_tile_position(tile)
 
     def is_stuck(self) -> bool:
         return self._board.is_stuck()

@@ -1,15 +1,15 @@
 from unittest import TestCase
-from ..item_helper import IItem, get_item
-from enums_and_types import ItemName, ItemType
+from src.model.item.item_helper import IItem, get_item
+from src.enums_and_types import ItemName, ItemType
 
 
 class TestGrislyFemur(TestCase):
 
     def setUp(self):
-        self._item: IItem = get_item(ItemName.GRISLY_FEMUR)
+        self._item: IItem = get_item(ItemName.GOLF_CLUB)
 
-    def test_name_is_grisly_femur(self):
-        expected = ItemName.GRISLY_FEMUR
+    def test_name_is_golf_club(self):
+        expected = ItemName.GOLF_CLUB
         actual = self._item.name
         self.assertEqual(expected, actual)
 

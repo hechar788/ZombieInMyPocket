@@ -1,5 +1,5 @@
 from ..event import Event
-from enums_and_types import GameOverReason
+from src.enums_and_types import GameOverReason
 from ..interfaces import IGameOver
 
 
@@ -7,11 +7,11 @@ class GameOver(IGameOver):
 
     def __init__(self) -> None:
         self.__game_over_event = Event[GameOverReason]()
-    
+
     @property
     def game_over_event(self) -> Event[GameOverReason]:
         return self.__game_over_event
-    
+
     @game_over_event.setter
     def game_over_event(self, value: Event[GameOverReason]) -> None:
         self.__game_over_event = value

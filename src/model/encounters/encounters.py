@@ -27,6 +27,11 @@ class CowerEncounter(IEncounter):
     def __init__(self):
         self.health_increase = 3
 
+    def set_values(self, value):
+        """No values to set"""
+        #added by Josiah O'Neill
+        pass
+
     def handle_encounter(self, player):
         player.heal(self.health_increase)
         return player
