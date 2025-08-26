@@ -1,11 +1,13 @@
 from typing import Callable, Any
+
+from src.model.interfaces.i_turn import ITurn
 from src.model.turn.turn_enums import ServiceNames, StateNames, Triggers
 from src.model.turn.turn_flow import TurnFlow
 from src.model.turn.turn_states import *
 
 
 
-class Turn:
+class Turn(ITurn):
     """
     Facade for managing a game turn.
 
