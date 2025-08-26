@@ -75,3 +75,6 @@ class GamePieces(IGamePieces):
 
     def is_stuck(self) -> bool:
         return self._board.is_stuck()
+
+    def get_tile_position(self, tile):
+        return self._board.get_tile_position(tile)
