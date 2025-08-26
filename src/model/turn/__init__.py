@@ -1,8 +1,10 @@
 import os
 
-__all__ = ["TurnFlow"]
+from .turn import Turn
 
-from .turn_flow import TurnFlow
+__all__ = [
+    "Turn"
+]
 
 if os.getenv("RUNNING_TURN_TESTS") == "1":
     #running tests for the turn packages only
@@ -12,7 +14,8 @@ if os.getenv("RUNNING_TURN_TESTS") == "1":
     from .turn_enums import Triggers, StateNames, ServiceNames, ServiceMethods
 
     __all__ = ["State",
-               "TurnFlow",
+               #"TurnFlow",
+               #"TurnSetUp"
                "Triggers",
                "StateNames",
                "ServiceNames",

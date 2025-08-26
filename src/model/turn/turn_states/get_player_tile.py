@@ -1,5 +1,5 @@
 """Get the players tile"""
-from src.model import State
+from ..state import State
 from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
 
 
@@ -8,11 +8,8 @@ class GetPlayerTile(State):
         super().__init__(name)
         self.player_location = None
 
-    def enter(self) -> None:
-        """Get the players location and the tile at that location"""
-        self.get_player_location()
-        self.get_player_tile()
-        self.exit()
+    def enter(self, *args) -> None:
+        self.trigger = Triggers.SELECT_EXIT
 
 
     def get_player_location(self) -> None:
@@ -24,7 +21,6 @@ class GetPlayerTile(State):
 
     def get_player_tile(self):
         """Gets the players tile"""
-        self.trigger = Triggers.SELECT_EXIT
         self.result = self.use_service(
             ServiceNames.GAME_PIECES,
             ServiceMethods.GET_TILE,
@@ -32,7 +28,9 @@ class GetPlayerTile(State):
 
 
     def handle_request(self, *args, **kwargs):
-        """This state doesn't take requests"""
+        """Get the players location and the tile at that location"""
+        self.get_player_location()
+        self.get_player_tile()
         super().handle_request()
 
 
@@ -43,4 +41,5 @@ class GetPlayerTile(State):
             trigger=self.trigger,
             result=self.result,
             next_tile=a_tile)
+        self.context = None
         #Expected next state select_exit

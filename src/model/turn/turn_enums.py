@@ -1,5 +1,4 @@
 """internal enums for turn"""
-import enum
 from enum import Enum
 from typing import TypedDict, Callable, Any
 
@@ -52,16 +51,17 @@ class ServiceNames(Enum):
 class ServiceMethods(Enum):
     #for player
     GET_POSITION = "get_position"
-    MOVE_PLAYER = "move_player"
+    SET_POSITION = "set_position"
     # for UI
     GET_INPUT = "get_input_with_callback"
     #for GamePieces
     GET_TILE_EXITS = "get_tile_exits"
     GET_TILE = "get_tile"
-    DRAW_TILE = "draw_tile"
-    IS_NEW_TILE = "is_new_tile"
+    DRAW_TILE = "draw_indoor_tile"
+    CAN_MOVE_TO_NEW_TILE = "can_move_to_new_tile"
     PLACE_TILE = "place_tile"
-    GET_TILE_LOCATION = "get_tile_location"
+    CAN_PLACE_TILE = "can_place_tile"
+    GET_TILE_POSITION = "get_tile_position"
     DRAW_DEV_CARD = "draw_dev_card"
     GET_ENCOUNTER = "get_encounter"
 
@@ -70,5 +70,5 @@ class PendingTransition(TypedDict):
     """stores the state factory for a new state
     and any results from previous states to pass to it"""
     next_state: Callable[[], Any]
-    previous_result: tuple[Any]
-    Next_tile: Any
+    previous_result: tuple[Any, ...] | None
+    next_tile: Any
