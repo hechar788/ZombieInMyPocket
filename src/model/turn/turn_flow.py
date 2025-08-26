@@ -40,6 +40,7 @@ class TurnFlow:
         self.pending_transition: PendingTransition | None = None
 
         self.current_state: State | None = None
+        # hold the active tile to make it easier to get the tile encounter
         self.active_tile: Any | None = None
 
         #todo update states and context to use transition and maybe active tile

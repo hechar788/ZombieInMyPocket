@@ -73,9 +73,6 @@ class GamePieces(IGamePieces):
     def get_tile(self, position: Position) -> ITile | None:
         return self._board.get_tile(position)
 
-    # def get_tile_position(self, tile: ITile) -> Position | None:
-    #     #added by Josiah (Sorry for not asking)
-    #     return self._board.get_tile_position(tile)
 
     def is_stuck(self) -> bool:
         return self._board.is_stuck()

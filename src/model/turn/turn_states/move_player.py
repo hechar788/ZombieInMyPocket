@@ -27,13 +27,13 @@ class MovePlayer(State):
 
 
     def get_tile_position(self, a_tile):
-        return 1, 0
-        # return self.use_service(
-        #     ServiceNames.GAME_PIECES,
-        #     ServiceMethods.GET_TILE_POSITION,
-        #     a_tile
-        # )
-        # error with get_tile_position
+        #return 1, 0
+        return self.use_service(
+            ServiceNames.GAME_PIECES,
+            ServiceMethods.GET_TILE_POSITION,
+            a_tile
+        )
+        #error with get_tile_position
 
 
     def move_player(self, position):
@@ -45,7 +45,6 @@ class MovePlayer(State):
 
 
     def handle_request(self, *arg, **kwarg):
-
         self.move_player(self.get_tile_position(self.result))
         super().handle_request()
 
@@ -55,3 +54,4 @@ class MovePlayer(State):
             trigger=self.trigger,
             result=None,
             next_tile=self.result)
+        self.context = None
