@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from enums_and_types import Position
+from src.enums_and_types.types import Position
 from .i_item import IItem
 
 
@@ -52,5 +52,5 @@ class IPlayer(ABC):
         pass
 
     @abstractmethod
-    def combine_items_from_inventory(self) -> None:
+    def combine_items_from_inventory(self) -> bool:
         pass

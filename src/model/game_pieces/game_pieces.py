@@ -53,7 +53,7 @@ class GamePieces(IGamePieces):
                    rotation: Rotation) -> None:
         self._board.place_tile(tile, position, rotation)
 
-    def get_tile(self, position: Position) -> ITile:
+    def get_tile(self, position: Position) -> ITile | None:
         return self._board.get_tile(position)
 
     def is_stuck(self) -> bool:

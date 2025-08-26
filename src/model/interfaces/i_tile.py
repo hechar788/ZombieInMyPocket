@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from enums_and_types import *
+from src.enums_and_types import *
 from .i_encounter import IEncounter
 
 

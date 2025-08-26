@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from enums_and_types import ItemInfo, ItemType
+from src.enums_and_types import *
 
 
 class IItem(ABC):
@@ -8,7 +8,7 @@ class IItem(ABC):
 
     @property
     @abstractmethod
-    def name(self) -> ItemInfo:
+    def name(self) -> ItemName:
         pass
 
     @property
@@ -31,11 +31,29 @@ class IItem(ABC):
     def heal_amount(self) -> int:
         pass
 
+    # @property
+    # @abstractmethod
+    # def is_single_use(self) -> bool:
+    #     pass
+
+    # Changed is_single_use to uses_remaning because the chainsaw
+    # has multiple uses
     @property
     @abstractmethod
-    def is_single_use(self) -> bool:
+    def uses_remaining(self) -> int:
+        """Number of uses remaining."""
+        pass
+
+    @property
+    @abstractmethod
+    def combinable_with(self) -> list[ItemName]:
         pass
 
     @abstractmethod
-    def combinable_with(self) -> list[ItemInfo]:
+    def use(self) -> bool:
+        """This method is just for decrementing the uses remaning
+        if the item has limited used.
+
+        Return True if the item has depleated all it's uses
+        """
         pass

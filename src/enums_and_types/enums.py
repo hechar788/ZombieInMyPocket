@@ -31,8 +31,10 @@ class Direction(Enum):
 
 
 class ItemType(Enum):
-    WEAPON = 0,
-    HEALING = 1
+    WEAPON = 0
+    HEALING = 1  # Can of Soda
+    COMBINE_ONLY = 2  # Candle and Gasoline
+    ESCAPE = 3  # Using oil by itself without combining it
 
 class ItemInfo(Enum):
     SPADE = ("Spade", "A sturdy digging tool that can be used as a weapon", ItemType.WEAPON, 2, 0, False, cast(list['ItemInfo'], []))
@@ -81,3 +83,14 @@ class GameOverConditions(Enum):
     WIN_TOTEM_BURIED = auto()
     LOSE_PLAYER_DIED = auto()
     LOSE_OUT_OF_TIME = auto()
+
+class ItemName(Enum):
+    OIL = "Oil"
+    GASOLINE = "Gasoline"
+    BOARD_WITH_NAILS = "Board With Nails"
+    CAN_OF_SODA = "Can of Soda"
+    GRISLY_FEMUR = "Grisly Femur"
+    GOLF_CLUB = "Golf Club"
+    CANDLE = "Candle"
+    CHAINSAW = "Chainsaw"
+    MACHETE = "Machete"
