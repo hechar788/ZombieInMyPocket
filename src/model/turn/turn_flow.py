@@ -17,14 +17,15 @@ class TurnFlow:
                  the_services: dict[
                     ServiceNames, object
                  ] | None = None,
+                 the_states: dict[
+                     StateNames,
+                     Callable[[], Any]
+                 ] | None = None,
                  the_transitions: dict[
                     Triggers,
                     StateNames
-                 ] | None = None,
-                the_states: dict[
-                    StateNames,
-                    Callable[[], Any]
-                ] | None = None) -> None:
+                 ] | None = None) -> None:
+
 
         #map: (name ServiceNames, component)
         self.service: dict[ServiceNames, object] = the_services if the_services is not None else {}
@@ -54,6 +55,13 @@ class TurnFlow:
         self.current_state = self.setup_new_state(start_state)
 
 
+    def end(self) -> None:
+        """Resets the state to its initial state"""
+        self.pending_transition = None
+        self.current_state = None
+        self.active_tile = None
+
+
     def setup_new_state(
             self,
             state_factory: Callable[[], Any],
@@ -73,6 +81,7 @@ class TurnFlow:
 
         return new_state
         #return None #Passback
+
 
     def change_state(self) -> None:
         """changes the current state of the turn if there is a pending transition"""
@@ -124,13 +133,14 @@ class TurnFlow:
             output = self.current_state.needs_input
         return output
 
+
     def handle_request(self, *args, **kwargs) -> None:
         """handles incoming requests"""
-        if self.current_state is not None:
-            self.current_state.handle_request(*args, **kwargs)
-            self.change_state()
-        else:
+        if self.current_state is None:
             raise Exception(f"No current state")
+
+        self.current_state.handle_request(*args, **kwargs)
+        self.change_state()
 
 
     def get_service(self, name: ServiceNames) -> object | None:
@@ -151,27 +161,5 @@ class TurnFlow:
         else:
             return method(*args, **kwargs)
 
-
-    def register_state(self, name: StateNames, sate_factory: Callable[[], Any]) -> None:
-        """registers a new state"""
-        self.states[name] = sate_factory
-
-
-    def register_transition(self,
-                            trigger: Triggers,
-                            name: StateNames) -> None:
-        """Register a transition, takes some trigger, and a state name"""
-        self.transitions[trigger] = name
-
-
-    # services (could be moved to a new class)
-    def register_service(self, name: ServiceNames, interface: object) -> None:
-        """registers a new interface
-        E.G. register_interface('combat', combat_interface)
-        """
-        self.service[name] = interface
-
-
-    def unregister_service(self, name: ServiceNames) -> object:
-        """unregisters a service, returns the service"""
-        return self.service.pop(name)
+    #could add register_state, register_transition, register_service and
+    #unregister_state etc if the need to change any dynamically comes up

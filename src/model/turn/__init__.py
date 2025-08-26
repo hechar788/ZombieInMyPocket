@@ -1,11 +1,9 @@
 import os
 
-#from .turn_flow import TurnFlow
-from .set_up_turn import TurnSetUp
+from .turn import Turn
 
 __all__ = [
-    #"TurnFlow",
-    "TurnSetUp"
+    "Turn"
 ]
 
 if os.getenv("RUNNING_TURN_TESTS") == "1":
