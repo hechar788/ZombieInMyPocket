@@ -20,7 +20,7 @@ class GameStatus(IGameStatus):
     def __init__(self) -> None:
         self._is_game_over: bool = False
         self._game_over_condition: str | None = None
-        self._system_message: str | None = None
+        self._system_messages: list[str] = []
 
     @property
     def is_game_over(self) -> bool:
@@ -30,9 +30,11 @@ class GameStatus(IGameStatus):
     def game_over_condition(self) -> GameOverConditions | None:
         return self._game_over_condition
 
-    @property
-    def system_message(self) -> str | None:
-        return self._system_message
+    def get_messages(self) -> list[str]:
+        return self._system_messages
+
+    def clear_messages(self) -> None:
+        self._system_messages.clear()
 
     def trigger_game_over(self, condition: GameOverConditions) -> None:
         self._is_game_over = True
@@ -42,9 +44,12 @@ class GameStatus(IGameStatus):
         """Resets for new game."""
         self._is_game_over = False
         self._game_over_condition = None
-        self._system_message = None
+        self.clear_messages()
 
     def post_message(self, code: MessageCode, *args) -> None:
-        #TODO: Add validation here for if args are missing but required
         message_template = self._MESSAGE_MAP.get(code, "Unknown system event.")
-        self._system_message = message_template.format(*args) # Error Possible Here
+        try:
+            message = message_template.format(*args)
+            self._system_messages.append(message)
+        except IndexError:
+            self._system_messages.append(f"Error formatting message for code {code}. Arguments may be missing.")

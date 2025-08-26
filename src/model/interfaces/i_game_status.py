@@ -17,9 +17,12 @@ class IGameStatus(ABC):
     def game_over_condition(self) -> GameOverConditions | None:
         pass
 
-    @property
     @abstractmethod
-    def system_message(self) -> str | None:
+    def get_messages(self) -> list[str]:
+        pass
+
+    @abstractmethod
+    def clear_messages(self) -> None:
         pass
 
     @abstractmethod
