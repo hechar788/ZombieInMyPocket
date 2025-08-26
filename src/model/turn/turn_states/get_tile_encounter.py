@@ -8,10 +8,7 @@ class GetTileEncounter(State):
 
     def enter(self):
         self.trigger = Triggers.RUN_ENCOUNTER
-        self.result = (
-            self.get_tile_encounter(self.context.active_tile),
-            Triggers.TILE_ENCOUNTER_END
-        )
+
 
     def get_tile_encounter(self, tile):
         return self.use_service(
@@ -21,6 +18,10 @@ class GetTileEncounter(State):
         )
 
     def handle_request(self, *arg, **kwarg):
+        self.result = (
+            self.get_tile_encounter(self.context.active_tile),
+            Triggers.TILE_ENCOUNTER_END
+        )
         super().handle_request()
 
     def exit(self):

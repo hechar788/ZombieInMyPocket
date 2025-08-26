@@ -4,7 +4,7 @@ from src.enums_and_types import enums
 
 class UserInterface:
     """A mock user interface."""
-    def get_input_with_callback(self, prompt: str, options: list[str], callback: Callable[[Any], None]) -> None:
+    def get_input_with_callback(self, prompt: str, options: Any, callback: Callable[[Any], None]) -> None:
         """adds mock callback behavior."""
         def delay_call():
             result = self.get_input(prompt, options)

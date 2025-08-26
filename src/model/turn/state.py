@@ -27,8 +27,8 @@ class State(ABC):
     def enter(self, *args, **kwargs) -> bool:
         """run when the state is entered
         Note, states should not call exit from with in enter (it makes a mess),
-        return Turn if handle_request will be called with a callback,
-        else return False
+        set needs_input to Turn if handle_request will be called with a callback,
+        else leave it as False
         """
 
     @abstractmethod

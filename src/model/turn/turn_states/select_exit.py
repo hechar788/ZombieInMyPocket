@@ -4,7 +4,7 @@ from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
 
 class SelectExit(State):
     """Ask the user to select an exit from a give tile"""
-    def __init__(self, name = StateNames.DRAW_TILE):
+    def __init__(self, name = StateNames.SELECT_EXIT):
         super().__init__(name)
         self.tile_exits = []
         self.args = None
@@ -16,12 +16,14 @@ class SelectExit(State):
               *arg
               ):
         self.result = a_tile
+        #to do refactor to make the exit mode trigger set in handle_request based on args
         self.trigger = exit_mode
+        print(exit_mode)
         self.args = arg or None
         self.needs_input = True
 
         self.get_tile_exits(a_tile)
-        self.get_user_selection()
+        self.get_user_selection(a_tile.get_name())
 
 
     def get_tile_exits (self, a_tile):
@@ -32,18 +34,20 @@ class SelectExit(State):
         #     self.result)
 
 
-    def get_user_selection(self):
+    def get_user_selection(self, tile_name):
         self.use_service(
             ServiceNames.UI,
             ServiceMethods.GET_INPUT,
-            prompt=f"Pick an exit {self.tile_exits}",
-            options=self.tile_exits,
-            callback=self.get_request_handler())
+            prompt = f"Pick an exit on the {tile_name} tile",
+            options = self.tile_exits,
+            callback = self.get_request_handler())
 
 
     def handle_request(self, selected_exit):
         if self.args:
-            self.result = (self.result, selected_exit, self.args)
+            current_tile, current_exit = self.args[0]
+            #print(current_tile, current_exit)
+            self.result = (self.result, selected_exit, current_tile, current_exit)
         else:
             self.result = (self.result, selected_exit)
         self.exit()

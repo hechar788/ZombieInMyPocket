@@ -6,8 +6,7 @@ def main():
     game_controller = GameController()
     game_controller.begin_game()
 
-
-if __name__ == "__main__":
+def running_turn():
     the_set_up = TurnSetUp()
     the_turn = the_set_up.get_turn_flow()
 
@@ -18,6 +17,9 @@ if __name__ == "__main__":
         if not the_turn.is_wait_for_input():
             the_turn.handle_request()
         #Else wait for a callback
+
+if __name__ == "__main__":
+    running_turn()
 
 
 

@@ -51,35 +51,40 @@ class TurnFlow:
         start_state = self.get_state_factory(Triggers.READY)
         if start_state is None:
             raise Exception(f"No start_state: use {Triggers.READY} trigger")
-        self.set_state(start_state)
+        self.current_state = self.setup_new_state(start_state)
 
 
-    def set_state(
+    def setup_new_state(
             self,
             state_factory: Callable[[], Any],
             next_tile: Any | None = None,
             previous_result: tuple[Any, ...] | None = None
-    ) -> None:
+    ) -> Any:
         """sets the current state of the turn"""
-        self.current_state = state_factory() #Make a new state object each time
-        self.current_state.context = self
-        if previous_result is not None:
-            self.current_state.enter(*previous_result)
-        else:
-            self.current_state.enter()
+        new_state = state_factory() #Make a new state object each time
+        new_state.context = self
+        print(f"the next state is {new_state.name}\n the previous result is {previous_result}")
         if next_tile is not None:
             self.active_tile = next_tile
+        if previous_result is not None:
+            new_state.enter(*previous_result)
+        else:
+            new_state.enter()
+
+        return new_state
         #return None #Passback
 
     def change_state(self) -> None:
         """changes the current state of the turn if there is a pending transition"""
         if self.pending_transition is not None and self.current_state is not None:
             self.current_state = None
-            self.set_state(
+            new_state = self.setup_new_state(
                 self.pending_transition["next_state"],
                 self.pending_transition["next_tile"],
-                self.pending_transition["previous_result"])
+                self.pending_transition["previous_result"]
+            )
             self.pending_transition = None
+            self.current_state = new_state
         #return None #Passback
 
 
@@ -91,11 +96,16 @@ class TurnFlow:
         #return self.transitions.get(trigger, None)
 
 
-    def state_finished(self, trigger: Triggers, result: tuple[Any, ...] | None, next_tile: Any | None = None) -> None:
+    def state_finished(
+            self,
+            trigger: Triggers,
+            result: tuple[Any, ...] | None,
+            next_tile: Any | None = None
+    ) -> None:
         """called when the state is finished"""
         next_transition = self.get_state_factory(trigger)
         if next_transition is None:
-            raise Exception(f"No such transition: {trigger}")
+            raise Exception(f"No such transition: {trigger}, exiting {self.current_state.name}")
         self.pending_transition: PendingTransition = {
             "next_state": next_transition,
             "previous_result": result,
@@ -105,14 +115,22 @@ class TurnFlow:
         #The state that called state_finished mast end(return) quickly
         #state returns to handle request, handle request changes the state
         #then returns to where it was called
+
+
     def is_wait_for_input(self) -> bool:
         """returns True if the state is waiting for input"""
-        return self.current_state.needs_input
+        output = True #Stops calls to handle request when no state is active
+        if self.current_state is not None:
+            output = self.current_state.needs_input
+        return output
 
     def handle_request(self, *args, **kwargs) -> None:
         """handles incoming requests"""
-        self.current_state.handle_request(*args, **kwargs)
-        self.change_state()
+        if self.current_state is not None:
+            self.current_state.handle_request(*args, **kwargs)
+            self.change_state()
+        else:
+            raise Exception(f"No current state")
 
 
     def get_service(self, name: ServiceNames) -> object | None:
