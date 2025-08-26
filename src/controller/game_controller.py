@@ -1,6 +1,4 @@
-from src.model.game_pieces import GamePieces
-from src.model.player import Player
-from src.model.turn import Turn
+from src.model import *
 from src.view.mock_ui import UserInterface
 
 class GameController:

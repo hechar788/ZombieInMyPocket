@@ -14,6 +14,7 @@ import os
 #else: #not testing
 from .player import Player
 from .game_pieces import GamePieces, DevCard, Tile
+from .turn import Turn
 #from .turn import TurnSetUp #,TurnFlow
 
 __all__ = [
@@ -21,4 +22,5 @@ __all__ = [
     'GamePieces',
     'DevCard',
     'Tile',
+    'Turn'
 ]
