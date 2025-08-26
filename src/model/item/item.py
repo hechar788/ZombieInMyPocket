@@ -33,7 +33,7 @@
 #     def combinable_with(self) -> list[ItemInfo]:
 #         return self._item_info.combinable_with
 
-from enums_and_types import ItemName, ItemType
+from src.enums_and_types import ItemName, ItemType
 from ..interfaces import IItem
 
 
