@@ -1,4 +1,5 @@
-from abc import ABC, abstractmethod, Callable
+from abc import ABC, abstractmethod
+from typing import Callable
 from src.model.player.player import Player
 
 class IEncounter(ABC):
