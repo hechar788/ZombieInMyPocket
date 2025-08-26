@@ -52,5 +52,5 @@ class IPlayer(ABC):
         pass
 
     @abstractmethod
-    def combine_items_from_inventory(self) -> None:
+    def combine_items_from_inventory(self) -> bool:
         pass
