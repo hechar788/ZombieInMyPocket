@@ -67,3 +67,7 @@ class IGamePieces(ABC):
     @abstractmethod
     def is_stuck(self) -> bool:
         pass
+
+    @abstractmethod
+    def get_tile_position(self, tile: ITile):
+        pass
