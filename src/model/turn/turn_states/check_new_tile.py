@@ -27,9 +27,9 @@ class CheckNewTile(State):
 
     def handle_request(self, *args, **kwargs):
         if self.is_new_tile(self.tile, self.selected_door):
-            self.trigger = Triggers.MOVE_PLAYER
-        else:
             self.trigger = Triggers.DRAW_TILE
+        else:
+            self.trigger = Triggers.MOVE_PLAYER
         super().handle_request()
 
     def exit(self):

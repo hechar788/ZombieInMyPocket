@@ -1,6 +1,7 @@
 from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
+from src.enums_and_types import Direction
 
 class SelectExit(State):
     """Ask the user to select an exit from a give tile"""
@@ -44,12 +45,16 @@ class SelectExit(State):
 
 
     def handle_request(self, selected_exit):
+        selected_exit = Direction(int(selected_exit))
         if self.args:
             current_tile, current_exit = self.args[0]
             #print(current_tile, current_exit)
             self.result = (self.result, selected_exit, current_tile, current_exit)
         else:
-            self.result = (self.result, selected_exit)
+            #moving back to an already placed tile
+            pass
+            #todo implment this plz
+            #self.result = (self.result, selected_exit)
         self.exit()
 
 

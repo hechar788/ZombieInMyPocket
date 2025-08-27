@@ -34,18 +34,19 @@ class PlaceTile(State):
 
     def can_place_tile(self):
         #temp
-        return True #override whilst CAN_PLACE_TILE isn't working
-        # return self.use_service(
-        #     ServiceNames.GAME_PIECES,
-        #     ServiceMethods.CAN_PLACE_TILE,
-        #     self.new_tile,
-        #     self.new_exit,
-        #     self.current_tile,
-        #     self.current_exit
-        # )
+        # return True #override whilst CAN_PLACE_TILE isn't working
+        return self.use_service(
+            ServiceNames.GAME_PIECES,
+            ServiceMethods.CAN_PLACE_TILE,
+            self.new_tile,
+            self.new_exit,
+            self.current_tile,
+            self.current_exit
+        )
 
     def handle_request(self, *arg, **kwarg):
         if self.can_place_tile():
+            #print('tile placed')
             self.place_tile()
             self.result = (self.new_tile, )
         else:
