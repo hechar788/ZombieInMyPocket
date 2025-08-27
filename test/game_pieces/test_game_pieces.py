@@ -117,6 +117,19 @@ class TestGamePieces(TestCase):
     #                                 (-1, 1), Rotation.ANTICLOCKWISE)
     #     self.assertTrue(self.game_pieces.is_stuck())
 
+    def test_get_tile_position(self):
+        self.assertTrue(self.game_pieces.can_place_tile(
+            self.bathroom_tile, Direction.NORTH,
+            self.game_pieces.get_tile((0, 0)), Direction.NORTH
+        ))
+        self.game_pieces.place_tile(
+            self.bathroom_tile, Direction.NORTH,
+            self.game_pieces.get_tile((0, 0)), Direction.NORTH
+        )
+        expected = (0, 1)
+        actual = self.game_pieces.get_tile_position(self.bathroom_tile)
+        self.assertTrue(expected, actual)
+
 
 if __name__ == '__main__':
     import unittest
