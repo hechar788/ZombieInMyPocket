@@ -68,7 +68,7 @@ class GamePieces(IGamePieces):
 
     def place_tile(self, new_tile: ITile, new_exit: Direction,
                    placed_tile: ITile, placed_tile_exit: Direction) -> None:
-        pass
+        self._board.place_tile(new_tile, new_exit, placed_tile, placed_tile_exit)
 
     def get_tile(self, position: Position) -> ITile | None:
         return self._board.get_tile(position)
