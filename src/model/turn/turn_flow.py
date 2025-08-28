@@ -42,7 +42,7 @@ class TurnFlow:
         # hold the active tile to make it easier to get the tile encounter
         self.active_tile: Any | None = None
 
-        #todo update states and context to use transition and maybe active tile
+        #todo update states and context to use transition_type and maybe active tile
         #self.transition_type = None
         #instead of having DEV_ENCOUNTER_END, ROOM_ENCOUNTER_END, etc
         #the context would use the transition_type to determine the next state

@@ -53,7 +53,6 @@ class PlaceTile(State):
             self.result = (
                 self.new_tile,
                 Triggers.NEW_TILE_EXIT,
-                self.new_exit,
                 self.current_tile,
                 self.current_exit
             )
