@@ -32,3 +32,6 @@ Quick to play, easy to learn
 It's a free print-and-play game you can download and make at home
 
 Think of it like a mini horror movie where you're the hero trying to save the day - but you only have until midnight to do it!
+
+
+#Alex Lind || Game_Status Component || Itteration 1 Implementation
