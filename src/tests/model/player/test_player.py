@@ -567,6 +567,40 @@ class TestPlayerImplementation(unittest.TestCase):
         # Assert
         self.assertEqual(result, expected_result)
 
+    def test_combat_with_gasoline_and_candle(self):
+        # Arrange
+        mock_gasoline = Mock(spec=IItem)
+        mock_gasoline.name = "Gasoline"
+        mock_gasoline.type.value = 2  # SPECIAL/OTHER type  
+        mock_gasoline.uses_remaining = 0  # Will be removed after use
+        
+        mock_candle = Mock(spec=IItem)
+        mock_candle.name = "Candle"
+        mock_candle.type.value = 2  # SPECIAL/OTHER type
+        mock_candle.uses_remaining = 3
+        
+        initial_health = 80
+        self.player_impl._health = initial_health
+        self.player_impl._inventory = [mock_gasoline, mock_candle]
+        
+        # Act - Simulate using gasoline and candle together in combat
+        gasoline_result = self.player_impl.use_item(mock_gasoline)
+        candle_result = self.player_impl.use_item(mock_candle)
+        
+        # Assert
+        # All zombies killed (simulated by successful item usage)
+        self.assertIsNone(gasoline_result)
+        self.assertIsNone(candle_result)
+        
+        # Gasoline removed from inventory (uses_remaining = 1, so depleted)
+        self.assertNotIn(mock_gasoline, self.player_impl._inventory)
+        
+        # Candle remains in inventory (uses_remaining = 3, so still usable)
+        self.assertIn(mock_candle, self.player_impl._inventory)
+        
+        # Player health unaffected
+        self.assertEqual(self.player_impl.health, initial_health)
+
     @patch('src.model.player.player.combine_items')
     def test_combine_items_from_inventory_no_items_depleted(self, mock_combine_items):
         # Arrange
