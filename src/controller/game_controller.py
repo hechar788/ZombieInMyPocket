@@ -7,7 +7,7 @@ from ..view.interfaces.i_ui import IUI
 import time
 
 class GameController:
-    def __init__(self, ui):
+    def __init__(self, ui: IUI):
         self.game_status = GameStatus()
         self.ui = ui
         self.the_set_up = TurnSetUp()
