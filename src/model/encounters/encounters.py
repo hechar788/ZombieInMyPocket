@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.model.player.player import Player
