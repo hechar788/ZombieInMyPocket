@@ -97,9 +97,9 @@ class Turn(ITurn):
             Triggers.NEW_TILE_EXIT:     StateNames.PLACE_TILE,
             Triggers.PLAYER_TILE_EXIT:  StateNames.CHECK_NEXT_TILE,
 
-            Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
+            #Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
             # ToDo update back to dev_encounters
-            #Triggers.START_ENCOUNTERS: StateNames.GET_COWER_ENCOUNTER,
+            Triggers.START_ENCOUNTERS: StateNames.GET_COWER_ENCOUNTER,
 
             Triggers.RUN_ENCOUNTER:         StateNames.RUN_ENCOUNTER,
             Triggers.DEV_ENCOUNTER_END:     StateNames.GET_TILE_ENCOUNTER,
