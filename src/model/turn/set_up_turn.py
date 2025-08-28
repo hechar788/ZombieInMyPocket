@@ -20,7 +20,7 @@ class TurnSetUp:
     """Sets up the turn flow, states and services"""
     def __init__(self):
         self.the_turn:TurnFlow = (
-            TurnFlow(self.get_services(), self.get_transitions(), self.get_turn_states()))
+            TurnFlow(self.get_services(), self.get_turn_states(), self.get_transitions()))
         self.the_turn.start() #Move the turn into the ready state
 
     def get_turn_flow(self):

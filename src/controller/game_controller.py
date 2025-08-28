@@ -1,4 +1,4 @@
-from ..model.turn import TurnSetUp
+from ..model.turn.set_up_turn import TurnSetUp
 from ..model.game_status.game_status import GameStatus
 from ..model.turn.turn_enums import ServiceNames
 from ..enums_and_types.enums import MessageCode
