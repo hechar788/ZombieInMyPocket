@@ -16,7 +16,6 @@ class PlaceTile(State):
 
 
     def enter(self, new_tile, new_exit, current_tile, current_exit):
-        self.trigger = Triggers.MOVE_PLAYER
         self.new_tile = new_tile
         self.new_exit = new_exit
         self.current_tile = current_tile
@@ -36,23 +35,25 @@ class PlaceTile(State):
 
     def can_place_tile(self):
         #temp
-        return True #override whilst CAN_PLACE_TILE isn't working
-        # return self.use_service(
-        #     ServiceNames.GAME_PIECES,
-        #     ServiceMethods.CAN_PLACE_TILE,
-        #     self.new_tile,
-        #     self.new_exit,
-        #     self.current_tile,
-        #     self.current_exit
-        # )
+        # return True #override whilst CAN_PLACE_TILE isn't working
+        return self.use_service(
+            ServiceNames.GAME_PIECES,
+            ServiceMethods.CAN_PLACE_TILE,
+            self.new_tile,
+            self.new_exit,
+            self.current_tile,
+            self.current_exit
+        )
 
     def handle_request(self, *arg, **kwarg):
         if self.can_place_tile():
+            self.trigger = Triggers.MOVE_PLAYER
             self.place_tile()
             self.result = (self.new_tile, )
             self.exit()
         else:
             raise Exception("Cannot place tile in this position")
+        #Exception logic handled in controller
 
     def get_input_options(self) -> Any:
         """Return the available rotations for placing the tile"""

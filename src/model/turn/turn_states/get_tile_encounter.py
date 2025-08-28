@@ -10,12 +10,14 @@ class GetTileEncounter(State):
         self.trigger = Triggers.RUN_ENCOUNTER
 
 
-    def get_tile_encounter(self, tile):
-        return self.use_service(
-            ServiceNames.GAME_PIECES,
-            ServiceMethods.GET_ENCOUNTER,
-            tile = tile
-        )
+    @staticmethod
+    def get_tile_encounter(tile):
+        return tile.get_tile_encounter()
+        # return self.use_service(
+        #     ServiceNames.GAME_PIECES,
+        #     ServiceMethods.GET_ENCOUNTER,
+        #     tile = tile
+        # )
 
     def handle_request(self, *arg, **kwarg):
         self.result = (

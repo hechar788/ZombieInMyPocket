@@ -13,6 +13,11 @@ class TestGamePieces(TestCase):
             (Direction.NORTH,),
             None, None)
 
+        self.storage_tile = Tile(
+            "Storage", False,
+            (Direction.NORTH,),
+            None, None)
+
         self.dining_room_tile = Tile(
             "Dining Room", False,
             (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST),
@@ -48,74 +53,129 @@ class TestGamePieces(TestCase):
         self.assertEqual(self.game_pieces.outdoor_tiles_remaining(), 7)
 
     def test_foyer_is_at_origin(self):
-        self.assertEqual(
-            self.game_pieces.get_tile((0, 0)).get_name(), "Foyer")
+        tile = self.game_pieces.get_tile((0, 0))
+        assert tile is not None
+        self.assertEqual(tile.get_name(), "Foyer")
 
     def test_can_add_upside_down_bathroom_above(self):
-        # self.assertTrue(self.game_pieces.can_place_tile(
-        #     self.bathroom_tile, (0, 1), (0, 0), Rotation.UPSIDE_DOWN
-        # ))
+
+        foyer = self.game_pieces.get_tile((0, 0))
+        assert foyer is not None
         self.assertTrue(self.game_pieces.can_place_tile(
             self.bathroom_tile, Direction.NORTH,
-            self.game_pieces.get_tile((0, 0)), Direction.NORTH
+            foyer, Direction.NORTH
         ))
 
-        # self.assertFalse(self.game_pieces.can_place_tile(
-        #     self.bathroom_tile, (0, 1), (0, 0), Rotation.NONE
-        # ))
-        # self.assertFalse(self.game_pieces.can_place_tile(
-        #     self.bathroom_tile, (0, 1), (0, 0), Rotation.CLOCKWISE
-        # ))
-        # self.assertFalse(self.game_pieces.can_place_tile(
-        #     self.bathroom_tile, (0, 1), (0, 0), Rotation.ANTICLOCKWISE
-        # ))
-        # self.game_pieces.place_tile(self.bathroom_tile,
-        #                             (0, 1), Rotation.UPSIDE_DOWN)
-        # self.assertEqual(
-        #     self.game_pieces.get_tile((0, 1)).get_name(), "Bathroom")
+        self.game_pieces.place_tile(
+            self.bathroom_tile, Direction.NORTH,
+            foyer, Direction.NORTH
+        )
 
-    # def test_can_not_go_out_front_door_to_garden(self):
-    #     self.game_pieces.place_tile(self.dining_room_tile,
-    #                                 (0, 1), Rotation.NONE)
-    #     self.assertTrue(self.game_pieces.can_place_tile(
-    #         self.bathroom_tile, (0, 2), (0, 1), Rotation.UPSIDE_DOWN
-    #     ))
-    #     self.assertFalse(self.game_pieces.can_place_tile(
-    #         self.garden_tile, (0, 2), (0, 1), Rotation.NONE
-    #     ))
+        bathroom = self.game_pieces.get_tile((0, 1))
+        assert bathroom is not None
+        expected = "Bathroom"
+        actual = bathroom.get_name()
+        self.assertEqual(expected, actual)
 
-    # def test_can_not_go_out_front_door_to_patio_not_rotated(self):
-    #     self.game_pieces.place_tile(self.dining_room_tile,
-    #                                 (0, 1), Rotation.NONE)
-    #     self.assertFalse(self.game_pieces.can_place_tile(
-    #         self.patio_tile, (0, 2), (0, 1), Rotation.NONE
-    #     ))
+    def test_can_not_go_out_front_door_to_indoors(self):
+        foyer = self.game_pieces.get_tile((0, 0))
+        assert foyer is not None
 
-    # def test_can_go_out_front_door_to_patio_upside_down(self):
-    #     self.game_pieces.place_tile(self.dining_room_tile,
-    #                                 (0, 1), Rotation.NONE)
-    #     self.assertTrue(self.game_pieces.can_place_tile(
-    #         self.patio_tile, (0, 2), (0, 1), Rotation.UPSIDE_DOWN
-    #     ))
+        self.game_pieces.place_tile(
+            self.dining_room_tile, Direction.SOUTH,
+            foyer, Direction.NORTH
+        )
+        self.assertFalse(self.game_pieces.can_place_tile(
+            self.bathroom_tile, Direction.NORTH,
+            self.dining_room_tile, Direction.NORTH
+        ))
 
-    # def test_is_stuck_starts_false(self):
-    #     self.assertFalse(self.game_pieces.is_stuck())
+    def test_can_not_go_out_front_door_to_garden(self):
+        foyer = self.game_pieces.get_tile((0, 0))
+        assert foyer is not None
 
-    # def test_is_stuck_is_true_with_bathroom_above(self):
-    #     self.game_pieces.place_tile(self.bathroom_tile,
-    #                                 (0, 1), Rotation.UPSIDE_DOWN)
-    #     self.assertTrue(self.game_pieces.is_stuck())
+        self.game_pieces.place_tile(
+            self.dining_room_tile, Direction.SOUTH,
+            foyer, Direction.NORTH
+        )
+        self.assertFalse(self.game_pieces.can_place_tile(
+            self.garden_tile, Direction.SOUTH,
+            self.dining_room_tile, Direction.NORTH
+        ))
 
-    # def test_complex_stuck_scenario(self):
-    #     self.game_pieces.place_tile(self.family_room_tile,
-    #                                 (0, 1), Rotation.UPSIDE_DOWN)
-    #     self.game_pieces.place_tile(self.bathroom_tile,
-    #                                 (1, 1), Rotation.CLOCKWISE)
+    def test_can_go_out_front_door_to_patio(self):
+        foyer = self.game_pieces.get_tile((0, 0))
+        assert foyer is not None
 
-    #     self.assertFalse(self.game_pieces.is_stuck())
-    #     self.game_pieces.place_tile(self.bathroom_tile,
-    #                                 (-1, 1), Rotation.ANTICLOCKWISE)
-    #     self.assertTrue(self.game_pieces.is_stuck())
+        self.game_pieces.place_tile(
+            self.dining_room_tile, Direction.SOUTH,
+            foyer, Direction.NORTH
+        )
+        self.assertTrue(self.game_pieces.can_place_tile(
+            self.patio_tile, Direction.NORTH,
+            self.dining_room_tile, Direction.NORTH
+        ))
+
+    def test_can_not_go_out_front_door_to_patio_not_rotated(self):
+        foyer = self.game_pieces.get_tile((0, 0))
+        assert foyer is not None
+
+        self.game_pieces.place_tile(
+            self.dining_room_tile, Direction.SOUTH,
+            foyer, Direction.NORTH
+        )
+        self.assertFalse(self.game_pieces.can_place_tile(
+            self.patio_tile, Direction.SOUTH,
+            self.dining_room_tile, Direction.NORTH
+        ))
+
+    def test_is_stuck_starts_false(self):
+        self.assertFalse(self.game_pieces.is_stuck())
+
+    def test_is_stuck_is_true_with_bathroom_above(self):
+        foyer = self.game_pieces.get_tile((0, 0))
+        assert foyer is not None
+        self.game_pieces.place_tile(
+            self.bathroom_tile, Direction.NORTH,
+            foyer, Direction.NORTH
+        )
+        self.assertTrue(self.game_pieces.is_stuck())
+
+    def test_complex_stuck_scenario(self):
+        foyer = self.game_pieces.get_tile((0, 0))
+        assert foyer is not None
+
+        self.game_pieces.place_tile(
+            self.family_room_tile, Direction.NORTH,
+            foyer, Direction.NORTH
+        )
+        self.game_pieces.place_tile(
+            self.bathroom_tile, Direction.NORTH,
+            self.family_room_tile, Direction.EAST
+        )
+
+        self.assertFalse(self.game_pieces.is_stuck())
+
+        self.game_pieces.place_tile(
+            self.storage_tile, Direction.NORTH,
+            self.family_room_tile, Direction.WEST
+        )
+        self.assertTrue(self.game_pieces.is_stuck())
+
+    def test_get_tile_position(self):
+        foyer = self.game_pieces.get_tile((0, 0))
+        assert foyer is not None
+        self.assertTrue(self.game_pieces.can_place_tile(
+            self.bathroom_tile, Direction.NORTH,
+            foyer, Direction.NORTH
+        ))
+        self.game_pieces.place_tile(
+            self.bathroom_tile, Direction.NORTH,
+            foyer, Direction.NORTH
+        )
+        expected = (0, 1)
+        actual = self.game_pieces.get_tile_position(self.bathroom_tile)
+        self.assertTrue(expected, actual)
 
 
 if __name__ == '__main__':

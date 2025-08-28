@@ -49,7 +49,7 @@ class TurnSetUp:
             Triggers.MOVE_PLAYER:           StateNames.MOVE_PLAYER,
 
             Triggers.NEW_TILE_EXIT:         StateNames.PLACE_TILE,
-            Triggers.PLAYER_TILE_EXIT:      StateNames.CHECK_NEW_TILE,
+            Triggers.PLAYER_TILE_EXIT:      StateNames.CHECK_NEXT_TILE,
 
             #Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
             #ToDo update back to dev_encounters
@@ -70,7 +70,7 @@ class TurnSetUp:
             StateNames.READY:               lambda : Ready(),
             StateNames.GET_PLAYER_TILE:     lambda: GetPlayerTile(),
             StateNames.SELECT_EXIT:         lambda : SelectExit(),
-            StateNames.CHECK_NEW_TILE:      lambda: CheckNewTile(),
+            StateNames.CHECK_NEXT_TILE:      lambda: CheckNextTile(),
             StateNames.DRAW_TILE:           lambda : DrawTile(),
             StateNames.PLACE_TILE:          lambda : PlaceTile(),
             StateNames.MOVE_PLAYER:         lambda : MovePlayer(),

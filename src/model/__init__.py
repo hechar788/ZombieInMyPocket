@@ -14,14 +14,13 @@ import os
 #else: #not testing
 from .player import Player
 from .game_pieces import GamePieces, DevCard, Tile
-from .turn import TurnSetUp #,TurnFlow
+from .turn import Turn
+#from .turn import TurnSetUp #,TurnFlow
 
 __all__ = [
     'Player',
     'GamePieces',
     'DevCard',
     'Tile',
-    'TurnSetUp',
-    #'TurnFlow',
-
+    'Turn'
 ]

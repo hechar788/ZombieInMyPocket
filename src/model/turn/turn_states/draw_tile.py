@@ -25,7 +25,7 @@ class DrawTile(State):
         super().handle_request()
 
     def exit(self):
-        self.result = (self.result, Triggers.NEW_TILE_EXIT, self.args)
+        self.result = (self.result, Triggers.NEW_TILE_EXIT, *self.args)
         super().exit()
 
     def get_input_options(self) -> Any:
