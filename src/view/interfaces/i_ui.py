@@ -8,8 +8,11 @@ class IUI(Protocol):
         """Display a message to the user."""
         ...
 
-    def display_game_state(self, player_health: int, player_attack: int, 
-                           current_time: str, items: list[str]) -> None:
+    def display_player_state(self, player_health: int, player_attack: int,
+                             items: list[str]) -> None:
+        """Display the current player state."""
+        ...
+    def display_game_state(self, tile, tile_position) -> None:
         """Display the current game state."""
         ...
 

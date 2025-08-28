@@ -25,11 +25,11 @@ class State(ABC):
         
     def get_input_options(self) -> Any:
         """Return the valid options for this state"""
-        return []
+        return [] #Hacky
 
     def get_prompt(self) -> str:
         """Return the prompt to show the user"""
-        return ""
+        return "" #Hacky
 
     @abstractmethod
     def enter(self, *args, **kwargs) -> bool:

@@ -30,7 +30,7 @@ class GameController:
 
 
     def _handle_input(self):
-        """Handle user input for the current turn state"""
+        """Dummy implementation for handling input - handle via view"""
 
         current_state = self.the_turn.current_state
         if current_state is None:
@@ -60,11 +60,18 @@ class GameController:
             self.game_status.clear_messages()
 
     def _update_full_state(self):
-        """Update the game display with current state"""
+        """""Update the game display with current state"""""
         player = self.the_turn.service[ServiceNames.PLAYER]
+        #game_pieces = self.the_turn.service[ServiceNames.GAME_PIECES]
+
+        '''  
         self.ui.display_game_state(
+            tile=game_pieces.get_tile(),
+            tile_position=game_pieces.get_tile_position(),
+        )'''
+
+        self.ui.display_player_state(
             player_health=player.get_health(),
             player_attack=player.get_attack_power(),
-            current_time="9:00 PM",  # TODO: Implement game time
             items=[item.name for item in player.get_inventory()]
         )

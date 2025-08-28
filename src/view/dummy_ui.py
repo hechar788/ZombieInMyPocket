@@ -10,16 +10,23 @@ class DummyUI(IUI):
     def display_message(self, message: str) -> None:
         print(message)
 
-    def display_game_state(self, player_health: int, player_attack: int, 
-                          current_time: str, items: list[str]) -> None:
+    def display_player_state(self, player_health: int, player_attack: int, 
+                             items: list[str]) -> None:
         """Display the current game state"""
         print("\n=== Game Status ===")
         print(f"Health: {player_health}")
         print(f"Attack Power: {player_attack}")
-        print(f"Time: {current_time}")
         if items:
             print("Items:", ", ".join(items))
         print("=================\n")
+
+
+    '''def display_game_state(self, tile, tile_position) -> None:
+        """Display the current game state."""
+        print("\n=== Game State ===")
+        print(f"Tile: {tile}")
+        print(f"Tile Position: {tile_position}")
+        print("=================\n")'''                                #Add typing
 
     def get_input(self, prompt: str, options: Any) -> str:
         """Get input from the user with validation"""
