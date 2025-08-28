@@ -1,3 +1,4 @@
+from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
 
@@ -45,9 +46,16 @@ class MovePlayer(State):
 
 
     def handle_request(self, *arg, **kwarg):
-
         self.move_player(self.get_tile_position(self.result))
-        super().handle_request()
+        self.exit()
+
+    def get_input_options(self) -> Any:
+        """No input options needed for moving player"""
+        return []
+
+    def get_prompt(self) -> str:
+        """No prompt needed for moving player"""
+        return "Moving player..."
 
 
     def exit(self):

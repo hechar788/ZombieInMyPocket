@@ -1,7 +1,9 @@
 """Places a tile"""
 
+from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
+from ....enums_and_types.enums import Rotation
 
 
 class PlaceTile(State):
@@ -48,10 +50,17 @@ class PlaceTile(State):
         if self.can_place_tile():
             self.place_tile()
             self.result = (self.new_tile, )
+            self.exit()
         else:
-            #todo go back to select exit state
-            raise Exception(f"invalid exit selection")
-        super().handle_request()
+            raise Exception("Cannot place tile in this position")
+
+    def get_input_options(self) -> Any:
+        """Return the available rotations for placing the tile"""
+        return list(Rotation)
+
+    def get_prompt(self) -> str:
+        """Return the prompt for tile placement"""
+        return f"Choose rotation for placing {self.new_tile.get_name() if self.new_tile else ''}"
 
 
     def exit(self):

@@ -10,17 +10,16 @@ class GetCowerEncounter(State):
     def enter(self):
         self.trigger = Triggers.RUN_ENCOUNTER
         self.needs_input = True
-        self.use_service(
-            ServiceNames.UI,
-            ServiceMethods.GET_INPUT,
-            prompt = 'Would you like to cower',
-            options = [Input_options.YES, Input_options.NO],
-            callback = self.get_request_handler()
-            )
 
     @staticmethod
     def get_cower_encounter():
         return encounters.CowerEncounter()
+
+    def get_input_options(self):
+        return [Input_options.YES, Input_options.NO]
+
+    def get_prompt(self):
+        return "Would you like to cower"
 
     def handle_request(self, selected_option):
         if selected_option == '0': #Input_options.YES.value:

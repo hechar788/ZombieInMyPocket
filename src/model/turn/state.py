@@ -22,6 +22,14 @@ class State(ABC):
 
     def get_request_handler(self):
         return self.context.handle_request
+        
+    def get_input_options(self) -> Any:
+        """Return the valid options for this state"""
+        return []
+
+    def get_prompt(self) -> str:
+        """Return the prompt to show the user"""
+        return ""
 
     @abstractmethod
     def enter(self, *args, **kwargs) -> bool:

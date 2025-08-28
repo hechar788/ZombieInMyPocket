@@ -33,6 +33,7 @@ class Player(IPlayer):
     def heal(self, amount: int) -> None:
         self.__player_impl.heal(amount)
 
+    @property
     def has_totem(self) -> bool:
         return self.__player_impl.has_totem
 

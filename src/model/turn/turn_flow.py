@@ -46,6 +46,24 @@ class TurnFlow:
         #instead of having DEV_ENCOUNTER_END, ROOM_ENCOUNTER_END, etc
         #the context would use the transition_type to determine the next state
 
+    def process(self) -> None:
+        """Process the current state if no input is needed"""
+        #Easier pathing for controller
+        if self.current_state and not self.is_wait_for_input():
+            self.current_state.handle_request()
+            self.change_state()
+
+    def handle_input(self, user_input: Any) -> None:
+        """Handle user input for the current state"""
+        if self.current_state and self.is_wait_for_input():
+            self.current_state.handle_request(user_input)
+            self.change_state()
+
+    def is_wait_for_input(self) -> bool:
+        """Returns True if the current state is waiting for input"""
+        if self.current_state is None:
+            return True  # Prevent processing when no state is active
+        return self.current_state.needs_input
 
     def start(self) -> None:
         start_state = self.get_state_factory(Triggers.READY)
@@ -116,13 +134,6 @@ class TurnFlow:
         #state returns to handle request, handle request changes the state
         #then returns to where it was called
 
-
-    def is_wait_for_input(self) -> bool:
-        """returns True if the state is waiting for input"""
-        output = True #Stops calls to handle request when no state is active
-        if self.current_state is not None:
-            output = self.current_state.needs_input
-        return output
 
     def handle_request(self, *args, **kwargs) -> None:
         """handles incoming requests"""

@@ -9,7 +9,6 @@ from src.model.turn.turn_states.get_dev_encounter import GetDevEncounter
 from src.model.turn.turn_states.get_tile_encounter import GetTileEncounter
 from src.model.turn.turn_states.move_player import MovePlayer
 from src.model.turn.turn_states.run_encounter import RunEncounter
-from src.view.mock_ui import UserInterface
 
 #imports from Turn
 from .turn_flow import TurnFlow #, state
@@ -32,8 +31,7 @@ class TurnSetUp:
         """Get the services used by the turn"""
         the_services = {
             ServiceNames.GAME_PIECES:   GamePieces(),
-            ServiceNames.PLAYER:        Player(),
-            ServiceNames.UI:            UserInterface()
+            ServiceNames.PLAYER:        Player()
         }
         return the_services
 

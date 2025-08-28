@@ -23,7 +23,6 @@ class SelectExit(State):
         self.needs_input = True
 
         self.get_tile_exits(a_tile)
-        self.get_user_selection(a_tile.get_name())
 
 
     def get_tile_exits (self, a_tile):
@@ -34,24 +33,24 @@ class SelectExit(State):
         #     self.result)
 
 
-    def get_user_selection(self, tile_name):
-        self.use_service(
-            ServiceNames.UI,
-            ServiceMethods.GET_INPUT,
-            prompt = f"Pick an exit on the {tile_name} tile",
-            options = self.tile_exits,
-            callback = self.get_request_handler())
+    
 
 
     def handle_request(self, selected_exit):
         if self.args:
             current_tile, current_exit = self.args[0]
-            #print(current_tile, current_exit)
             self.result = (self.result, selected_exit, current_tile, current_exit)
         else:
             self.result = (self.result, selected_exit)
         self.exit()
 
+    def get_input_options(self) -> Any:
+        """Return the available exits for the current tile"""
+        return self.tile_exits
+
+    def get_prompt(self) -> str:
+        """Return the prompt for exit selection"""
+        return f"Pick an exit on the {self.result.get_name() if self.result else ''} tile"
 
     def exit(self):
         super().exit()

@@ -1,3 +1,4 @@
+from typing import Any
 from ..state import State
 from ..turn_enums import ServiceNames, ServiceMethods, Triggers, StateNames
 
@@ -27,3 +28,10 @@ class DrawTile(State):
         self.result = (self.result, Triggers.NEW_TILE_EXIT, self.args)
         super().exit()
 
+    def get_input_options(self) -> Any:
+        """No input options needed for drawing tile"""
+        return []
+
+    def get_prompt(self) -> str:
+        """No prompt needed for drawing tile"""
+        return "Drawing a new tile..."
