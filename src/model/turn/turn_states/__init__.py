@@ -2,7 +2,7 @@ from .turn_ready import Ready
 from .select_exit import SelectExit
 from .get_player_tile import GetPlayerTile
 from .draw_tile import DrawTile
-from .check_new_tile import CheckNewTile
+from .check_next_tile import CheckNextTile
 from .place_tile import PlaceTile
 from .get_cower_encounter import GetCowerEncounter
 from .get_dev_encounter import GetDevEncounter
@@ -15,7 +15,7 @@ __all__ = [
     'SelectExit',
     'GetPlayerTile',
     'DrawTile',
-    'CheckNewTile',
+    'CheckNextTile',
     'PlaceTile',
     'GetCowerEncounter',
     'GetDevEncounter',

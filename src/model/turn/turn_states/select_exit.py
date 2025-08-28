@@ -7,54 +7,70 @@ class SelectExit(State):
     """Ask the user to select an exit from a give tile"""
     def __init__(self, name = StateNames.SELECT_EXIT):
         super().__init__(name)
-        self.tile_exits = []
-        self.args = None
+        #self.tile_exits = []
+        #self.args = None
+        self.tile = None
+        self.other_tile = None
+        self.other_exit = None
 
 
-    def enter(self,
-              a_tile: Any,
-              exit_mode: Triggers,
-              *arg
-              ):
-        self.result = a_tile
-        #to do refactor to make the exit mode trigger set in handle_request based on args
+    def enter(
+            self,
+            the_tile: Any,
+            exit_mode: Triggers,
+            other_tile = None,
+            other_exit = None
+    ):
+
+        self.tile = the_tile
         self.trigger = exit_mode
-        print(exit_mode)
-        self.args = arg or None
+
+        self.other_tile = other_tile
+        self.other_exit = other_exit
+
         self.needs_input = True
 
-        self.get_tile_exits(a_tile)
-        self.get_user_selection(a_tile.get_name())
+        self.get_user_selection()
 
 
-    def get_tile_exits (self, a_tile):
-        self.tile_exits = a_tile.get_exits()
+    def get_tile_exits (self):
+        return self.tile.get_exits()
         # self.tile_exits = self.use_service(
         #     ServiceNames.GAME_PIECES,
         #     ServiceMethods.GET_TILE_EXITS,
         #     self.result)
 
 
-    def get_user_selection(self, tile_name):
+    def get_user_selection(self):
+        tile_exits = self.get_tile_exits()
+        tile_name = self.tile.get_name(),
         self.use_service(
             ServiceNames.UI,
             ServiceMethods.GET_INPUT,
             prompt = f"Pick an exit on the {tile_name} tile",
-            options = self.tile_exits,
+            options = tile_exits,
             callback = self.get_request_handler())
 
 
     def handle_request(self, selected_exit):
         selected_exit = Direction(int(selected_exit))
-        if self.args:
-            current_tile, current_exit = self.args[0]
-            #print(current_tile, current_exit)
-            self.result = (self.result, selected_exit, current_tile, current_exit)
+
+        if self.trigger == Triggers.NEW_TILE_EXIT:
+            #selected an exit on a tile that is about to be placed
+            self.result = (
+                self.tile,
+                selected_exit,
+                self.other_tile,
+                self.other_exit
+            )
+            #expected next state PLACE_TILE
         else:
-            #moving back to an already placed tile
-            pass
-            #todo implment this plz
-            #self.result = (self.result, selected_exit)
+            #selected an exit on a tile that the player is on
+            self.result = (
+                self.tile,
+                selected_exit
+            )
+            #expected next state CHECK_NEXT_TILE
         self.exit()
 
 

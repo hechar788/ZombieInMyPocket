@@ -1,5 +1,4 @@
 """Places a tile"""
-
 from ..state import State
 from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
 
@@ -14,7 +13,6 @@ class PlaceTile(State):
 
 
     def enter(self, new_tile, new_exit, current_tile, current_exit):
-        self.trigger = Triggers.MOVE_PLAYER
         self.new_tile = new_tile
         self.new_exit = new_exit
         self.current_tile = current_tile
@@ -46,12 +44,20 @@ class PlaceTile(State):
 
     def handle_request(self, *arg, **kwarg):
         if self.can_place_tile():
-            #print('tile placed')
+            self.trigger = Triggers.MOVE_PLAYER
             self.place_tile()
             self.result = (self.new_tile, )
         else:
-            #todo go back to select exit state
-            raise Exception(f"invalid exit selection")
+            #go back to select exit state
+            self.trigger = Triggers.SELECT_EXIT
+            self.result = (
+                self.new_tile,
+                self.new_exit,
+                self.current_tile,
+                self.current_exit
+            )
+            #This could become an end less loop....
+
         super().handle_request()
 
 
