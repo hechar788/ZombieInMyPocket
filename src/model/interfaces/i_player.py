@@ -1,63 +1,56 @@
 from abc import ABC, abstractmethod
-from typing import List
-from ...enums_and_types.types import Position
+from src.enums_and_types.types import Position
 from .i_item import IItem
 
 
 class IPlayer(ABC):
-    """Abstract interface defining the contract for player objects in the game."""
-    
-    @property
+    """Abstract interface defining the contract for player objects in the game.
+    """
+
     @abstractmethod
-    def health(self) -> int:
-        pass
-    
-    @property
-    @abstractmethod
-    def attack_power(self) -> int:
+    def get_health(self) -> int:
         pass
 
-    @property
-    @abstractmethod
-    def has_totem(self) -> bool:
-        pass
-
-    @property
-    @abstractmethod
-    def inventory(self) -> List[IItem]:
-        pass
-    
-    @property
-    @abstractmethod
-    def position(self) -> Position:
-        pass
-    
-    @position.setter
-    @abstractmethod
-    def position(self, position: Position) -> None:
-        pass
-
-    
     @abstractmethod
     def take_damage(self, amount: int) -> None:
         pass
-    
+
     @abstractmethod
     def heal(self, amount: int) -> None:
         pass
 
     @abstractmethod
+    def get_attack_power(self) -> int:
+        pass
+
+    @abstractmethod
+    def has_totem(self) -> bool:
+        pass
+
+    @abstractmethod
+    def get_position(self) -> Position:
+        pass
+
+    @abstractmethod
+    def set_position(self, position: Position) -> None:
+        pass
+
+    @abstractmethod
     def use_item(self, item: IItem) -> None:
         pass
-    
+
+    @abstractmethod
+    def get_inventory(self) -> list[IItem]:
+        pass
+
     @abstractmethod
     def add_item_to_inventory(self, item: IItem) -> None:
         pass
-    
+
     @abstractmethod
     def remove_item_from_inventory(self, item: IItem) -> None:
         pass
-    
+
     @abstractmethod
-    def combine_items_from_inventory(self) -> None:
+    def combine_items_from_inventory(self) -> bool:
         pass
