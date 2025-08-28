@@ -68,28 +68,39 @@ class Board:
         new_tile.set_rotation(self.__get_rotation_to_align_door(
             new_exit, placed_tile_exit
         ))
-        result = self.__can_place_tile(new_tile, new_exit,
-                                       placed_tile, placed_tile_exit)
+        result = self.__can_place_tile(new_tile, placed_tile,
+                                       placed_tile_exit)
         new_tile.set_rotation(Rotation.NONE)
         return result
 
-    def __can_place_tile(self, new_tile: ITile, new_exit: Direction,
+    def __can_place_tile(self, new_tile: ITile,
                          placed_tile: ITile,
                          placed_tile_exit: Direction) -> bool:
         if not self.can_move_to_new_tile(placed_tile, placed_tile_exit):
             return False
+
+        reversed_dir = self.__reverse_direction(placed_tile_exit)
 
         # Handle indoor to outdoor
         if new_tile.is_outdoors() != placed_tile.is_outdoors():
 
             # Both tiles must have a front door
             if placed_tile.get_front_door() is None or \
-                    new_tile.get_front_door() is None:
+                    new_tile.get_front_door() is None or \
+                    placed_tile_exit != placed_tile.get_front_door() or \
+                    new_tile.get_front_door() != reversed_dir:
                 return False
 
+        # Stop from placing an indoor tile after the front door
+        if not placed_tile.is_outdoors() and \
+                placed_tile.get_front_door() is not None and \
+                placed_tile_exit is placed_tile.get_front_door() and \
+                not new_tile.is_outdoors():
+            return False
+
         # Make sure another door isn't facing a wall
-        for dir in [Direction.NORTH, Direction.EAST,
-                    Direction.SOUTH, Direction.WEST]:
+        for dir in {Direction.NORTH, Direction.EAST,
+                    Direction.SOUTH, Direction.WEST} - {reversed_dir}:
             pos = self.get_tile_position(placed_tile)
             pos = self.__move_position(pos, dir)
             if pos in self._all_tiles:
