@@ -2,6 +2,7 @@ from ..interfaces.i_dev_card import IDevCard
 from ..interfaces.i_game_pieces import IGamePieces
 from ..interfaces.i_tile import ITile
 from .tile import Tile
+from .dev_card import DevCard
 from .board import Board
 from src.enums_and_types import *
 from random import shuffle
@@ -14,7 +15,7 @@ class GamePieces(IGamePieces):
 
     def setup(self) -> None:
         self._board = Board()
-        self._dev_cards: list[IDevCard] = []
+        self._dev_cards: list[IDevCard] = DevCard.get_dev_cards()
         self._indoor_tiles: list[ITile] = Tile.get_indoor_tiles()
         self._outdoor_tiles: list[ITile] = Tile.get_outdoor_tiles()
 
@@ -45,17 +46,6 @@ class GamePieces(IGamePieces):
     def outdoor_tiles_remaining(self) -> int:
         return len(self._outdoor_tiles)
 
-    # def can_place_tile(self, tile: ITile,
-    #                    tile_position: Position,
-    #                    player_position: Position,
-    #                    rotation: Rotation) -> bool:
-    #     return self._board.can_place_tile(
-    #         tile, tile_position, player_position, rotation)
-
-    # def place_tile(self, tile: ITile, position: Position,
-    #                rotation: Rotation) -> None:
-    #     self._board.place_tile(tile, position, rotation)
-
     def can_place_tile(self, new_tile: ITile, new_exit: Direction,
                        placed_tile: ITile,
                        placed_tile_exit: Direction) -> bool:
@@ -68,14 +58,14 @@ class GamePieces(IGamePieces):
 
     def place_tile(self, new_tile: ITile, new_exit: Direction,
                    placed_tile: ITile, placed_tile_exit: Direction) -> None:
-        self._board.place_tile(new_tile, new_exit, placed_tile, placed_tile_exit)
+        self._board.place_tile(new_tile, new_exit, placed_tile,
+                               placed_tile_exit)
 
     def get_tile(self, position: Position) -> ITile | None:
         return self._board.get_tile(position)
 
-
     def is_stuck(self) -> bool:
         return self._board.is_stuck()
 
-    def get_tile_position(self, tile):
+    def get_tile_position(self, tile: ITile) -> Position:
         return self._board.get_tile_position(tile)
