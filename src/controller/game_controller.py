@@ -1,3 +1,4 @@
+from time import sleep
 from src.model import *
 from src.view.mock_ui import UserInterface
 
@@ -26,4 +27,5 @@ class GameController:
         while game_running:
             if not self.the_turn.is_wait_for_input():
                 self.the_turn.continue_turn()
-            # Else wait for a callback
+            else:
+                sleep(0.5)#Wait just a bit

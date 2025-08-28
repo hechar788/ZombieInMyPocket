@@ -1,7 +1,6 @@
 """Controls the flow of the turn by changing state"""
 from typing import Callable, Any, TYPE_CHECKING
 
-
 from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames, PendingTransition
 
 if TYPE_CHECKING:
