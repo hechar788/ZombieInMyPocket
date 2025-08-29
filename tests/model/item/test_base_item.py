@@ -1,6 +1,6 @@
 import unittest
 from src.model.item.base_item import (
-    BaseItem, ConsumableItem, WeaponItem, 
+    BaseItem, ConsumableItem, WeaponItem,
     CombinableItem, SpecialWeaponItem
 )
 from src.enums_and_types import ItemName, ItemType
@@ -19,7 +19,7 @@ class TestBaseItem(unittest.TestCase):
             uses=5,
             combinable_with=[ItemName.OIL]
         )
-        
+
         # Assert
         self.assertEqual(item.name, ItemName.MACHETE)
         self.assertEqual(item.description, "Test item")
@@ -37,10 +37,10 @@ class TestBaseItem(unittest.TestCase):
             item_type=ItemType.WEAPON,
             uses=3
         )
-        
+
         # Act
         should_be_discarded = item.use()
-        
+
         # Assert
         self.assertFalse(should_be_discarded)
         self.assertEqual(item.uses_remaining, 2)
@@ -53,10 +53,10 @@ class TestBaseItem(unittest.TestCase):
             item_type=ItemType.WEAPON,
             uses=1
         )
-        
+
         # Act
         should_be_discarded = item.use()
-        
+
         # Assert
         self.assertTrue(should_be_discarded)
         self.assertEqual(item.uses_remaining, 0)
@@ -69,10 +69,10 @@ class TestBaseItem(unittest.TestCase):
             item_type=ItemType.WEAPON,
             uses=0
         )
-        
+
         # Act
         should_be_discarded = item.use()
-        
+
         # Assert
         self.assertTrue(should_be_discarded)
         self.assertEqual(item.uses_remaining, 0)
@@ -86,11 +86,11 @@ class TestBaseItem(unittest.TestCase):
             item_type=ItemType.COMBINE_ONLY,
             combinable_with=original_list
         )
-        
+
         # Act
         returned_list = item.combinable_with
         returned_list.append(ItemName.CHAINSAW)
-        
+
         # Assert
         self.assertEqual(len(item.combinable_with), 2)
         self.assertNotEqual(returned_list, item.combinable_with)
@@ -106,7 +106,7 @@ class TestConsumableItem(unittest.TestCase):
             item_type=ItemType.HEALING,
             heal_amount=3
         )
-        
+
         # Assert
         self.assertEqual(item.name, ItemName.CAN_OF_SODA)
         self.assertEqual(item.type, ItemType.HEALING)
@@ -123,7 +123,7 @@ class TestConsumableItem(unittest.TestCase):
             heal_amount=2,
             combinable_with=[ItemName.OIL]
         )
-        
+
         # Assert
         self.assertEqual(item.combinable_with, [ItemName.OIL])
 
@@ -138,7 +138,7 @@ class TestWeaponItem(unittest.TestCase):
             attack_bonus=3,
             uses=10
         )
-        
+
         # Assert
         self.assertEqual(item.name, ItemName.MACHETE)
         self.assertEqual(item.type, ItemType.WEAPON)
@@ -153,7 +153,7 @@ class TestWeaponItem(unittest.TestCase):
             description="Sharp weapon",
             attack_bonus=2
         )
-        
+
         # Assert
         self.assertEqual(item.uses_remaining, 99)
 
@@ -166,7 +166,7 @@ class TestWeaponItem(unittest.TestCase):
             uses=2,
             combinable_with=[ItemName.GASOLINE]
         )
-        
+
         # Assert
         self.assertEqual(item.combinable_with, [ItemName.GASOLINE])
 
@@ -181,7 +181,7 @@ class TestCombinableItem(unittest.TestCase):
             item_type=ItemType.ESCAPE,
             combinable_with=[ItemName.CANDLE]
         )
-        
+
         # Assert
         self.assertEqual(item.name, ItemName.OIL)
         self.assertEqual(item.type, ItemType.ESCAPE)
@@ -202,7 +202,7 @@ class TestSpecialWeaponItem(unittest.TestCase):
             uses=2,
             combinable_with=[ItemName.GASOLINE]
         )
-        
+
         # Assert
         self.assertEqual(item.name, ItemName.CHAINSAW)
         self.assertEqual(item.type, ItemType.WEAPON)
@@ -218,10 +218,10 @@ class TestSpecialWeaponItem(unittest.TestCase):
             attack_bonus=3,
             uses=2
         )
-        
+
         # Act
         item.add_uses(3)
-        
+
         # Assert
         self.assertEqual(item.uses_remaining, 5)
 
@@ -233,11 +233,11 @@ class TestSpecialWeaponItem(unittest.TestCase):
             attack_bonus=3,
             uses=1
         )
-        
+
         # Act
         item.add_uses(2)
         item.add_uses(1)
-        
+
         # Assert
         self.assertEqual(item.uses_remaining, 4)
 
@@ -249,12 +249,12 @@ class TestSpecialWeaponItem(unittest.TestCase):
             attack_bonus=3,
             uses=2
         )
-        
+
         # Act
         item.use()  # 2 -> 1
         item.add_uses(3)  # 1 -> 4
         item.use()  # 4 -> 3
-        
+
         # Assert
         self.assertEqual(item.uses_remaining, 3)
 

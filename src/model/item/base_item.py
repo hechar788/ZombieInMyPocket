@@ -5,8 +5,9 @@ from ..interfaces import IItem
 
 class BaseItem(IItem):
     def __init__(self, name: ItemName, description: str, item_type: ItemType,
-                 attack_bonus: int = 0, heal_amount: int = 0, 
-                 uses: int = 1, combinable_with: Optional[list[ItemName]] = None) -> None:
+                 attack_bonus: int = 0, heal_amount: int = 0,
+                 uses: int = 1,
+                 combinable_with: Optional[list[ItemName]] = None) -> None:
         self._name = name
         self._description = description
         self._type = item_type
@@ -47,32 +48,34 @@ class BaseItem(IItem):
     def use(self) -> bool:
         if self._uses_remaining <= 0:
             return True
-        
+
         self._uses_remaining -= 1
         return self._uses_remaining <= 0
 
 
 class ConsumableItem(BaseItem):
     def __init__(self, name: ItemName, description: str, item_type: ItemType,
-                 heal_amount: int = 0, combinable_with: Optional[list[ItemName]] = None) -> None:
-        super().__init__(name, description, item_type, 
-                        heal_amount=heal_amount, uses=1, 
-                        combinable_with=combinable_with)
+                 heal_amount: int = 0,
+                 combinable_with: Optional[list[ItemName]] = None) -> None:
+        super().__init__(name, description, item_type,
+                         heal_amount=heal_amount, uses=1,
+                         combinable_with=combinable_with)
 
 
 class WeaponItem(BaseItem):
     def __init__(self, name: ItemName, description: str, attack_bonus: int,
-                 uses: int = 99, combinable_with: Optional[list[ItemName]] = None) -> None:
-        super().__init__(name, description, ItemType.WEAPON, 
-                        attack_bonus=attack_bonus, uses=uses,
-                        combinable_with=combinable_with)
+                 uses: int = 99,
+                 combinable_with: Optional[list[ItemName]] = None) -> None:
+        super().__init__(name, description, ItemType.WEAPON,
+                         attack_bonus=attack_bonus, uses=uses,
+                         combinable_with=combinable_with)
 
 
 class CombinableItem(BaseItem):
     def __init__(self, name: ItemName, description: str, item_type: ItemType,
                  combinable_with: list[ItemName]) -> None:
         super().__init__(name, description, item_type, uses=1,
-                        combinable_with=combinable_with)
+                         combinable_with=combinable_with)
 
 
 class SpecialWeaponItem(WeaponItem):

@@ -1,5 +1,6 @@
 import unittest
-from src.model.item.item_config import ItemConfig, ITEM_CONFIGS, GASOLINE_CHAINSAW_USES
+from src.model.item.item_config import (ItemConfig, ITEM_CONFIGS,
+                                        GASOLINE_CHAINSAW_USES)
 from src.enums_and_types import ItemName, ItemType
 
 
@@ -12,7 +13,7 @@ class TestItemConfig(unittest.TestCase):
             description="Sharp blade",
             item_type=ItemType.WEAPON
         )
-        
+
         # Assert
         self.assertEqual(config.name, ItemName.MACHETE)
         self.assertEqual(config.description, "Sharp blade")
@@ -33,7 +34,7 @@ class TestItemConfig(unittest.TestCase):
             uses=2,
             combinable_with=[ItemName.GASOLINE]
         )
-        
+
         # Assert
         self.assertEqual(config.name, ItemName.CHAINSAW)
         self.assertEqual(config.description, "Motorized weapon")
@@ -51,7 +52,7 @@ class TestItemConfig(unittest.TestCase):
             item_type=ItemType.WEAPON,
             combinable_with=None
         )
-        
+
         # Assert
         self.assertEqual(config.combinable_with, [])
 
@@ -61,7 +62,7 @@ class TestItemConfigs(unittest.TestCase):
     def test_all_item_names_have_configs(self):
         # Arrange
         all_item_names = list(ItemName)
-        
+
         # Act & Assert
         for item_name in all_item_names:
             with self.subTest(item=item_name):
@@ -71,14 +72,14 @@ class TestItemConfigs(unittest.TestCase):
         # Arrange & Act
         config_count = len(ITEM_CONFIGS)
         item_name_count = len(ItemName)
-        
+
         # Assert
         self.assertEqual(config_count, item_name_count)
 
     def test_oil_config(self):
         # Arrange & Act
         config = ITEM_CONFIGS[ItemName.OIL]
-        
+
         # Assert
         self.assertEqual(config.name, ItemName.OIL)
         self.assertEqual(config.item_type, ItemType.ESCAPE)
@@ -91,17 +92,18 @@ class TestItemConfigs(unittest.TestCase):
     def test_gasoline_config(self):
         # Arrange & Act
         config = ITEM_CONFIGS[ItemName.GASOLINE]
-        
+
         # Assert
         self.assertEqual(config.name, ItemName.GASOLINE)
         self.assertEqual(config.item_type, ItemType.COMBINE_ONLY)
-        self.assertEqual(config.combinable_with, [ItemName.CANDLE, ItemName.CHAINSAW])
+        self.assertEqual(config.combinable_with,
+                         [ItemName.CANDLE, ItemName.CHAINSAW])
         self.assertIn("Combine with Candle", config.description)
 
     def test_chainsaw_config(self):
         # Arrange & Act
         config = ITEM_CONFIGS[ItemName.CHAINSAW]
-        
+
         # Assert
         self.assertEqual(config.name, ItemName.CHAINSAW)
         self.assertEqual(config.item_type, ItemType.WEAPON)
@@ -113,7 +115,7 @@ class TestItemConfigs(unittest.TestCase):
     def test_can_of_soda_config(self):
         # Arrange & Act
         config = ITEM_CONFIGS[ItemName.CAN_OF_SODA]
-        
+
         # Assert
         self.assertEqual(config.name, ItemName.CAN_OF_SODA)
         self.assertEqual(config.item_type, ItemType.HEALING)
@@ -124,11 +126,12 @@ class TestItemConfigs(unittest.TestCase):
     def test_candle_config(self):
         # Arrange & Act
         config = ITEM_CONFIGS[ItemName.CANDLE]
-        
+
         # Assert
         self.assertEqual(config.name, ItemName.CANDLE)
         self.assertEqual(config.item_type, ItemType.COMBINE_ONLY)
-        self.assertEqual(config.combinable_with, [ItemName.OIL, ItemName.GASOLINE])
+        self.assertEqual(config.combinable_with,
+                         [ItemName.OIL, ItemName.GASOLINE])
         self.assertIn("Combine with Oil or Gasoline", config.description)
 
     def test_weapon_configs(self):
@@ -140,7 +143,7 @@ class TestItemConfigs(unittest.TestCase):
             (ItemName.MACHETE, 2),
             (ItemName.CHAINSAW, 3)
         ]
-        
+
         # Act & Assert
         for weapon_name, expected_attack in weapon_configs:
             with self.subTest(weapon=weapon_name):
@@ -160,8 +163,9 @@ class TestItemConfigs(unittest.TestCase):
 
     def test_all_configs_have_valid_types(self):
         # Arrange
-        valid_types = [ItemType.WEAPON, ItemType.HEALING, ItemType.COMBINE_ONLY, ItemType.ESCAPE]
-        
+        valid_types = [ItemType.WEAPON, ItemType.HEALING,
+                       ItemType.COMBINE_ONLY, ItemType.ESCAPE]
+
         # Act & Assert
         for item_name, config in ITEM_CONFIGS.items():
             with self.subTest(item=item_name):
@@ -175,7 +179,7 @@ class TestItemConfigs(unittest.TestCase):
     def test_combinable_items_reference_existing_items(self):
         # Arrange
         all_item_names = set(ItemName)
-        
+
         # Act & Assert
         for item_name, config in ITEM_CONFIGS.items():
             with self.subTest(item=item_name):
@@ -186,11 +190,15 @@ class TestItemConfigs(unittest.TestCase):
         # Arrange & Act & Assert
         for item_name, config in ITEM_CONFIGS.items():
             for combinable_item_name in config.combinable_with:
-                with self.subTest(item=item_name, combinable=combinable_item_name):
+                with self.subTest(item=item_name,
+                                  combinable=combinable_item_name):
                     combinable_config = ITEM_CONFIGS[combinable_item_name]
-                    self.assertIn(item_name, combinable_config.combinable_with,
-                                f"{item_name} can combine with {combinable_item_name}, "
-                                f"but {combinable_item_name} cannot combine with {item_name}")
+                    self.assertIn(
+                        item_name, combinable_config.combinable_with,
+                        f"{item_name} can combine with "
+                        f"{combinable_item_name}, "
+                        f"but {combinable_item_name} cannot combine with "
+                        f"{item_name}")
 
 
 if __name__ == '__main__':

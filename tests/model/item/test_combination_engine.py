@@ -10,10 +10,10 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         candle = get_item(ItemName.CANDLE)
         oil = get_item(ItemName.OIL)
-        
+
         # Act
         result = combine_items(candle, oil)
-        
+
         # Assert
         self.assertTrue(result)
         self.assertEqual(candle.uses_remaining, 0)
@@ -23,10 +23,10 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         candle = get_item(ItemName.CANDLE)
         gasoline = get_item(ItemName.GASOLINE)
-        
+
         # Act
         result = combine_items(candle, gasoline)
-        
+
         # Assert
         self.assertTrue(result)
         self.assertEqual(candle.uses_remaining, 0)
@@ -36,10 +36,10 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         oil = get_item(ItemName.OIL)
         candle = get_item(ItemName.CANDLE)
-        
+
         # Act
         result = combine_items(oil, candle)
-        
+
         # Assert
         self.assertTrue(result)
         self.assertEqual(oil.uses_remaining, 0)
@@ -49,10 +49,10 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         gasoline = get_item(ItemName.GASOLINE)
         candle = get_item(ItemName.CANDLE)
-        
+
         # Act
         result = combine_items(gasoline, candle)
-        
+
         # Assert
         self.assertTrue(result)
         self.assertEqual(gasoline.uses_remaining, 0)
@@ -63,10 +63,10 @@ class TestCombinationEngine(unittest.TestCase):
         chainsaw = get_item(ItemName.CHAINSAW)
         gasoline = get_item(ItemName.GASOLINE)
         initial_chainsaw_uses = chainsaw.uses_remaining
-        
+
         # Act
         result = combine_items(chainsaw, gasoline)
-        
+
         # Assert
         self.assertFalse(result)  # Doesn't kill all zombies
         self.assertEqual(chainsaw.uses_remaining, initial_chainsaw_uses + 2)
@@ -77,10 +77,10 @@ class TestCombinationEngine(unittest.TestCase):
         gasoline = get_item(ItemName.GASOLINE)
         chainsaw = get_item(ItemName.CHAINSAW)
         initial_chainsaw_uses = chainsaw.uses_remaining
-        
+
         # Act
         result = combine_items(gasoline, chainsaw)
-        
+
         # Assert
         self.assertFalse(result)  # Doesn't kill all zombies
         self.assertEqual(chainsaw.uses_remaining, initial_chainsaw_uses + 2)
@@ -90,7 +90,7 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         chainsaw = get_item(ItemName.CHAINSAW)
         oil = get_item(ItemName.OIL)
-        
+
         # Act & Assert
         with self.assertRaises(ValueError):
             combine_items(chainsaw, oil)
@@ -99,7 +99,7 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         machete = get_item(ItemName.MACHETE)
         golf_club = get_item(ItemName.GOLF_CLUB)
-        
+
         # Act & Assert
         with self.assertRaises(ValueError):
             combine_items(machete, golf_club)
@@ -107,7 +107,7 @@ class TestCombinationEngine(unittest.TestCase):
     def test_combine_item_with_itself_raises_error(self):
         # Arrange
         candle = get_item(ItemName.CANDLE)
-        
+
         # Act & Assert
         with self.assertRaises(ValueError):
             combine_items(candle, candle)
@@ -116,7 +116,7 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         soda = get_item(ItemName.CAN_OF_SODA)
         candle = get_item(ItemName.CANDLE)
-        
+
         # Act & Assert
         with self.assertRaises(ValueError):
             combine_items(soda, candle)
@@ -127,11 +127,11 @@ class TestCombinationEngine(unittest.TestCase):
         gasoline1 = get_item(ItemName.GASOLINE)
         gasoline2 = get_item(ItemName.GASOLINE)
         initial_uses = chainsaw.uses_remaining
-        
+
         # Act
         combine_items(chainsaw, gasoline1)
         combine_items(chainsaw, gasoline2)
-        
+
         # Assert
         self.assertEqual(chainsaw.uses_remaining, initial_uses + 4)
         self.assertEqual(gasoline1.uses_remaining, 0)
@@ -141,11 +141,11 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         chainsaw = get_item(ItemName.CHAINSAW)
         initial_uses = chainsaw.uses_remaining
-        
+
         # Act
         if isinstance(chainsaw, SpecialWeaponItem):
             chainsaw.add_uses(3)
-        
+
         # Assert
         self.assertEqual(chainsaw.uses_remaining, initial_uses + 3)
 
@@ -153,15 +153,15 @@ class TestCombinationEngine(unittest.TestCase):
         # Arrange
         candle = get_item(ItemName.CANDLE)
         oil = get_item(ItemName.OIL)
-        
+
         original_candle_name = candle.name
         original_candle_type = candle.type
         original_oil_name = oil.name
         original_oil_type = oil.type
-        
+
         # Act
         combine_items(candle, oil)
-        
+
         # Assert - Properties should remain unchanged
         self.assertEqual(candle.name, original_candle_name)
         self.assertEqual(candle.type, original_candle_type)

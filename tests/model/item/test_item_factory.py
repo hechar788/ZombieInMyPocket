@@ -1,6 +1,7 @@
 import unittest
 from src.model.item import get_item, get_all_items
-from src.model.item.base_item import ConsumableItem, WeaponItem, CombinableItem, SpecialWeaponItem
+from src.model.item.base_item import (ConsumableItem, WeaponItem,
+                                      CombinableItem, SpecialWeaponItem)
 from src.enums_and_types import ItemName, ItemType
 
 
@@ -9,7 +10,7 @@ class TestItemFactory(unittest.TestCase):
     def test_get_item_chainsaw_returns_special_weapon(self):
         # Arrange & Act
         item = get_item(ItemName.CHAINSAW)
-        
+
         # Assert
         self.assertIsInstance(item, SpecialWeaponItem)
         self.assertEqual(item.name, ItemName.CHAINSAW)
@@ -21,7 +22,7 @@ class TestItemFactory(unittest.TestCase):
     def test_get_item_can_of_soda_returns_consumable(self):
         # Arrange & Act
         item = get_item(ItemName.CAN_OF_SODA)
-        
+
         # Assert
         self.assertIsInstance(item, ConsumableItem)
         self.assertEqual(item.name, ItemName.CAN_OF_SODA)
@@ -32,7 +33,7 @@ class TestItemFactory(unittest.TestCase):
     def test_get_item_machete_returns_weapon(self):
         # Arrange & Act
         item = get_item(ItemName.MACHETE)
-        
+
         # Assert
         self.assertIsInstance(item, WeaponItem)
         self.assertEqual(item.name, ItemName.MACHETE)
@@ -43,7 +44,7 @@ class TestItemFactory(unittest.TestCase):
     def test_get_item_oil_returns_combinable(self):
         # Arrange & Act
         item = get_item(ItemName.OIL)
-        
+
         # Assert
         self.assertIsInstance(item, CombinableItem)
         self.assertEqual(item.name, ItemName.OIL)
@@ -54,7 +55,7 @@ class TestItemFactory(unittest.TestCase):
     def test_get_item_candle_returns_combinable(self):
         # Arrange & Act
         item = get_item(ItemName.CANDLE)
-        
+
         # Assert
         self.assertIsInstance(item, CombinableItem)
         self.assertEqual(item.name, ItemName.CANDLE)
@@ -65,7 +66,7 @@ class TestItemFactory(unittest.TestCase):
     def test_get_item_gasoline_returns_combinable(self):
         # Arrange & Act
         item = get_item(ItemName.GASOLINE)
-        
+
         # Assert
         self.assertIsInstance(item, CombinableItem)
         self.assertEqual(item.name, ItemName.GASOLINE)
@@ -82,7 +83,7 @@ class TestItemFactory(unittest.TestCase):
             ItemName.MACHETE,
             ItemName.CHAINSAW
         ]
-        
+
         # Act & Assert
         for weapon_name in weapon_names:
             with self.subTest(weapon=weapon_name):
@@ -93,11 +94,11 @@ class TestItemFactory(unittest.TestCase):
     def test_get_all_items_returns_all_nine_items(self):
         # Arrange & Act
         all_items = get_all_items()
-        
+
         # Assert
         self.assertEqual(len(all_items), 9)
         item_names = [item.name for item in all_items]
-        
+
         expected_names = [
             ItemName.OIL,
             ItemName.GASOLINE,
@@ -109,7 +110,7 @@ class TestItemFactory(unittest.TestCase):
             ItemName.CHAINSAW,
             ItemName.MACHETE
         ]
-        
+
         for expected_name in expected_names:
             self.assertIn(expected_name, item_names)
 
@@ -117,10 +118,10 @@ class TestItemFactory(unittest.TestCase):
         # Arrange & Act
         all_items_1 = get_all_items()
         all_items_2 = get_all_items()
-        
+
         # Assert
         self.assertEqual(len(all_items_1), len(all_items_2))
-        
+
         # Each call should create new instances
         for i in range(len(all_items_1)):
             self.assertIsNot(all_items_1[i], all_items_2[i])
@@ -130,7 +131,7 @@ class TestItemFactory(unittest.TestCase):
         # Arrange & Act
         item1 = get_item(ItemName.CHAINSAW)
         item2 = get_item(ItemName.CHAINSAW)
-        
+
         # Assert
         self.assertIsNot(item1, item2)
         self.assertEqual(item1.name, item2.name)
