@@ -11,7 +11,8 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         the_services = self.create_mock_services()
         the_transitions = self.create_mock_transitions()
-        self.turn_flow = TurnFlow(the_services, the_transitions)
+        the_state = self.create_mock_states()
+        self.turn_flow = TurnFlow(the_services, the_state, the_transitions)
 
     def create_mock_services(self):
         #mock UI
@@ -27,7 +28,12 @@ class MyTestCase(unittest.TestCase):
 
         return {ServiceNames.UI:mock_ui, ServiceNames.GAME_PIECES:self.mock_game_pieces}
 
-    def create_mock_state(self, name, result=None, trigger=None):
+    def create_mock_states(self):
+        pass
+
+
+    @staticmethod
+    def create_mock_state(name, result=None, trigger=None):
         # Create a mock that follows the State interface
         mock_state = create_autospec(State, instance=True)
 
@@ -73,19 +79,19 @@ class MyTestCase(unittest.TestCase):
     def test_starting_state_bad_day(self):
         with self.assertRaises(Exception):
             self.turn_flow.start()
-        self.assertEqual(self.turn_flow.current_state, None)
+        self.assertEqual(self.turn_flow._current_state, None)
 
     def test_starting_happy_day(self):
-        self.turn_flow.register_transition(Triggers.READY, Mock(return_value=self.create_ready_state()))
+        #self.turn_flow.register_transition(Triggers.READY, Mock(return_value=self.create_ready_state()))
         self.assertEqual(self.turn_flow.start(), True)
-        self.assertEqual(self.turn_flow.current_state.name, StateNames.READY)
+        self.assertEqual(self.turn_flow._current_state.name, StateNames.READY)
 
     def test_calling_states(self):
-        self.turn_flow.register_transition(Triggers.READY, Mock(return_value=self.create_ready_state()))
+        #self.turn_flow.register_transition(Triggers.READY, Mock(return_value=self.create_ready_state()))
         self.turn_flow.start()
-        self.assertEqual(self.turn_flow.current_state.name, StateNames.READY)
+        self.assertEqual(self.turn_flow._current_state.name, StateNames.READY)
         self.turn_flow.handle_request()
-        self.assertEqual(self.turn_flow.current_state.name, StateNames.EXIT_ROOM)
+        self.assertEqual(self.turn_flow._current_state.name, StateNames.EXIT_ROOM)
         self.mock_game_pieces.get_tile_doors.assert_called()
 
 

@@ -12,15 +12,27 @@ class State(ABC):
     @abstractmethod
     def __init__(self, name: StateNames) -> None:
         self.name: StateNames = name
-        self.result: tuple[Any] | None = None
+        self.result: tuple[Any, ...] | None = None
         self.trigger: Triggers | None = None
         self.context: TurnFlow | None = None #none should be assigned before exiting to help with clean up #TurnFlow
         self.needs_input: bool = False
 
     def use_service(self, service: ServiceNames, method: ServiceMethods, *args, **kwargs):
+        """
+        Calls a given method from a given service via the context
+        Args:
+            service: The service to call.
+            method: The method to call.
+            *args: Additional arguments passed to the method.
+            **kwargs: Additional keyword arguments passed to the method.
+            """
         return self.context.call_service_method(service, method, *args, **kwargs)
 
     def get_request_handler(self):
+        """
+        Gets the context request handler,
+        only to be used as a callback passed to a service
+         """
         return self.context.handle_request
 
     @abstractmethod
@@ -35,9 +47,6 @@ class State(ABC):
     def handle_request(self, *args, **kwargs):
         """handles incoming requests in a way that is unique to this state"""
         self.exit()
-        # raise NotImplementedError(
-        #     f"{self.__class__.__name__} does not implement handle_request"
-        # )
 
     @abstractmethod
     def exit(self):
