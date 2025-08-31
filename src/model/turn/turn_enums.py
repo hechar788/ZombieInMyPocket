@@ -38,8 +38,7 @@ class StateNames(Enum):
     GET_TILE_ENCOUNTER = "get_tile_encounter"
     GET_COWER_ENCOUNTER = "get_cower_encounter"
     RUN_ENCOUNTER = "run_encounter"
-    #testing
-    TEST_STATE = "test_state"
+
 
 #Services
 class ServiceNames(Enum):

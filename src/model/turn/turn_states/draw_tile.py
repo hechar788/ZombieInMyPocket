@@ -16,14 +16,14 @@ class DrawTile(State):
 
 
     def handle_request(self):
-        self.result = self.use_service(
+        the_new_tile = self.use_service(
             #todo check indoor/outdoor in service
             ServiceNames.GAME_PIECES,
             ServiceMethods.DRAW_TILE,
         )
+        self.result = (the_new_tile, Triggers.NEW_TILE_EXIT, *self.args)
         super().handle_request()
 
     def exit(self):
-        self.result = (self.result, Triggers.NEW_TILE_EXIT, *self.args)
         super().exit()
 

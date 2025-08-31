@@ -9,9 +9,9 @@ class SelectExit(State):
         super().__init__(name)
         #self.tile_exits = []
         #self.args = None
-        self.tile = None
-        self.other_tile = None
-        self.other_exit = None
+        self._tile = None
+        self._other_tile = None
+        self._other_exit = None
 
 
     def enter(
@@ -22,11 +22,11 @@ class SelectExit(State):
             other_exit = None
     ):
 
-        self.tile = the_tile
+        self._tile = the_tile
         self.trigger = exit_mode
 
-        self.other_tile = other_tile
-        self.other_exit = other_exit
+        self._other_tile = other_tile
+        self._other_exit = other_exit
 
         self.needs_input = True
 
@@ -34,7 +34,7 @@ class SelectExit(State):
 
 
     def get_tile_exits (self):
-        return self.tile.get_exits()
+        return self._tile.get_exits()
         # self.tile_exits = self.use_service(
         #     ServiceNames.GAME_PIECES,
         #     ServiceMethods.GET_TILE_EXITS,
@@ -43,7 +43,7 @@ class SelectExit(State):
 
     def get_user_selection(self):
         tile_exits = self.get_tile_exits()
-        tile_name = self.tile.get_name(),
+        tile_name = self._tile.get_name(),
         self.use_service(
             ServiceNames.UI,
             ServiceMethods.GET_INPUT,
@@ -58,16 +58,16 @@ class SelectExit(State):
         if self.trigger == Triggers.NEW_TILE_EXIT:
             #selected an exit on a tile that is about to be placed
             self.result = (
-                self.tile,
+                self._tile,
                 selected_exit,
-                self.other_tile,
-                self.other_exit
+                self._other_tile,
+                self._other_exit
             )
             #expected next state PLACE_TILE
         else:
             #selected an exit on a tile that the player is on
             self.result = (
-                self.tile,
+                self._tile,
                 selected_exit
             )
             #expected next state CHECK_NEXT_TILE

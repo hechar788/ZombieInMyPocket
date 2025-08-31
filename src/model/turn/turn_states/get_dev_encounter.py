@@ -11,14 +11,14 @@ class GetDevEncounter(State):
         self.trigger = Triggers.RUN_ENCOUNTER
 
     
-    def get_dev_card(self):
+    def _get_dev_card(self):
         return self.use_service(
             ServiceNames.GAME_PIECES,
             ServiceMethods.DRAW_DEV_CARD
         )
 
     @staticmethod
-    def get_dev_encounter(dev_card):
+    def _get_dev_encounter(dev_card):
         dev_card.get_encounter(9) #todo use game time
         # return self.use_service(
         #     ServiceNames.GAME_PIECES,
@@ -27,9 +27,9 @@ class GetDevEncounter(State):
         # )
     
     def handle_request(self):
-        the_dev_card = self.get_dev_card()
+        the_dev_card = self._get_dev_card()
         self.result = (
-            self.get_dev_encounter(the_dev_card),
+            self._get_dev_encounter(the_dev_card),
             Triggers.DEV_ENCOUNTER_END
         )
         super().handle_request()

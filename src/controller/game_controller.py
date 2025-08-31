@@ -25,7 +25,7 @@ class GameController:
         self.the_turn.start_turn()
 
         while game_running:
-            if not self.the_turn.is_wait_for_input():
+            if not self.the_turn.is_waiting_for_callback():
                 self.the_turn.continue_turn()
             else:
                 sleep(0.5)#Wait just a bit

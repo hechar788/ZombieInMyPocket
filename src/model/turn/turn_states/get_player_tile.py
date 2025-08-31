@@ -12,14 +12,14 @@ class GetPlayerTile(State):
         self.trigger = Triggers.SELECT_EXIT
 
 
-    def get_player_location(self) -> None:
+    def _get_player_location(self) -> None:
         """Gets the players location"""
         self.player_location = self.use_service(
             ServiceNames.PLAYER,
             ServiceMethods.GET_POSITION)
 
 
-    def get_player_tile(self):
+    def _get_player_tile(self):
         """Gets the players tile"""
         self.result = self.use_service(
             ServiceNames.GAME_PIECES,
@@ -29,8 +29,8 @@ class GetPlayerTile(State):
 
     def handle_request(self, *args, **kwargs):
         """Get the players location and the tile at that location"""
-        self.get_player_location()
-        self.get_player_tile()
+        self._get_player_location()
+        self._get_player_tile()
         super().handle_request()
 
 

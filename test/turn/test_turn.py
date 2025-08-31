@@ -24,7 +24,7 @@ class TestTurn(unittest.TestCase):
 
     def assert_pre_start(self):
         """Turn should start with no state"""
-        self.assertTrue(self.the_turn.is_wait_for_input())
+        self.assertTrue(self.the_turn.is_waiting_for_callback())
         with self.assertRaisesRegex(RuntimeError, "Cannot continue turn while waiting for input."):
             self.the_turn.continue_turn()
 

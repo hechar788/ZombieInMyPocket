@@ -19,7 +19,7 @@ class PlaceTile(State):
         self.current_exit = current_exit
 
 
-    def place_tile(self):
+    def _place_tile(self):
         self.use_service(
             ServiceNames.GAME_PIECES,
             ServiceMethods.PLACE_TILE,
@@ -30,7 +30,7 @@ class PlaceTile(State):
         )
 
 
-    def can_place_tile(self):
+    def _can_place_tile(self):
         #temp
         # return True #override whilst CAN_PLACE_TILE isn't working
         return self.use_service(
@@ -43,9 +43,9 @@ class PlaceTile(State):
         )
 
     def handle_request(self, *arg, **kwarg):
-        if self.can_place_tile():
+        if self._can_place_tile():
             self.trigger = Triggers.MOVE_PLAYER
-            self.place_tile()
+            self._place_tile()
             self.result = (self.new_tile, )
         else:
             #go back to select exit state
