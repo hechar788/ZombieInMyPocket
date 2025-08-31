@@ -24,12 +24,6 @@ class Direction(Enum):
     SOUTH = 2
     WEST = 3
 
-class Input_options(Enum):
-    """Input_options yes or no."""
-
-    YES = 0
-    NO = 1
-
 
 class ItemType(Enum):
     WEAPON = 0
