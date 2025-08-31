@@ -46,6 +46,9 @@ class GamePieces(IGamePieces):
     def outdoor_tiles_remaining(self) -> int:
         return len(self._outdoor_tiles)
 
+    def tiles_remaining(self) -> int:
+        return self.indoor_tiles_remaining() + self.outdoor_tiles_remaining()
+
     def can_place_tile(self, new_tile: ITile, new_exit: Direction,
                        placed_tile: ITile,
                        placed_tile_exit: Direction) -> bool:
@@ -65,7 +68,7 @@ class GamePieces(IGamePieces):
         return self._board.get_tile(position)
 
     def is_stuck(self) -> bool:
-        return self._board.is_stuck()
+        return self._board.is_stuck() and self.tiles_remaining() > 0
 
     def get_tile_position(self, tile: ITile) -> Position:
         return self._board.get_tile_position(tile)
