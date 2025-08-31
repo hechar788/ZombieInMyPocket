@@ -1,10 +1,10 @@
 import unittest
 from unittest.mock import Mock, create_autospec
 
-from src.model.turn import Turn
+from src.model.turn import *
 
 class TestTurn(unittest.TestCase):
-    """tests for Turn"""
+    """tests for Turn (context and states"""
     def setUp(self):
         """set up a turn to test"""
         self.the_turn = Turn.create(*self.create_mock_services())
@@ -32,10 +32,25 @@ class TestTurn(unittest.TestCase):
         """turn should start with no state"""
         self.assert_pre_start()
 
+
     def test_turn_after_start(self):
         """turn should be in the ready state"""
-        pass
+        self.the_turn.start_turn()
+        self.assertEqual(self.the_turn._flow._current_state.name.value, 'ready')
+        self.assertFalse(self.the_turn.is_waiting_for_callback())
 
+    def test_continue_turn(self):
+        """turn should move to the ready state then the get player tile state"""
+        self.the_turn.start_turn()
+        self.the_turn.continue_turn()
+        self.assertEqual(self.the_turn._flow._current_state.name.value, 'get_player_tile')
+
+    def test_turn_after_stop(self):
+        """turn should move to pre_start with no state"""
+        self.the_turn.start_turn()
+        self.the_turn.continue_turn()
+        self.the_turn.end_turn()
+        self.assert_pre_start()
 
 
 if __name__ == '__main__':
