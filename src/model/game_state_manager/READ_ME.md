@@ -1,4 +1,4 @@
-# Component for User Story 12 - Game set-up start thing
+# [1] Component for User Story 12 - Game set-up start thing
 **Description:** This component is closely related to Game over as it also states what the game would do when player wins/lose. In future iterations, this component will also include saving and restoring progress. 
 
 **User Story/ Feature**:
@@ -81,7 +81,6 @@
 4. [ ] Reset a game to default state (**0.5 hours**)
 
 ---
-
 
 # Component for User Story 8 - Game Over
 **User Story/ Feature**: As a user I want the game to stop after a win or loss event so that I can finish the game and restart.

@@ -7,7 +7,6 @@ from ..interfaces.i_time import ITime
 from ...enums_and_types.enums import GameStateMessage, GameInstruction, AlertMessage, UnknownErrorMessage, GameState, \
     GameOverMessage
 
-
 class GameStatus(IGameStatus, ABC):
     def __init__(self, current_time: ITime) -> None:
         self.current_time = current_time

@@ -25,10 +25,22 @@ class GameStateManager:
         # set_game_time
         pass
 
-    def stop_game(self):
+    def start_game(self):
+        """"""
+        pass
+
+    def end_game(self):
         """ Handles stopping game operations. """
         pass
 
     def reset_game(self):
         """ Handles cleaning up game environment. """
         # clear_tiles
+
+    def save_game(self):
+        """ Save game progress """
+        pass
+
+    def load_game(self):
+        """ Restore saved game progress """
+        pass
