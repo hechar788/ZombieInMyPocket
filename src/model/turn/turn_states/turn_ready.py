@@ -11,17 +11,20 @@ class Ready(State):
     """Ready to start a turn"""
     def __init__(self, name = StateNames.READY):
         super().__init__(name)
+        self.trigger = Triggers.START_TURN
+
 
     def enter(self):
         """Ready to start a turn"""
-        #self.needs_input = True
-        self.trigger = Triggers.START_TURN
+        #no set up needed
+        pass
 
 
     def handle_request(self):
         """Wait before starting a new turn"""
-        print(f'{'-'*10}starting a new turn{'-'*10}')
-        self.exit()
+        #print(f'{'-'*10}starting a new turn{'-'*10}')
+        super().handle_request()
+
 
     def exit(self):
         super().exit()
