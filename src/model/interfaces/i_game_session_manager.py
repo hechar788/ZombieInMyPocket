@@ -1,3 +1,6 @@
+# Arsenie: [1] Component for User Story 12 - Game set-up start thing
+# Used by game_session_manager
+
 from abc import abstractmethod
 
 from src.enums_and_types.enums import GameState

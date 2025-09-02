@@ -14,7 +14,7 @@
 - As a player I want to save my game and comeback to it later
 (Requirement created by Josiah)
 ---
-## Interfaces provides:
+## Interfaces provides: [ IGameStateManager, IEndGameHandler, IGameOver ]
 **Setup game**
 - Sets up a new game ready for the player to start playing
 - Takes None
@@ -25,14 +25,19 @@
 - Takes None
 - Returns Bool (True if the player won else False)
 
-**End game**
+**End game: win**
 - Stops the game at any point during the game
-- Takes None
+- Takes None (?)
 - Returns Bool (True if the game was has been successfully stopped else False)
 
-**Reset**
+**End game: loss**
+- Stops the game after player lose
+- Takes None (?)
+- Returns Bool (True if the game was has been successfully stopped else False)
+
+**End game: Reset**
 - Resets an existing game to a default state
-- Takes None
+- Takes None (?)
 - Returns Bool (True if the game has been reset else False)
 
 **Save**

@@ -1,4 +1,4 @@
-from .game_state_manager import GameStateManager
+from .game_session_manager import GameStateManager
 from .player import Player
 
 from .game_pieces import GamePieces, DevCard, Tile, Board

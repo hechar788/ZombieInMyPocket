@@ -9,12 +9,12 @@
 
 **Feature**: As a player, I want to see status messages for what’s happening during the game, so I am informed of the outcomes of my actions.
 ---
-## Interfaces provides:
-** [] **
-- x
-- x
-- x
-
+## Interfaces provides: [ IGetGameMessage ]
+** IGetGameMessage **
+- Tips: handle_help_key
+- Occurrences: get_state_message
+- Alerts: handle_game_warning_event
+- Stats: get_current_time
 ---
 
 ## Acceptance Criteria

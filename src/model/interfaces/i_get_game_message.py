@@ -1,3 +1,6 @@
+# Arsenie: [2] Component for User Story 9 - Status/Notifications/Alerts/Stats
+# Used by get_game_message
+
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -6,7 +9,7 @@ from . import ITime
 from ...enums_and_types.enums import GameStateMessage, GameInstruction, AlertMessage, UnknownErrorMessage, GameState, \
     GameOverMessage
 
-class IGameStatus(ABC):
+class IGetGameMessage(ABC):
     """ Handles game status messages."""
 
     # @abstractmethod

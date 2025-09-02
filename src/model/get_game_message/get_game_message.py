@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import Optional
 
-from ..interfaces.i_get_game_status import IGameStatus
+from ..interfaces.i_get_game_message import IGameStatus
 from ..interfaces.i_time import ITime
 
 from ...enums_and_types.enums import GameStateMessage, GameInstruction, AlertMessage, UnknownErrorMessage, GameState, \
