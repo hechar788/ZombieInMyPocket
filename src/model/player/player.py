@@ -1,9 +1,7 @@
-# from typing import List
-# from ..interfaces.i_player import IPlayer
-# from ..interfaces.i_item import IItem
-# from ...enums_and_types.types import Position
-
-from ...model import *
+from typing import List
+from ..interfaces.i_player import IPlayer
+from ..interfaces.i_item import IItem
+from ...enums_and_types.types import Position
 
 
 class Player(IPlayer):

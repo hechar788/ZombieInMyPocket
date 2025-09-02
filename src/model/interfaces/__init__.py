@@ -12,7 +12,7 @@ from .i_get_game_status import IGameStatus
 
 __all__ = [
     "IDevCard",
-    "IEncounter", 
+    "IEncounter",
     "IGamePieces",
     "IItem",
     "IPlayer",

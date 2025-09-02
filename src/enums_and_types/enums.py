@@ -1,16 +1,11 @@
-from enum import Enum, auto
-from typing import TYPE_CHECKING, cast
-
-if TYPE_CHECKING:
-    pass
-
+from enum import Enum
 
 class Rotation(Enum):
     """Rotation of a tile."""
 
     NONE = 0
     """No rotation."""
-
+    
     CLOCKWISE = 1
     """Rotated 90 degrees clockwise."""
 
@@ -31,19 +26,33 @@ class Direction(Enum):
 
 
 class ItemType(Enum):
-    WEAPON = 0,
-    HEALING = 1
+    WEAPON = 0
+    HEALING = 1  # Can of Soda
+    COMBINE_ONLY = 2  # Candle and Gasoline
+    ESCAPE = 3  # Using oil by itself without combining it
+
+
+class ItemName(Enum):
+    OIL = "Oil"
+    GASOLINE = "Gasoline"
+    BOARD_WITH_NAILS = "Board With Nails"
+    CAN_OF_SODA = "Can of Soda"
+    GRISLY_FEMUR = "Grisly Femur"
+    GOLF_CLUB = "Golf Club"
+    CANDLE = "Candle"
+    CHAINSAW = "Chainsaw"
+    MACHETE = "Machete"
 
 
 class ItemInfo(Enum):
-    SPADE = ("Spade", "A sturdy digging tool that can be used as a weapon", ItemType.WEAPON, 2, 0, False,
-             cast(list['ItemInfo'], []))
-    AXE = ("Axe", "A sharp wood-cutting axe effective in combat", ItemType.WEAPON, 3, 0, False,
-           cast(list['ItemInfo'], []))
-    BANDAGE = ("Bandage", "Basic medical supplies for treating wounds", ItemType.HEALING, 0, 3, True,
-               cast(list['ItemInfo'], []))
-    HEALTH_KIT = ("Health Kit", "Advanced medical kit for serious injuries", ItemType.HEALING, 0, 8, True,
-                  cast(list['ItemInfo'], []))
+    # SPADE = ("Spade", "A sturdy digging tool that can be used as a weapon", ItemType.WEAPON, 2, 0, False,
+    #          cast(list['ItemInfo'], []))
+    # AXE = ("Axe", "A sharp wood-cutting axe effective in combat", ItemType.WEAPON, 3, 0, False,
+    #        cast(list['ItemInfo'], []))
+    # BANDAGE = ("Bandage", "Basic medical supplies for treating wounds", ItemType.HEALING, 0, 3, True,
+    #            cast(list['ItemInfo'], []))
+    # HEALTH_KIT = ("Health Kit", "Advanced medical kit for serious injuries", ItemType.HEALING, 0, 8, True,
+    #               cast(list['ItemInfo'], []))
 
     def __init__(self, display_name: str, description: str, item_type: ItemType,
                  attack_bonus: int, heal_amount: int, is_single_use: bool,
@@ -58,11 +67,12 @@ class ItemInfo(Enum):
 
 # Arsenie: State (From game components branch)
 class GameState(Enum):
-    INIT = auto()       # Basic flow
-    READY = auto()      # Basic flow
-    RUNNING = auto()    # Basic flow
-    PAUSED = auto()     # Alternate flow
-    OVER = auto()       # Basic flow
+    pass
+    # INIT = auto()       # Basic flow
+    # READY = auto()      # Basic flow
+    # RUNNING = auto()    # Basic flow
+    # PAUSED = auto()     # Alternate flow
+    # OVER = auto()       # Basic flow
 
 # Arsenie: [Event-driven] Game setup messages, used in get-game-status and game-state-manager.
 class GameSetupMessage(Enum):

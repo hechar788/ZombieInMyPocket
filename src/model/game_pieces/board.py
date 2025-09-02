@@ -1,3 +1,6 @@
+from ..interfaces.i_tile import ITile
+from enums_and_types import *
+
 from game_pieces import *
 from src.enums_and_types.types import Position
 from ...enums_and_types.enums import Rotation, Direction
