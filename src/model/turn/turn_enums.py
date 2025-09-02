@@ -30,7 +30,7 @@ class StateNames(Enum):
     READY = "ready"
     GET_PLAYER_TILE = "get_player_tile"
     SELECT_EXIT = "select_exit"
-    CHECK_NEW_TILE = "check_new_tile"
+    CHECK_NEXT_TILE = "check_next_tile"
     DRAW_TILE = "draw_tile"
     PLACE_TILE = "place_tile"
     MOVE_PLAYER = "move_player"
@@ -38,8 +38,7 @@ class StateNames(Enum):
     GET_TILE_ENCOUNTER = "get_tile_encounter"
     GET_COWER_ENCOUNTER = "get_cower_encounter"
     RUN_ENCOUNTER = "run_encounter"
-    #testing
-    TEST_STATE = "test_state"
+
 
 #Services
 class ServiceNames(Enum):
@@ -58,7 +57,8 @@ class ServiceMethods(Enum):
     GET_TILE_EXITS = "get_tile_exits"
     GET_TILE = "get_tile"
     DRAW_TILE = "draw_indoor_tile"
-    CAN_MOVE_TO_NEW_TILE = "can_move_to_new_tile"
+    IS_NEXT_TILE_NEW = "can_move_to_new_tile"
+    GET_NEXT_TILE = "get_next_tile"
     PLACE_TILE = "place_tile"
     CAN_PLACE_TILE = "can_place_tile"
     GET_TILE_POSITION = "get_tile_position"

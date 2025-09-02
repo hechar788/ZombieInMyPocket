@@ -69,5 +69,5 @@ class IGamePieces(ABC):
         pass
 
     @abstractmethod
-    def get_tile_position(self, tile: ITile):
+    def get_tile_position(self, tile: ITile) -> Position:
         pass

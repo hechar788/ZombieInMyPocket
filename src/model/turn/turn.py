@@ -1,6 +1,6 @@
 from typing import Callable, Any
 
-from src.model.interfaces.i_turn import ITurn
+from src.model.interfaces import ITurn
 from src.model.turn.turn_enums import ServiceNames, StateNames, Triggers
 from src.model.turn.turn_flow import TurnFlow
 from src.model.turn.turn_states import *
@@ -15,7 +15,7 @@ class Turn(ITurn):
     and progressing turns, as well as checking input state.
     """
     def __init__(self, flow):
-        self._flow = flow
+        self._flow: TurnFlow = flow
 
     #make the turn flow object
     @classmethod
@@ -70,7 +70,7 @@ class Turn(ITurn):
             StateNames.READY:               lambda: Ready(),
             StateNames.GET_PLAYER_TILE:     lambda: GetPlayerTile(),
             StateNames.SELECT_EXIT:         lambda: SelectExit(),
-            StateNames.CHECK_NEW_TILE:      lambda: CheckNewTile(),
+            StateNames.CHECK_NEXT_TILE:     lambda: CheckNextTile(),
             StateNames.DRAW_TILE:           lambda: DrawTile(),
             StateNames.PLACE_TILE:          lambda: PlaceTile(),
             StateNames.MOVE_PLAYER:         lambda: MovePlayer(),
@@ -95,9 +95,9 @@ class Turn(ITurn):
             Triggers.MOVE_PLAYER:       StateNames.MOVE_PLAYER,
 
             Triggers.NEW_TILE_EXIT:     StateNames.PLACE_TILE,
-            Triggers.PLAYER_TILE_EXIT:  StateNames.CHECK_NEW_TILE,
+            Triggers.PLAYER_TILE_EXIT:  StateNames.CHECK_NEXT_TILE,
 
-            # Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
+            #Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
             # ToDo update back to dev_encounters
             Triggers.START_ENCOUNTERS: StateNames.GET_COWER_ENCOUNTER,
 
@@ -124,7 +124,7 @@ class Turn(ITurn):
         Stops the turn flow and resets relevant values.
         `start_turn` must be called before running a new turn.
         """
-        self._flow.stop()
+        self._flow.end()
 
     def continue_turn(self) -> None:
         """
@@ -136,15 +136,15 @@ class Turn(ITurn):
         Automatically starts a new turn after the last step.
         Use `start_turn` only before the start of first turn or after `end_turn`.
         """
-        if self._flow.is_wait_for_input():
+        if self._flow.is_waiting_for_callback():
             raise RuntimeError("Cannot continue turn while waiting for input.")
         self._flow.handle_request()
 
-    def is_wait_for_input(self) -> bool:
+    def is_waiting_for_callback(self) -> bool:
         """
         Check if the turn is currently waiting for user input.
 
         Returns:
             bool: True if waiting for input, False otherwise.
         """
-        return self._flow.is_wait_for_input()
+        return self._flow.is_waiting_for_callback()
