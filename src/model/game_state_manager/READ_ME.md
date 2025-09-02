@@ -1,4 +1,6 @@
 # Component for User Story 12 - Game set-up start thing
+**Description:** This component is closely related to Game over as it also states what the game would do when player wins/lose. In future iterations, this component will also include saving and restoring progress. 
+
 **User Story/ Feature**:
 - As a player, I want the game set up and started so that I can play the game
 - As a player I want to save my game and comeback to it later
