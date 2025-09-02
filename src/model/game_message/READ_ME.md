@@ -1,6 +1,12 @@
 # [2] Component for User Story 9 - Status/Notifications/Alerts/Stats
 **Description:** This component covers two aspects: (1) warnings/alerts (2) status (3) tips (4) constant game stats 
 
+**Key responsibilities:**
+- shows status updates (room changes, welcome, item acquired).
+- shows alerts/warnings (low health, time almost up, invalid actions).
+- shows instructions/tooltips (special rooms like Graveyard/Evil Temple/Storage).
+- shows stats (constant reminders of outcomes like +1 Health).
+
 **Feature**: As a player, I want to see status messages for what’s happening during the game, so I am informed of the outcomes of my actions.
 ---
 ## Interfaces provides:
