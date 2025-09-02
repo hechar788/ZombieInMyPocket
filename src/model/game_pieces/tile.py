@@ -1,6 +1,6 @@
 from src.enums_and_types import *
 from ..interfaces.i_tile import ITile
-from ..interfaces.i_encounter import IEncounter
+from ..encounters.encounters import IEncounter, HealthEncounter, ItemEncounter
 
 
 class Tile(ITile):
@@ -53,15 +53,13 @@ class Tile(ITile):
                  (Direction.NORTH,),
                  None, None),
 
-            # TODO: Add encounter for +1 health
             Tile("Kitchen", False,
                  (Direction.NORTH, Direction.EAST, Direction.WEST),
-                 None, None),
+                 None, HealthEncounter(1)),
 
-            # TODO: Add item encounter
             Tile("Storage", False,
                  (Direction.NORTH,),
-                 None, None),
+                 None, ItemEncounter(None)),
 
             # TODO: Add pick up totem event
             Tile("Evil Temple", False,
@@ -90,10 +88,9 @@ class Tile(ITile):
     def get_outdoor_tiles() -> list[ITile]:
         return [
 
-            # TODO: Add encounter for +1 health
             Tile("Garden", True,
                  (Direction.EAST, Direction.SOUTH, Direction.WEST),
-                 None, None),
+                 None, HealthEncounter(1)),
 
             Tile("Sitting Area", True,
                  (Direction.EAST, Direction.SOUTH, Direction.WEST),
