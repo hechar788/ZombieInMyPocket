@@ -1,6 +1,7 @@
 from src.enums_and_types import *
 from ..interfaces.i_tile import ITile
-from ..encounters.encounters import IEncounter, HealthEncounter, ItemEncounter
+from ..encounters.encounters import IEncounter, HealthEncounter, \
+     ItemEncounter, TotemEncounter
 
 
 class Tile(ITile):
@@ -61,10 +62,9 @@ class Tile(ITile):
                  (Direction.NORTH,),
                  None, ItemEncounter(None)),
 
-            # TODO: Add pick up totem event
             Tile("Evil Temple", False,
                  (Direction.EAST, Direction.WEST),
-                 None, None),
+                 None, TotemEncounter(False)),
 
             Tile("Family Room", False,
                  (Direction.NORTH, Direction.EAST, Direction.WEST),
