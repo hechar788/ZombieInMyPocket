@@ -19,7 +19,7 @@ class GetDevEncounter(State):
 
     @staticmethod
     def _get_dev_encounter(dev_card):
-        dev_card.get_encounter(9) #todo use game time
+        return dev_card.get_encounter(9) #todo use game time
         # return self.use_service(
         #     ServiceNames.GAME_PIECES,
         #     ServiceMethods.GET_ENCOUNTER,

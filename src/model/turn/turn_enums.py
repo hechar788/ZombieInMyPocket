@@ -19,6 +19,7 @@ class Triggers(Enum):
     START_ENCOUNTERS = "start_encounters"
     RUN_ENCOUNTER = "run_encounter"
     DEV_ENCOUNTER_END = "dev_encounter_end"
+    START_TILE_ENCOUNTER = "start_tile_encounter"
     TILE_ENCOUNTER_END = "tile_encounter_end"
     COWER_ENCOUNTER_END = "cow_encounter_end"
 
@@ -71,4 +72,3 @@ class PendingTransition(TypedDict):
     and any results from previous states to pass to it"""
     next_state: Callable[[], Any]
     previous_result: tuple[Any, ...] | None
-    next_tile: Any

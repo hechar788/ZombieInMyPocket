@@ -53,5 +53,5 @@ class MovePlayer(State):
         self.context.state_finished(
             trigger=self.trigger,
             result=None,
-            next_tile=self.result)
+            )
         self.context = None

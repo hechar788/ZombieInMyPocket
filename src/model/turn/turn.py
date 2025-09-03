@@ -86,23 +86,23 @@ class Turn(ITurn):
         """Get the transitions used by the turn"""
         return {
             # Trigger,                       #Next State
-            Triggers.READY:             StateNames.READY,
+            Triggers.READY:                 StateNames.READY,
 
-            Triggers.START_TURN:        StateNames.GET_PLAYER_TILE,
-            Triggers.SELECT_EXIT:       StateNames.SELECT_EXIT,
+            Triggers.START_TURN:            StateNames.GET_PLAYER_TILE,
+            Triggers.SELECT_EXIT:           StateNames.SELECT_EXIT,
 
-            Triggers.DRAW_TILE:         StateNames.DRAW_TILE,
-            Triggers.MOVE_PLAYER:       StateNames.MOVE_PLAYER,
+            Triggers.DRAW_TILE:             StateNames.DRAW_TILE,
+            Triggers.MOVE_PLAYER:           StateNames.MOVE_PLAYER,
 
-            Triggers.NEW_TILE_EXIT:     StateNames.PLACE_TILE,
-            Triggers.PLAYER_TILE_EXIT:  StateNames.CHECK_NEXT_TILE,
+            Triggers.NEW_TILE_EXIT:         StateNames.PLACE_TILE,
+            Triggers.PLAYER_TILE_EXIT:      StateNames.CHECK_NEXT_TILE,
 
-            #Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
-            # ToDo update back to dev_encounters
-            Triggers.START_ENCOUNTERS: StateNames.GET_COWER_ENCOUNTER,
+            Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
 
             Triggers.RUN_ENCOUNTER:         StateNames.RUN_ENCOUNTER,
-            Triggers.DEV_ENCOUNTER_END:     StateNames.GET_TILE_ENCOUNTER,
+
+            Triggers.DEV_ENCOUNTER_END:     StateNames.GET_PLAYER_TILE,
+            Triggers.START_TILE_ENCOUNTER:  StateNames.GET_TILE_ENCOUNTER,
             Triggers.TILE_ENCOUNTER_END:    StateNames.GET_COWER_ENCOUNTER,
             Triggers.COWER_ENCOUNTER_END:   StateNames.READY,
 
