@@ -1,4 +1,5 @@
-from enum import Enum
+from enum import Enum, auto
+
 
 class Rotation(Enum):
     """Rotation of a tile."""
@@ -67,12 +68,13 @@ class ItemInfo(Enum):
 
 # Arsenie: State (From game components branch)
 class GameState(Enum):
+    """States outside the game play duration"""
     pass
-    # INIT = auto()       # Basic flow
-    # READY = auto()      # Basic flow
-    # RUNNING = auto()    # Basic flow
-    # PAUSED = auto()     # Alternate flow
-    # OVER = auto()       # Basic flow
+    INIT = auto()       # Basic flow
+    READY = auto()      # Basic flow
+    RUNNING = auto()    # Basic flow
+    PAUSED = auto()     # Alternate flow
+    OVER = auto()       # Basic flow
 
 # Arsenie: [Event-driven] Game setup messages, used in get-game-status and game-state-manager.
 class GameSetupMessage(Enum):
@@ -113,7 +115,6 @@ class AlertMessage(Enum):
     INVALID_COWER_MOVE = "You cannot cower during a zombie door attack"
     INVALID_DOOR_EXIT_SELECTED = "You can't enter from this side. There's no door here."
     INVALID_GRASS_PATH_SELECTED = "You can't enter from this side. Hedges block your path."
-
 
 class UnknownErrorMessage(Enum):
     """Codes for system errors in the game."""
