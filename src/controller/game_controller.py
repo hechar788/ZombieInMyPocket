@@ -1,23 +1,26 @@
-from ..model.turn.set_up_turn import TurnSetUp
+from ..model.turn.turn import Turn
 from ..model.game_status.game_status import GameStatus
 from ..model.turn.turn_enums import ServiceNames
 from ..enums_and_types.enums import MessageCode
-from ..enums_and_types.game_over_reason import GameOverReason
 from ..view.interfaces.i_ui import IUI
+from ..model.player.player import Player
+from ..model.game_pieces.game_pieces import GamePieces
 import time
 
 class GameController:
     def __init__(self, ui: IUI):
         self.game_status = GameStatus()
         self.ui = ui
-        self.the_set_up = TurnSetUp()
-        self.the_turn = self.the_set_up.get_turn_flow()
+        player = Player()
+        game_pieces = GamePieces()
+        self.the_turn = Turn.create(game_pieces, player, ui)
 
     def begin_game(self):
         self.game_status.post_message(MessageCode.WELCOME)
         self.run_game()
 
     def run_game(self):
+        self.the_turn.start_turn()
         while not self.game_status.is_game_over:
             self._process_and_display_messages()
             self._update_full_state()
@@ -32,7 +35,7 @@ class GameController:
     def _handle_input(self):
         """Dummy implementation for handling input - handle via view"""
 
-        current_state = self.the_turn.current_state
+        current_state = self.the_turn._flow.current_state
         if current_state is None:
             return
 
@@ -44,11 +47,11 @@ class GameController:
         user_input = self.ui.get_input(prompt, options)
         
         # Process the input in the current state
-        self.the_turn.handle_input(user_input)
+        self.the_turn._flow.handle_input(user_input)
 
     def _process_turn(self):
         """Process the current turn state when no input is needed"""
-        self.the_turn.process()
+        self.the_turn.continue_turn()
 
 
     def _process_and_display_messages(self):
@@ -61,14 +64,15 @@ class GameController:
 
     def _update_full_state(self):
         """""Update the game display with current state"""""
-        player = self.the_turn.service[ServiceNames.PLAYER]
-        #game_pieces = self.the_turn.service[ServiceNames.GAME_PIECES]
-
-        '''  
-        self.ui.display_game_state(
-            tile=game_pieces.get_tile(),
-            tile_position=game_pieces.get_tile_position(),
-        )'''
+        player = self.the_turn._flow.service[ServiceNames.PLAYER]
+        game_pieces = self.the_turn._flow.service[ServiceNames.GAME_PIECES]
+        
+        active_tile = self.the_turn._flow.active_tile
+        if active_tile:
+            self.ui.display_game_state(
+                tile=active_tile,
+                tile_position=game_pieces.get_tile_position(active_tile),
+            )
 
         self.ui.display_player_state(
             player_health=player.get_health(),
