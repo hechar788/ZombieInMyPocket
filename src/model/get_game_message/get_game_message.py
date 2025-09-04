@@ -13,11 +13,6 @@ class GetGameMessage(IGetGameMessage, ABC):
         self._state = GameState.INIT
         self._low_health = False
 
-    # @property
-    # def check_game_state(self) -> GameState:
-    #     """"""
-    #     return self._state
-
     def handle_game_over(self, game_over_event) -> Optional[GameOverMessage]:
         """ Retrieves message code for the end game details, based on GameOverMessage enum"""
         match game_over_event:
