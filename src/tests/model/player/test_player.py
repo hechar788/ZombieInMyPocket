@@ -172,6 +172,10 @@ class TestPlayer(unittest.TestCase):
         # Arrange
         mock_item1 = Mock(spec=IItem)
         mock_item2 = Mock(spec=IItem)
+        mock_item1.name = "item1"
+        mock_item2.name = "item2"
+        mock_item1.combinable_with = ["item2"]
+        mock_item2.combinable_with = ["item1"]
         self.player.add_item_to_inventory(mock_item1)
         self.player.add_item_to_inventory(mock_item2)
         

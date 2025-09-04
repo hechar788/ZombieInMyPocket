@@ -1,10 +1,6 @@
-from __future__ import annotations
-from typing import TYPE_CHECKING
-from abc import ABC, abstractmethod#, Callable
-
-
-if TYPE_CHECKING:
-    from src.model.player.player import Player
+from abc import ABC, abstractmethod
+from typing import Callable
+from src.model.player.player import Player
 
 class IEncounter(ABC):
     """Abstract Class for building other Encounter Classes"""
