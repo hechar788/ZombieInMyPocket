@@ -1,7 +1,7 @@
 from src.enums_and_types.enums import GameState
 
 
-class GameStateManager:
+class GameSessionManager:
     """ Handles game states and set up. """
     def __init__(self):
         """ Coordinates the state and the components of the game (Time, Turn, Player, and GameOver/GameStatus)"""

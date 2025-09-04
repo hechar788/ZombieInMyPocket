@@ -1,13 +1,13 @@
 from abc import ABC
 from typing import Optional
 
-from ..interfaces.i_get_game_message import IGameStatus
+from ..interfaces.i_get_game_message import IGetGameMessage
 from ..interfaces.i_time import ITime
 
 from ...enums_and_types.enums import GameStateMessage, GameInstruction, AlertMessage, UnknownErrorMessage, GameState, \
     GameOverMessage
 
-class GameStatus(IGameStatus, ABC):
+class GetGameMessage(IGetGameMessage, ABC):
     def __init__(self, current_time: ITime) -> None:
         self.current_time = current_time
         self._state = GameState.INIT

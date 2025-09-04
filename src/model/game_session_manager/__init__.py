@@ -1,3 +1,3 @@
-from .game_session_manager import GameStateManager
+from .game_session_manager import GameSessionManager
 
-__all__ = ["GameStateManager"]
+__all__ = ["GameSessionManager"]

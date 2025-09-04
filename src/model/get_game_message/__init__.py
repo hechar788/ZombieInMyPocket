@@ -1,5 +1,5 @@
-from .get_game_message import GameStatus
+from .get_game_message import GetGameMessage
 
 __all__ = [
-    'GameStatus',
+    'GetGameMessage',
 ]
