@@ -6,13 +6,13 @@
 
 from unittest import TestCase
 from src.model.game_pieces import GamePieces
+from src.model.game_time.game_time import GameTime
 
 
 class TestRandomTileSequence(TestCase):
 
     def setUp(self):
-        self.game_pieces = GamePieces()
-        self.game_pieces.setup()
+        self.game_pieces = GamePieces(GameTime())
 
     def get_six_tiles(self, is_outdoor: bool) -> list[str]:
         self.setUp()

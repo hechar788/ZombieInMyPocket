@@ -7,13 +7,13 @@ from unittest import TestCase
 from src.model.game_pieces import GamePieces, Tile
 from src.model.interfaces.i_tile import ITile
 from src.enums_and_types import Direction
+from src.model.game_time.game_time import GameTime
 
 
 class TestMapConnectivity(TestCase):
 
     def setUp(self):
-        self.game_pieces = GamePieces()
-        self.game_pieces.setup()
+        self.game_pieces = GamePieces(GameTime())
 
         indoor = Tile.get_indoor_tiles()
         outdoor = Tile.get_outdoor_tiles()

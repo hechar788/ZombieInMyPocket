@@ -1,12 +1,13 @@
 from unittest import TestCase
 from src.model.game_pieces import GamePieces, Tile
 from src.enums_and_types import *
+from src.model.game_time.game_time import GameTime
 
 
 class TestGamePieces(TestCase):
 
     def setUp(self) -> None:
-        self.game_pieces = GamePieces()
+        self.game_pieces = GamePieces(GameTime())
 
         self.bathroom_tile = Tile(
             "Bathroom", False,
