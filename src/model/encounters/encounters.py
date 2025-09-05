@@ -56,7 +56,7 @@ class MessageEncounter(IEncounter):
     def __init__(self, new_code):
         self.message_code = new_code
 
-    def handle_encounter(self, player) -> Player:
+    def handle_encounter(self, player) -> "Player":
         pass
 
 class TotemEncounter(IEncounter):
@@ -64,7 +64,7 @@ class TotemEncounter(IEncounter):
     def __init__(self, new_totem_state):
         self.totem_state = new_totem_state
 
-    def handle_encounter(self, player) -> Player:
+    def handle_encounter(self, player) -> "Player":
         # player.setTotem??
         # return player
         pass
