@@ -25,18 +25,6 @@ class Board:
         else:
             return None
 
-    # def place_tile(self, tile: ITile, position: Position,
-    #                rotation: Rotation) -> None:
-    #     assert position not in self._all_tiles, \
-    #         f"There is already a tile at position {position}"
-    #     tile.set_rotation(rotation)
-    #     self._all_tiles[position] = tile
-
-    #     # Keep track of exits available
-    #     self._exits_available += len(tile.get_exits())
-    #     if len(self._all_tiles) > 1:
-    #         self._exits_available -= 2
-
     def place_tile(self, new_tile: ITile, new_exit: Direction,
                    placed_tile: ITile | None,
                    placed_tile_exit: Direction) -> None:
@@ -127,38 +115,6 @@ class Board:
         keys = self._all_tiles.keys()
         values = self._all_tiles.values()
         return (list(keys)[list(values).index(tile)])
-
-    # def can_place_tile(self, tile: ITile, position: Position,
-    #                    position_from: Position, rotation: Rotation) -> bool:
-    #     tile.set_rotation(rotation)
-
-    #     # Can't add a tile where one already exists
-    #     if position in self._all_tiles:
-    #         return False
-
-    #     if position_from not in self._all_tiles:
-    #         return False
-    #     tile_from = self._all_tiles[position_from]
-
-    #     direction = self._direction_from_position(position_from, position)
-    #     if direction is None:
-    #         return False
-
-    #     reverse_direction = Direction((direction.value + 2) % 4)
-
-    #     # Handle indoor to outdoor
-    #     if tile_from.is_outdoors() != tile.is_outdoors():
-
-    #         # Both tiles must have a front door
-    #         if tile_from.get_front_door() is None or \
-    #                 tile.get_front_door() is None:
-    #             return False
-
-    #         return tile_from.get_front_door() == direction and \
-    #             tile.get_front_door() == reverse_direction
-
-    #     return direction in tile_from.get_exits() and \
-    #         reverse_direction in tile.get_exits()
 
     def is_stuck(self) -> bool:
         return self._exits_available <= 0

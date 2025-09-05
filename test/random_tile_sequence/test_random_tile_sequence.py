@@ -16,7 +16,7 @@ class TestRandomTileSequence(TestCase):
 
     def get_six_tiles(self, is_outdoor: bool) -> list[str]:
         self.setUp()
-        result = []
+        result: list[str] = []
         for _ in range(6):
             if is_outdoor:
                 tile = self.game_pieces.draw_outdoor_tile()
