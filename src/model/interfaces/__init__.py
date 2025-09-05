@@ -6,7 +6,6 @@ from .i_player import IPlayer
 from .i_tile import ITile
 from .i_time import ITime
 from .i_endgame_handler import IEndGameHandler
-from .i_game_session_manager import IGameStateManager
 from .i_get_game_message import IGetGameMessage
 
 
@@ -19,6 +18,5 @@ __all__ = [
     "ITile",
     "ITime",
     "IEndGameHandler",
-    "IGameStateManager",
     "IGetGameMessage",
 ]
