@@ -36,6 +36,11 @@ class TestMapConnectivity(TestCase):
             if tile.get_name() == tile_name:
                 return tile
 
+    def test_first_tile_is_foyer(self):
+        expected = "Foyer"
+        actual = self.foyer.get_name()
+        self.assertEqual(expected, actual)
+
     def test_can_move_to_patio(self):
         # Can move from foyer to dining room
         self.assertTrue(Direction.NORTH in self.foyer.get_exits())
