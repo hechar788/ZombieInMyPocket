@@ -57,6 +57,18 @@ class GamePieces(IGamePieces):
 
     def can_move_to_new_tile(self, placed_tile: ITile,
                              placed_tile_exit: Direction) -> bool:
+
+        # Can't move if there are no tiles left
+        if self.outdoor_tiles_remaining() == 0:
+            if placed_tile.is_outdoors():
+                return False
+            elif placed_tile.get_front_door() == placed_tile_exit:
+                return False
+        if self.indoor_tiles_remaining() == 0:
+            if not placed_tile.is_outdoors():
+                if placed_tile.get_front_door() != placed_tile_exit:
+                    return False
+
         return self._board.can_move_to_new_tile(placed_tile, placed_tile_exit)
 
     def place_tile(self, new_tile: ITile, new_exit: Direction,
