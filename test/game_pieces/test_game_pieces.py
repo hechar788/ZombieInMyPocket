@@ -1,12 +1,13 @@
 from unittest import TestCase
 from src.model.game_pieces import GamePieces, Tile
 from src.enums_and_types import *
+from src.model.game_time.game_time import GameTime
 
 
 class TestGamePieces(TestCase):
 
     def setUp(self) -> None:
-        self.game_pieces = GamePieces()
+        self.game_pieces = GamePieces(GameTime())
 
         self.bathroom_tile = Tile(
             "Bathroom", False,
@@ -43,6 +44,51 @@ class TestGamePieces(TestCase):
 
     def test_eight_outdoor_cards(self):
         self.assertEqual(self.game_pieces.outdoor_tiles_remaining(), 8)
+
+    def test_indoor_cards_are_shuffled(self):
+        first_game_pieces = GamePieces(GameTime())
+        first = (
+            first_game_pieces.draw_indoor_tile(),
+            first_game_pieces.draw_indoor_tile(),
+            first_game_pieces.draw_indoor_tile(),
+        )
+        second_game_pieces = GamePieces(GameTime())
+        second = (
+            second_game_pieces.draw_indoor_tile(),
+            second_game_pieces.draw_indoor_tile(),
+            second_game_pieces.draw_indoor_tile(),
+        )
+        self.assertNotEqual(first, second)
+    
+    def test_outdoor_cards_are_shuffled(self):
+        first_game_pieces = GamePieces(GameTime())
+        first = (
+            first_game_pieces.draw_outdoor_tile(),
+            first_game_pieces.draw_outdoor_tile(),
+            first_game_pieces.draw_outdoor_tile(),
+        )
+        second_game_pieces = GamePieces(GameTime())
+        second = (
+            second_game_pieces.draw_outdoor_tile(),
+            second_game_pieces.draw_outdoor_tile(),
+            second_game_pieces.draw_outdoor_tile(),
+        )
+        self.assertNotEqual(first, second)
+    
+    def test_dev_cards_are_shuffled(self):
+        first_game_pieces = GamePieces(GameTime())
+        first = (
+            first_game_pieces.draw_dev_card(),
+            first_game_pieces.draw_dev_card(),
+            first_game_pieces.draw_dev_card(),
+        )
+        second_game_pieces = GamePieces(GameTime())
+        second = (
+            second_game_pieces.draw_dev_card(),
+            second_game_pieces.draw_dev_card(),
+            second_game_pieces.draw_dev_card(),
+        )
+        self.assertNotEqual(first, second)
 
     def test_draw_indoor_card_decrements_count(self):
         self.game_pieces.draw_indoor_tile()
