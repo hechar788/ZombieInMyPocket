@@ -4,21 +4,17 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from . import ITile
-from . import ITime
-from ...enums_and_types.enums import GameStateMessage, GameInstruction, AlertMessage, UnknownErrorMessage, GameState, \
-    GameOverMessage
+from . import ITile, ITime
+from ...enums_and_types.game_message import GameStateMessage, GameInstruction, AlertMessage, UnknownErrorMessage, GameOverMessage, GameOverMessage
+from ...enums_and_types.game_session import GameState
+from ...enums_and_types.game_over_reason import GameOverReason
 
 class IGetGameMessage(ABC):
-    """ Handles game status messages."""
-
-    # @abstractmethod
-    # def check_game_state(self) -> GameState:
-    #     pass
+    """ Handles game messages."""
 
     @abstractmethod
     # TODO: Change condition type to enum of game over conditions
-    def handle_game_over(self, string) -> Optional[GameOverMessage]:
+    def handle_game_over(self, string) -> Optional[GameOverReason]:
         """ Game over event-driven that calls appropriate game over message and options, based on GameOverMessage enum"""
         # TODO: replace the string type with a proper event type
         pass
