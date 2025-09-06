@@ -1,3 +1,10 @@
+"""Configuration data for game items in Zombie in My Pocket.
+
+This module contains the configuration definitions for all game items,
+including their properties like attack bonuses, healing amounts, usage limits,
+and combination rules.
+"""
+
 from dataclasses import dataclass
 from typing import Optional
 from src.enums_and_types import ItemName, ItemType
@@ -5,6 +12,17 @@ from src.enums_and_types import ItemName, ItemType
 
 @dataclass
 class ItemConfig:
+    """Configuration data for a game item.
+    
+    Attributes:
+        name: Unique identifier for the item
+        description: Human-readable description of the item's effects
+        item_type: Category this item belongs to
+        attack_bonus: Combat bonus this item provides (default: 0)
+        heal_amount: Health points this item restores (default: 0)
+        uses: Number of times this item can be used (default: 1)
+        combinable_with: List of items this can combine with (default: [])
+    """
     name: ItemName
     description: str
     item_type: ItemType
@@ -14,10 +32,12 @@ class ItemConfig:
     combinable_with: Optional[list[ItemName]] = None
 
     def __post_init__(self):
+        """Initialize combinable_with to empty list if None."""
         if self.combinable_with is None:
             self.combinable_with = []
 
 
+# Dictionary mapping item names to their configuration data
 ITEM_CONFIGS = {
     ItemName.OIL: ItemConfig(
         name=ItemName.OIL,
@@ -95,5 +115,5 @@ ITEM_CONFIGS = {
     )
 }
 
-
+# Number of uses gasoline adds to a chainsaw when combined
 GASOLINE_CHAINSAW_USES = 2
