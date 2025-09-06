@@ -26,29 +26,29 @@ This directory contains unit tests for the item module components of the Zombie 
 ### Run All Item Tests
 
 ```bash
-python -m pytest tests/model/item/ -v
+python -m pytest test/item/ -v
 ```
 
 ### Run Specific Test Files
 
 ```bash
 # Run base item tests
-python -m pytest tests/model/item/test_base_item.py -v
+python -m pytest test/item/test_base_item.py -v
 
 # Run combination engine tests
-python -m pytest tests/model/item/test_combination_engine.py -v
+python -m pytest test/item/test_combination_engine.py -v
 
 # Run item config tests
-python -m pytest tests/model/item/test_item_config.py -v
+python -m pytest test/item/test_item_config.py -v
 
 # Run item factory tests
-python -m pytest tests/model/item/test_item_factory.py -v
+python -m pytest test/item/test_item_factory.py -v
 ```
 
 ### Run Tests with Coverage (if coverage is installed)
 
 ```bash
-python -m pytest tests/model/item/ --cov=src/model/item
+python -m pytest test/item/ --cov=src/model/item
 ```
 
 ## Test Results
@@ -64,5 +64,5 @@ When successful, all 54 tests should pass:
 All test files follow PEP8 style guidelines and can be verified with:
 
 ```bash
-python -m pycodestyle tests/model/item/
+python -m pycodestyle test/item/
 ```

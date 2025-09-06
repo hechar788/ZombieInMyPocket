@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ..encounters.encounters import IEncounter
+from .i_encounter import IEncounter
 from .i_item import IItem
 
 
