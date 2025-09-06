@@ -3,10 +3,10 @@
 This document explains how to run the unit tests for the Player module and generate coverage reports.
 
 ## Test File
-- **Location**: `src/tests/model/player/test_player.py`
+- **Location**: `test/player/test_player.py`
 - **Test Classes**: 
   - `TestPlayer` - Tests the Player facade class
-  - `TestPlayerImplementation` - Tests the PlayerImplementation class
+  - `Test_PlayerImplementation` - Tests the _PlayerImplementation class
 - **Total Tests**: 41 test cases
 
 ## Running Tests
@@ -14,26 +14,26 @@ This document explains how to run the unit tests for the Player module and gener
 ### Basic Test Execution
 ```bash
 # Run all player tests
-python -m pytest src/tests/model/player/test_player.py -v
+python -m pytest test/player/test_player.py -v
 
 # Run from project root directory
 cd C:\Users\rishe\Documents\GitHub\ZombieInMyPocket
-python -m pytest src/tests/model/player/test_player.py -v
+python -m pytest test/player/test_player.py -v
 ```
 
 ### Run Specific Test Classes
 ```bash
 # Run only TestPlayer class
-python -m pytest src/tests/model/player/test_player.py::TestPlayer -v
+python -m pytest test/player/test_player.py::TestPlayer -v
 
-# Run only TestPlayerImplementation class
-python -m pytest src/tests/model/player/test_player.py::TestPlayerImplementation -v
+# Run only Test_PlayerImplementation class
+python -m pytest test/player/test_player.py::Test_PlayerImplementation -v
 ```
 
 ### Run Individual Tests
 ```bash
 # Run specific test method
-python -m pytest src/tests/model/player/test_player.py::TestPlayer::test_init_default_values -v
+python -m pytest test/player/test_player.py::TestPlayer::test_init_default_values -v
 ```
 
 ## Coverage Reports
@@ -41,7 +41,7 @@ python -m pytest src/tests/model/player/test_player.py::TestPlayer::test_init_de
 ### Generate Coverage with Tests
 ```bash
 # Run tests with coverage collection
-python -m coverage run -m pytest src/tests/model/player/test_player.py -v
+python -m coverage run -m pytest test/player/test_player.py -v
 ```
 
 ### View Coverage Report (Terminal)

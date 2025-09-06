@@ -9,7 +9,7 @@ class Player(IPlayer):
     def __init__(self, initial_health: int = 100,
                  initial_position: Position = (0, 0),
                  base_attack_power: int = 1):
-        self.__player_impl = PlayerImplementation(
+        self.__player_impl = _PlayerImplementation(
             initial_health, initial_position, base_attack_power)
 
     def get_health(self) -> int:
@@ -49,7 +49,7 @@ class Player(IPlayer):
         return self.__player_impl.combine_items_from_inventory()
 
 
-class PlayerImplementation:
+class _PlayerImplementation:
     """Concrete implementation of the IPlayer interface."""
 
     def __init__(self, initial_health: int, initial_position: Position,

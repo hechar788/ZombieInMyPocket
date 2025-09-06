@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock, patch
-from src.model.player.player import Player, PlayerImplementation
+from src.model.player.player import Player, _PlayerImplementation
 from src.model.interfaces.i_item import IItem
 
 class TestPlayer(unittest.TestCase):
@@ -186,11 +186,11 @@ class TestPlayer(unittest.TestCase):
         self.assertIsInstance(result, bool)
 
 
-class TestPlayerImplementation(unittest.TestCase):
+class Test_PlayerImplementation(unittest.TestCase):
 
     def setUp(self):
-        self.player_impl = PlayerImplementation(initial_health=100, initial_position=(0, 0), base_attack_power=1)
-        self.custom_player_impl = PlayerImplementation(initial_health=50, initial_position=(5, 10), base_attack_power=3)
+        self.player_impl = _PlayerImplementation(initial_health=100, initial_position=(0, 0), base_attack_power=1)
+        self.custom_player_impl = _PlayerImplementation(initial_health=50, initial_position=(5, 10), base_attack_power=3)
 
     def test_init(self):
         # Arrange
@@ -201,7 +201,7 @@ class TestPlayerImplementation(unittest.TestCase):
         expected_has_totem = False
         
         # Act
-        impl = PlayerImplementation(expected_health, expected_position, expected_attack_power)
+        impl = _PlayerImplementation(expected_health, expected_position, expected_attack_power)
         
         # Assert
         self.assertEqual(impl.health, expected_health)
