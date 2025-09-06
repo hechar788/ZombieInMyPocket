@@ -1,25 +1,26 @@
 import unittest
-from unittest.mock import Mock, create_autospec
+from unittest.mock import create_autospec
 
 from src.model.turn import *
+from src.model.game_pieces import *
+from src.model.player import Player
+from src.model.game_time.game_time import GameTime
+from src.view.mock_ui import UserInterface
 
 class TestTurn(unittest.TestCase):
     """tests for Turn (context and states"""
     def setUp(self):
         """set up a turn to test"""
-        self.the_turn = Turn.create(*self.create_mock_services())
-
-    @staticmethod
-    def create_mock_services():
-        """create mock services"""
-        from src.model.interfaces import IPlayer, IGamePieces
-        from src.view.mock_ui import UserInterface
-
-        mock_player = create_autospec(IPlayer)
-        mock_game_pieces = create_autospec(IGamePieces)
-        mock_user_interface = create_autospec(UserInterface)
-
-        return mock_game_pieces, mock_player, mock_user_interface
+        self.user_interface = create_autospec(UserInterface)
+        self.player = Player()
+        self.game_pieces = GamePieces()
+        self.game_time = GameTime()
+        self.the_turn = Turn.create(
+            self.game_pieces,
+            self.player,
+            self.user_interface,
+            self.game_time
+        )
 
 
     def assert_pre_start(self):
@@ -64,7 +65,6 @@ class TestTurn(unittest.TestCase):
     def jump_to_dev_encounter(self):
         """advance the turn 10 steps"""
         from src.model.turn.turn_enums import Triggers
-        game_running = 10
         self.the_turn.start_turn()
 
         self.the_turn._flow.state_finished(
