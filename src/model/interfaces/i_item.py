@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from ...enums_and_types.enums import ItemName, ItemType
-from typing import List
+from src.enums_and_types import *
+
 
 class IItem(ABC):
     """Abstract interface defining the contract for item objects in the game.

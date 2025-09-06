@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IEncounter(ABC):
     """Abstract Class for building other Encounter Classes"""
     @abstractmethod
@@ -8,7 +9,4 @@ class IEncounter(ABC):
 
     @abstractmethod
     def handle_encounter(self, player):
-        ...
-
-    def handle_status_message(self, message):
         ...
