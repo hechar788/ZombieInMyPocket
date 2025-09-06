@@ -35,7 +35,7 @@ class GamePieces(IGamePieces):
         # Increase the time and reshuffle if no cards are left
         if self.dev_cards_remaining() == 0:
             self._time.increase_current_time()
-            if self._time.get_current_time() < 12:
+            if self._time.get_current_time() != '12:00am':
                 self._dev_cards = DevCard.get_dev_cards()
                 shuffle(self._dev_cards)
         return self._dev_cards.pop()

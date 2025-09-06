@@ -45,6 +45,51 @@ class TestGamePieces(TestCase):
     def test_eight_outdoor_cards(self):
         self.assertEqual(self.game_pieces.outdoor_tiles_remaining(), 8)
 
+    def test_indoor_cards_are_shuffled(self):
+        first_game_pieces = GamePieces(GameTime())
+        first = (
+            first_game_pieces.draw_indoor_tile(),
+            first_game_pieces.draw_indoor_tile(),
+            first_game_pieces.draw_indoor_tile(),
+        )
+        second_game_pieces = GamePieces(GameTime())
+        second = (
+            second_game_pieces.draw_indoor_tile(),
+            second_game_pieces.draw_indoor_tile(),
+            second_game_pieces.draw_indoor_tile(),
+        )
+        self.assertNotEqual(first, second)
+    
+    def test_outdoor_cards_are_shuffled(self):
+        first_game_pieces = GamePieces(GameTime())
+        first = (
+            first_game_pieces.draw_outdoor_tile(),
+            first_game_pieces.draw_outdoor_tile(),
+            first_game_pieces.draw_outdoor_tile(),
+        )
+        second_game_pieces = GamePieces(GameTime())
+        second = (
+            second_game_pieces.draw_outdoor_tile(),
+            second_game_pieces.draw_outdoor_tile(),
+            second_game_pieces.draw_outdoor_tile(),
+        )
+        self.assertNotEqual(first, second)
+    
+    def test_dev_cards_are_shuffled(self):
+        first_game_pieces = GamePieces(GameTime())
+        first = (
+            first_game_pieces.draw_dev_card(),
+            first_game_pieces.draw_dev_card(),
+            first_game_pieces.draw_dev_card(),
+        )
+        second_game_pieces = GamePieces(GameTime())
+        second = (
+            second_game_pieces.draw_dev_card(),
+            second_game_pieces.draw_dev_card(),
+            second_game_pieces.draw_dev_card(),
+        )
+        self.assertNotEqual(first, second)
+
     def test_draw_indoor_card_decrements_count(self):
         self.game_pieces.draw_indoor_tile()
         self.assertEqual(self.game_pieces.indoor_tiles_remaining(), 6)
