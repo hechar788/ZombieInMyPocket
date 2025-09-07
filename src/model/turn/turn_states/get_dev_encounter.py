@@ -23,46 +23,22 @@ class GetDevEncounter(State):
     def exit(self):
         super().exit()
 
-    def _is_dev_cards_remaining(self) -> bool:
-        """returns true if there are dev cards remaining to pull"""
-        is_dev_cards_remaining = True
-        if self.use_service(
-                ServiceNames.GAME_PIECES,
-                ServiceMethods.DEV_CARDS_REMAINING
-        ) <= 0:
-            is_dev_cards_remaining = False
-        return is_dev_cards_remaining
-
-
-    def _increase_time(self):
-        """Increase time"""
-        self.use_service(ServiceNames.GAME_TIME, ServiceMethods.INCREASE_TIME)
-
-
-    def _shuffle_cards(self):
-        """Shuffle the dev cards"""
-        #suffle not implemented in game pieces (or anywhere)
-        self.use_service(ServiceNames.GAME_PIECES, ServiceMethods.SHUFFLE_DEV_CARDS)
-
     
     def _get_dev_card(self):
         """Draws a dev card if any remaining"""
-        if not self._is_dev_cards_remaining():
-            #no cards remaining increase time and shuffle cards
-            self._increase_time()
-            self._shuffle_cards()
-
         return self.use_service(
             ServiceNames.GAME_PIECES,
             ServiceMethods.DRAW_DEV_CARD
         )
 
-
-    def _get_dev_encounter(self, the_dev_card):
-        the_time = self.use_service(
+    def _get_game_time(self):
+        return self.use_service(
             ServiceNames.GAME_TIME,
             ServiceMethods.GET_CURRENT_TIME
         )
-        return the_dev_card.get_encounter(9) #todo use game time
+
+    def _get_dev_encounter(self, the_dev_card):
+        the_time = self._get_game_time()
+        return the_dev_card.get_encounter(the_time)
 
     

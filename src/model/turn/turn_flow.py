@@ -68,7 +68,7 @@ class TurnFlow:
         """sets the current state of the turn"""
         next_state = state_factory() #Make a new state object each time
         next_state.context = self
-        print(f"the next state is {next_state.name}\n the previous result is {previous_result}")
+        #print(f"the next state is {next_state.name}\n the previous result is {previous_result}")
         if previous_result is not None:
             next_state.enter(*previous_result)
         else:

@@ -15,8 +15,8 @@ class TestTurnAdvancement(unittest.TestCase):
         """set up a turn to test"""
         self.user_interface = create_autospec(UserInterface)
         self.player = create_autospec(IPlayer)
-        self.game_pieces = GamePieces()
         self.game_time = GameTime()
+        self.game_pieces = GamePieces(self.game_time)
         self.the_turn = Turn.create(
             self.game_pieces,
             self.player,
@@ -51,7 +51,7 @@ class TestTurnAdvancement(unittest.TestCase):
         self.assertEqual(time_before, self.game_time.get_current_time())
 
         i  = 0
-        while i < 9:
+        while i < 11:
             #run out the dev cards
             self.jump_to_dev_encounter()
             self.the_turn.continue_turn()

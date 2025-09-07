@@ -13,8 +13,8 @@ class TestTurn(unittest.TestCase):
         """set up a turn to test"""
         self.user_interface = create_autospec(UserInterface)
         self.player = Player()
-        self.game_pieces = GamePieces()
         self.game_time = GameTime()
+        self.game_pieces = GamePieces(self.game_time)
         self.the_turn = Turn.create(
             self.game_pieces,
             self.player,
@@ -62,16 +62,12 @@ class TestTurn(unittest.TestCase):
         self.assert_pre_start()
 
 
-    def jump_to_dev_encounter(self):
-        """advance the turn 10 steps"""
-        from src.model.turn.turn_enums import Triggers
-        self.the_turn.start_turn()
-
+    def jump_to_trigger(self, trigger, result):
+        """Jumps the turn to the given trigger"""
         self.the_turn._flow.state_finished(
-            trigger = Triggers.START_ENCOUNTERS,
-            result = None
+            trigger = trigger,
+            result = result
         )
-
         self.the_turn._flow._change_state()
 
 
@@ -81,7 +77,7 @@ class TestTurn(unittest.TestCase):
         When:   a Dev card is dawn
         Then:   time must update according to the rule of Time Passes
         """
-        self.jump_to_dev_encounter()
+        self.jump_to_trigger()
         self.assertEqual('get_dev_encounter', self.the_turn._flow._current_state.name.value)
         self.the_turn.continue_turn()
         self.assertEqual('run_encounter', self.the_turn._flow._current_state.name.value)
