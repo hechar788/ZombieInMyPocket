@@ -65,17 +65,22 @@ python -m pytest test/player/test_combining_items.py --cov=src.model.player --co
 
 ## Tutor Given Test Cases
 
-```bash
-# Weapon Equip Effect
-# Given the player equips a weapon, When the player fights zombies, Then the weapon bonus is applied.
-# Test: Test_PlayerImplementation.test_use_item_weapon_type in test_player_implementation.py
-# Coverage: Verifies weapon items return attack bonus when used (base attack + weapon bonus)
-python -m pytest test/player/test_player_implementation.py::Test_PlayerImplementation::test_use_item_weapon_type -v
+The following specific test cases fulfill the tutor's given requirements:
 
-# Combat with Gasoline and Candle
-# Given the player equips Gasoline and Candle, When fighting zombies using Gasoline and Candle,
-# Then all zombies on the tile are killed, And Gasoline is removed from inventory, and player health is unaffected.
-# Test: Test_PlayerImplementation.test_combat_with_gasoline_and_candle in test_player_implementation.py
-# Coverage: Verifies gasoline is removed (uses_remaining=0), candle remains in inventory, and player health is unaffected
+### Weapon Equip Effect
+**Given the player equips a weapon, When the player fights zombies, Then the weapon bonus is applied.**
+- **Test**: `Test_PlayerImplementation.test_use_item_weapon_type` in `test_player_implementation.py`
+- **Coverage**: Verifies weapon items return attack bonus when used (base attack + weapon bonus)
+- **Command**: 
+```bash
+python -m pytest test/player/test_player_implementation.py::Test_PlayerImplementation::test_use_item_weapon_type -v
+```
+
+### Combat with Gasoline and Candle  
+**Given the player equips Gasoline and Candle, When fighting zombies using Gasoline and Candle, Then all zombies on the tile are killed, And Gasoline is removed from inventory, and player health is unaffected.**
+- **Test**: `Test_PlayerImplementation.test_combat_with_gasoline_and_candle` in `test_player_implementation.py`
+- **Coverage**: Verifies gasoline is removed (uses_remaining=0), candle remains in inventory, and player health is unaffected
+- **Command**: 
+```bash
 python -m pytest test/player/test_player_implementation.py::Test_PlayerImplementation::test_combat_with_gasoline_and_candle -v
 ```
