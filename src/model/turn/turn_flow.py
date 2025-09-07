@@ -40,7 +40,6 @@ class TurnFlow:
 
         self._current_state: State | None = None
         # hold the active tile to make it easier to get the tile encounter
-        self._active_tile: Any | None = None
 
         #todo update states and context to use transition_type and maybe active tile
         #self.transition_type = None
@@ -59,7 +58,6 @@ class TurnFlow:
         """Resets the state to its initial state"""
         self._pending_transition = None
         self._current_state = None
-        self._active_tile = None
 
 
     def _enter_next_state(
@@ -77,7 +75,6 @@ class TurnFlow:
             next_state.enter()
 
         return next_state
-        #return None #Passback
 
 
     def _change_state(self) -> None:
@@ -88,8 +85,6 @@ class TurnFlow:
                 self._pending_transition["next_state"],
                 self._pending_transition["previous_result"]
             )
-            if self._pending_transition["next_tile"] is not None:
-                self._active_tile = self._pending_transition["next_tile"]
             self._pending_transition = None
             self._current_state = next_state
         #return None #Passback
@@ -106,8 +101,7 @@ class TurnFlow:
     def state_finished(
             self,
             trigger: Triggers,
-            result: tuple[Any, ...] | None,
-            next_tile: Any | None = None
+            result: tuple[Any, ...] | None
     ) -> None:
         """called when the state is finished"""
         next_transition = self._get_state_factory(trigger)
@@ -115,8 +109,7 @@ class TurnFlow:
             raise Exception(f"No such transition: {trigger}, exiting {self._current_state.name}")
         self._pending_transition: PendingTransition = {
             "next_state": next_transition,
-            "previous_result": result,
-            "next_tile": next_tile
+            "previous_result": result
         }
         #return None
         #The state that called state_finished mast end(return) quickly
