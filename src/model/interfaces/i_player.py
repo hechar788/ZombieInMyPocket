@@ -62,6 +62,14 @@ class IPlayer(ABC):
         """
         pass
 
+    def set_has_totem(self, has_totem: bool) -> None:
+        """Set the totem possession state.
+        
+        Args:
+            has_totem: True if player should have the totem, False otherwise
+        """
+        pass
+
     @abstractmethod
     def get_position(self) -> Position:
         """Get the player's current position on the game board.

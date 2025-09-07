@@ -127,6 +127,14 @@ class Player(IPlayer):
         """
         return self.__player_impl.combine_items_from_inventory()
 
+    def set_has_totem(self, has_totem: bool) -> None:
+        """Set the player's totem possession state.
+        
+        Args:
+            has_totem: True if player should have the totem, False otherwise
+        """
+        self.__player_impl.set_has_totem(has_totem)
+
 
 class _PlayerImplementation:
     """Concrete implementation of player functionality.
@@ -299,3 +307,11 @@ class _PlayerImplementation:
                 return False
 
         return False
+
+    def set_has_totem(self, has_totem: bool) -> None:
+        """Set the totem possession state.
+        
+        Args:
+            has_totem: True if player should have the totem, False otherwise
+        """
+        self._has_totem = has_totem
